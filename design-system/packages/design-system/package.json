@@ -22,10 +22,14 @@
     "lint": "eslint . --max-warnings 0 && stylelint \"src/**/*.css\" --allow-empty-input",
     "check-types": "tsc --noEmit",
     "check-api": "api-extractor run --verbose",
-    "update-api": "api-extractor run --local --verbose"
+    "update-api": "api-extractor run --local --verbose",
+    "test-visual": "pnpm run build-storybook && playwright test",
+    "test-visual:update": "pnpm run build-storybook && playwright test --update-snapshots"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@microsoft/api-extractor": "^7.58.9",
+    "@playwright/test": "^1.61.1",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@storybook/addon-a11y": "^10.4.6",
@@ -35,6 +39,7 @@
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "eslint": "^9.39.1",
+    "http-server": "^14.1.1",
     "storybook": "^10.4.6",
     "style-dictionary": "^5.5.0",
     "stylelint": "^17.14.0",
@@ -42,7 +47,7 @@
     "stylelint-declaration-strict-value": "^1.11.1",
     "tsup": "^8.3.5",
     "typescript": "5.9.2",
-    "vite": "^8.1.4"
+    "vite": "^8.1.0"
   },
   "peerDependencies": {
     "react": "^19.0.0",

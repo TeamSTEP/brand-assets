@@ -103,12 +103,67 @@ before moving on; don't skip a gate to "come back to it later."
    failed with a clear diff, confirmed `update-api` accepted it, then reverted `index.ts` and regenerated
    the clean baseline. Wired as a turbo task (`check-api`, `dependsOn: ["build"]` since it reads
    `dist/index.d.ts`).
-9. Add CI workflow: `pnpm install --frozen-lockfile` → `turbo run lint check-types build build-storybook`.
+9. Add CI workflow: `pnpm install --frozen-lockfile` → `turbo run lint check-types check-api build
+    build-storybook`. Expanded scope (from the 2026-07-10 governance review, comparing this scaffold
+    against current supply-chain-security practice for agent-driven repos):
+    - Add `pnpm audit` as its own CI step — nothing currently checks installed deps for known CVEs.
+    - Harden `.npmrc`: `engine-strict=true` (currently `engines.node` is declared but not enforced),
+      `save-exact=true`, plus pnpm's `minimumReleaseAge` / `trustPolicy` lockfile settings. These matter
+      more here than in a typical repo — an agent suggesting/installing a newly-published package
+      doesn't get the natural pause a human has before trusting it; `minimumReleaseAge` (e.g. 3–7 days)
+      closes the "malicious package exploited within hours of publish" window structurally.
+    - CI must run with `--frozen-lockfile` (no silent lockfile drift) and a pinned pnpm version via
+      Corepack, not whatever's on the runner's PATH.
+    — **Done, with one real correction to the plan above: `minimumReleaseAge`/`trustPolicy` turned out
+    to be pnpm 11+ only, `pnpm-workspace.yaml`-only settings (not `.npmrc`, not pnpm 10 — introduced
+    v10.16.0/v10.21.0 but pnpm 11 is what defaults `minimumReleaseAge` to 1440min/1 day out of the box).
+    Upgraded the pinned `packageManager` from `pnpm@10.33.1` → `pnpm@11.11.0` rather than hand-rolling a
+    weaker equivalent on 10.x. This also broke the old `package.json` `"pnpm.onlyBuiltDependencies"` field
+    from step 2 — pnpm 11 no longer reads it at all (silently, with only a deprecation warning) — moved
+    to `pnpm-workspace.yaml` as `allowBuilds: { esbuild: true }`.**
+    `pnpm-workspace.yaml` now carries: `minimumReleaseAge: 1440`, `trustPolicy: no-downgrade`,
+    `engineStrict: true`, `allowBuilds`, and `overrides`. `.npmrc` carries `save-exact=true` (still a
+    legacy `.npmrc`-only setting, not migrated).
+    **The trust-policy gate fired for real on the very first clean install** — three transitive deps
+    (`undici-types@6.21.0`, `semver@6.3.1`, `chokidar@4.0.3`) got flagged as trust downgrades. Investigated
+    each rather than blanket-disabling the check: all three are extremely well-known, actively-maintained
+    packages (one literally maintained by the npm-cli-ops org account; `chokidar@4.0.3` is pnpm's own
+    documented example of a benign exclusion) hitting older maintenance-branch releases that predate
+    provenance-attestation adoption on their current major line — reads as ecosystem-wide uneven rollout,
+    not a compromise signal. Excluded each by exact version in `trustPolicyExclude`, with the reasoning
+    written inline as a comment, so a future *different* version of any of these still gets checked.
+    Separately, `minimumReleaseAge` correctly blocked `vite@8.1.4` (published less than a day prior) —
+    this one was **not** excluded, since that would defeat the setting's purpose; instead loosened our own
+    `vite` pin from `^8.1.4` to `^8.1.0` so pnpm's maturity-aware resolution can automatically fall back to
+    an already-mature patch version instead of hard-requiring the newest one.
+    `pnpm audit` also caught something real on first run: a transitive `esbuild < 0.28.1` (low-severity,
+    Windows-only dev-server file read, GHSA-g7r4-m6w7-qqqr) via several Storybook/Vite chains, even though
+    a patched `0.28.1` was already present elsewhere in the tree. Fixed with `overrides: { esbuild:
+    ">=0.28.1" }` rather than leaving known low-severity debt — `pnpm audit` is clean now, verified.
+    CI workflow lives at `.github/workflows/design-system-ci.yml` (repo root — GitHub Actions requires
+    this, not `design-system/`), path-filtered to `design-system/**`, `corepack enable` → `actions/setup-node`
+    (pnpm cache) → `pnpm install --frozen-lockfile` → `pnpm audit` → `turbo run lint check-types check-api
+    build build-storybook`. Verified by running the exact same sequence locally end to end, twice (once
+    to prove `--frozen-lockfile` correctly fails without a lockfile, once with a fresh lockfile to prove
+    the real sequence passes clean).
 10. Add Chromatic (or Playwright screenshot diffing) wired to the Storybook build, snapshotting every
     story at the three breakpoints from step 6. This is the standing regression gate for all future work.
+    Expanded scope (same review): visual regression alone leaves `addon-a11y` and the viewport presets
+    as UI-only checks a human has to remember to look at — that's prose-strength governance wearing a
+    config file, inconsistent with the "typed contracts and failing CI, not conventions" principle this
+    whole scaffold is built on. Step 10 isn't done until a headless a11y check actually fails a build:
+    wire Storybook's test-runner (or Playwright + `axe-playwright`) against the `build-storybook` output
+    so an accessibility violation is a red CI check, not a manual review step.
 11. **[gate — foundation complete]** Confirm the whole pipeline runs green with nothing but stubs:
-    empty tokens, no real components, a11y/viewport addons active, strict-value lint active, Chromatic
-    baseline captured. Only after this passes do real token values or the first component get written.
+    empty tokens, no real components, a11y/viewport addons active *and CI-enforced*, strict-value lint
+    active, Chromatic baseline captured, `pnpm audit` clean. Only after this passes do real token values
+    or the first component get written.
+12. **[manual — not file-scaffoldable, track here so it doesn't get lost]** Once this repo is pushed to
+    GitHub: add a `CODEOWNERS` file and turn on branch protection requiring the CI checks above plus a
+    reviewed Chromatic diff before merge to `main`. This is the actual enforcement mechanism behind the
+    "any PR touching `packages/design-system/src` must have a Chromatic diff reviewed" standing rule
+    below — until this is on, that rule is prose. I can draft `CODEOWNERS`, but the branch-protection
+    toggle itself is a repo setting only you can flip.
 
 ## Standing rules — apply to every future change, not just the scaffold
 
@@ -139,6 +194,11 @@ contracts and failing CI do. Prioritize enforcement mechanisms over documentatio
 - **When something seems missing, add a variant — don't fork or override.** If a consuming project needs
   a look the component doesn't support, that's a signal to extend the component's typed variant set in
   this repo (with a Changesets entry), not to reach for inline styles or a copy-pasted fork downstream.
+- **Re-enable `ae-missing-release-tag` in `api-extractor.json` once the first real component ships.**
+  It's currently silenced (see `check-api`) because requiring `@public`/`@internal` TSDoc tags on an
+  empty barrel export is meaningless. The diff gate (step 8) only catches *changes* to the API surface;
+  release tags catch *accidental* exposure at the moment an export is first added — a stronger agent
+  guardrail than the diff alone, and cheap once there's real API surface to tag.
 
 ## Brand rules (from the original design spec — enforce via tokens/components, not memory)
 

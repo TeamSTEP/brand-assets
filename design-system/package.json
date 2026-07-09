@@ -1,7 +1,7 @@
 {
   "name": "design-system",
   "private": true,
-  "packageManager": "pnpm@10.33.1",
+  "packageManager": "pnpm@11.11.0",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -22,10 +22,5 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
   }
 }

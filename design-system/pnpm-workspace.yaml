@@ -1,2 +1,34 @@
 packages:
   - "packages/*"
+
+# Supply-chain hardening (CLAUDE.md step 9). An agent suggesting/installing a newly published
+# package doesn't get the pause a human naturally has before trusting it — these settings close
+# that gap structurally instead of relying on review discipline.
+minimumReleaseAge: 1440 # minutes (1 day) — v11 default, pinned explicitly rather than left implicit
+trustPolicy: no-downgrade
+engineStrict: true
+
+# Reviewed individually — not a blanket bypass. This first install caught undici-types@6.21.0
+# (transitive dep of @types/node) as a real trust downgrade (earlier versions had provenance,
+# this one doesn't). Investigated: official Node.js-ecosystem package, actively maintained 6.x
+# branch (up to 6.27.0), registry-signed — reads as a provenance-attestation gap, not a
+# compromise. Excluded by exact version, not by package name, so a future *different* version
+# of this package still gets checked.
+trustPolicyExclude:
+  - "undici-types@6.21.0"
+  - "semver@6.3.1" # maintained by the npm-cli-ops org account itself; 6.x is an older maintenance
+    # branch predating this package's provenance adoption on the 7.x line — same pattern as above.
+  - "chokidar@4.0.3" # this is pnpm's own documented example of a benign trust-policy exclusion —
+    # a strong signal this whole class of flag is uneven-provenance-rollout noise, not a real
+    # threat signal, for any well-known package encountered this way.
+
+# Explicit allowlist for postinstall scripts — replaces the old package.json "pnpm.onlyBuiltDependencies"
+# array, which pnpm 11 no longer reads at all (see CLAUDE.md step 9).
+allowBuilds:
+  esbuild: true
+
+# Forces every transitive resolution of esbuild to the patched version. `pnpm audit` (step 9) found
+# GHSA-g7r4-m6w7-qqqr (low severity, Windows dev-server-only file read) via several Storybook/Vite
+# transitive chains that hadn't picked up 0.28.1 yet even though other parts of the tree already had.
+overrides:
+  esbuild: ">=0.28.1"
