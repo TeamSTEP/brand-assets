@@ -32,6 +32,9 @@ storybook-static
 packages/design-system/src/tokens/tokens.css
 packages/design-system/src/tokens/tokens.ts
 
+# api-extractor scratch output — etc/*.api.md is the committed contract, temp/ is not
+packages/design-system/temp
+
 
 # Debug
 npm-debug.log*

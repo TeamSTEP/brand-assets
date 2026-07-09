@@ -69,7 +69,7 @@ before moving on; don't skip a gate to "come back to it later."
    future token changes, which is the actual drift-detection mechanism. Verified for real: built
    Storybook (`build-storybook`) and grepped the compiled bundle to confirm it embeds live token data,
    not a stub. Caught two real bugs doing this: (1) `moduleResolution: NodeNext` requires explicit `.js`
-   extensions on relative imports even from `.ts` source — fixed the story's import; (2) `eslint . `
+   extensions on relative imports even from `.ts` source — fixed the story's import; (2) `eslint .`
    was linting Storybook's own minified `storybook-static/` build output (18,623 warnings) — added it
    plus the generated `src/tokens/tokens.{css,ts}` to package-level eslint `ignores`, and added
    `storybook-static` to `.gitignore`.
@@ -81,10 +81,28 @@ before moving on; don't skip a gate to "come back to it later."
    is installed.
 7. Wire Turborepo tasks (`build`, `lint`, `check-types`, `storybook`, `build-storybook`). Exclude
    `**/*.stories.tsx` from the `build` task's cache `inputs` so story edits don't invalidate component
-   build cache.
+   build cache. — **Done.** `storybook` is `cache: false, persistent: true` (matches `dev`); `build-storybook`
+   caches normally with `outputs: ["storybook-static/**"]`. The story-exclusion rule itself was already
+   added to `build`'s `inputs` back in step 2 while that block was open for the `.next/**` → `dist/**` fix
+   — verified for real here, not just configured: appended a comment to `Tokens.stories.tsx` and reran
+   `turbo run build build-storybook` — `build` was a cache hit (story edit correctly ignored),
+   `build-storybook` was a cache miss (story edit correctly picked up). Removed the test comment after.
 8. Init Changesets at v0.0.0. Add an API-surface diff check (e.g. `api-extractor`) that fails CI if a
    public export/prop shape changes without a matching version bump. **[gate]** — set this up before
-   the first real component ships, not after.
+   the first real component ships, not after. — **Done.** Changesets initialized (`.changeset/config.json`,
+   `access: restricted` since packages are private); `@repo/eslint-config`/`@repo/typescript-config` are
+   in the `ignore` list — internal tooling, never published, don't need version bumps. `changeset status`
+   currently errors ("packages have changed but no changesets were found") because nothing has been
+   committed to `main` yet, so the whole working tree reads as pending change — expected until the first
+   commit establishes a baseline, not a bug.
+   `@microsoft/api-extractor` wired in `packages/design-system` (`check-api` = CI mode, fails on drift;
+   `update-api` = local mode, accepts and writes the new baseline). Committed baseline is
+   `etc/design-system.api.md` — currently just the empty `export {}` surface. `temp/` (api-extractor's
+   scratch output) is gitignored, `etc/` is not. **Proved the gate for real**, same pattern as step 4:
+   added a throwaway `export const gateProofOnly = "delete-me"` to `index.ts`, confirmed `check-api`
+   failed with a clear diff, confirmed `update-api` accepted it, then reverted `index.ts` and regenerated
+   the clean baseline. Wired as a turbo task (`check-api`, `dependsOn: ["build"]` since it reads
+   `dist/index.d.ts`).
 9. Add CI workflow: `pnpm install --frozen-lockfile` → `turbo run lint check-types build build-storybook`.
 10. Add Chromatic (or Playwright screenshot diffing) wired to the Storybook build, snapshotting every
     story at the three breakpoints from step 6. This is the standing regression gate for all future work.

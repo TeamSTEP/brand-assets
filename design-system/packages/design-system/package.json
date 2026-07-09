@@ -20,9 +20,12 @@
     "storybook": "pnpm run build:tokens && storybook dev -p 6006",
     "build-storybook": "pnpm run build:tokens && storybook build",
     "lint": "eslint . --max-warnings 0 && stylelint \"src/**/*.css\" --allow-empty-input",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "check-api": "api-extractor run --verbose",
+    "update-api": "api-extractor run --local --verbose"
   },
   "devDependencies": {
+    "@microsoft/api-extractor": "^7.58.9",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@storybook/addon-a11y": "^10.4.6",
