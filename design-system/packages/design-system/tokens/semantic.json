@@ -1,0 +1,9 @@
+{
+  "color": {
+    "scaffold": {
+      "$value": "{placeholder.scaffold}",
+      "$type": "color",
+      "$description": "Pipeline smoke-test token only. Proves primitive -> semantic aliasing resolves through Style Dictionary."
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "placeholder": {
+    "scaffold": {
+      "$value": "#000000",
+      "$type": "color",
+      "$description": "Pipeline smoke-test token only. Not a brand color — replace with real Team STEP primitives (Section 2.1 of teamstep-landing-spec.md) before the first component ships."
+    }
+  }
+}

@@ -11,23 +11,35 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./tokens.css": "./dist/tokens.css"
+    "./tokens.css": "./dist/tokens/tokens.css"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "pnpm run build:tokens && tsup",
+    "build:tokens": "style-dictionary build --config style-dictionary.config.mjs",
     "dev": "tsup --watch",
-    "lint": "eslint . --max-warnings 0",
+    "storybook": "pnpm run build:tokens && storybook dev -p 6006",
+    "build-storybook": "pnpm run build:tokens && storybook build",
+    "lint": "eslint . --max-warnings 0 && stylelint \"src/**/*.css\" --allow-empty-input",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@storybook/addon-a11y": "^10.4.6",
+    "@storybook/addon-docs": "^10.4.6",
+    "@storybook/react-vite": "^10.4.6",
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "eslint": "^9.39.1",
+    "storybook": "^10.4.6",
+    "style-dictionary": "^5.5.0",
+    "stylelint": "^17.14.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-declaration-strict-value": "^1.11.1",
     "tsup": "^8.3.5",
-    "typescript": "5.9.2"
+    "typescript": "5.9.2",
+    "vite": "^8.1.4"
   },
   "peerDependencies": {
     "react": "^19.0.0",

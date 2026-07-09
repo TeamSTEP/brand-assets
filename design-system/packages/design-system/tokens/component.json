@@ -1,0 +1,9 @@
+{
+  "scaffold": {
+    "background": {
+      "$value": "{color.scaffold}",
+      "$type": "color",
+      "$description": "Pipeline smoke-test token only. Proves semantic -> component aliasing resolves through Style Dictionary."
+    }
+  }
+}
