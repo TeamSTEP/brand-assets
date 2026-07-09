@@ -1,9 +1,142 @@
 {
   "color": {
-    "scaffold": {
-      "$value": "{placeholder.scaffold}",
+    "background": {
+      "$value": "{color.void}",
       "$type": "color",
-      "$description": "Pipeline smoke-test token only. Proves primitive -> semantic aliasing resolves through Style Dictionary."
+      "$description": "Default page/section background."
+    },
+    "background-recessed": {
+      "$value": "{color.void-deep}",
+      "$type": "color",
+      "$description": "Deepest background — BBS Board section only."
+    },
+    "surface": {
+      "$value": "{color.shadow}",
+      "$type": "color",
+      "$description": "Raised panel/card surface over the page background."
+    },
+    "border-default": {
+      "$value": "{color.mid}",
+      "$type": "color"
+    },
+    "border-emphasis": {
+      "$value": "{color.accent}",
+      "$type": "color"
+    },
+    "accent-primary": {
+      "$value": "{color.accent}",
+      "$type": "color"
+    },
+    "text-primary": {
+      "$value": "{color.ice}",
+      "$type": "color"
+    },
+    "text-secondary": {
+      "$value": "{color.muted}",
+      "$type": "color"
+    },
+    "text-tertiary": {
+      "$value": "{color.mid}",
+      "$type": "color"
+    },
+    "game-green": {
+      "$value": "{color.green}",
+      "$type": "color",
+      "$description": "Meltdown / main-quest scope only."
+    },
+    "game-green-active": {
+      "$value": "{color.green-hi}",
+      "$type": "color",
+      "$description": "Meltdown / main-quest scope only."
+    },
+    "game-blood": {
+      "$value": "{color.blood}",
+      "$type": "color",
+      "$description": "Witch One scope only."
+    },
+    "game-blood-active": {
+      "$value": "{color.blood-hi}",
+      "$type": "color",
+      "$description": "Witch One scope only."
+    },
+    "status-pending": {
+      "$value": "{color.amber}",
+      "$type": "color",
+      "$description": "Coming-soon / in-development state."
+    },
+    "status-pending-active": {
+      "$value": "{color.amber-hi}",
+      "$type": "color"
+    },
+    "chrome-accent": {
+      "$value": "{color.teal}",
+      "$type": "color",
+      "$description": "UI chrome (non-game, non-status) accent."
+    },
+    "chrome-accent-active": {
+      "$value": "{color.teal-hi}",
+      "$type": "color"
+    }
+  },
+  "spacing": {
+    "xs": { "$value": "{spacing.050}", "$type": "dimension" },
+    "sm": { "$value": "{spacing.100}", "$type": "dimension" },
+    "md": { "$value": "{spacing.200}", "$type": "dimension" },
+    "lg": { "$value": "{spacing.400}", "$type": "dimension" },
+    "xl": { "$value": "{spacing.600}", "$type": "dimension" },
+    "2xl": { "$value": "{spacing.800}", "$type": "dimension" },
+    "3xl": { "$value": "{spacing.1200}", "$type": "dimension" },
+    "section": { "$value": "{spacing.1600}", "$type": "dimension" }
+  },
+  "radius": {
+    "chip-sm": {
+      "$value": "{radius.hairline} {radius.100} {radius.hairline} {radius.100}",
+      "$type": "dimension",
+      "$description": "Asymmetric top-left/bottom-right radius for small chips (badges)."
+    },
+    "chip-md": {
+      "$value": "{radius.hairline} {radius.150} {radius.hairline} {radius.150}",
+      "$type": "dimension",
+      "$description": "Asymmetric radius for ghost CTAs."
+    },
+    "chip-lg": {
+      "$value": "{radius.hairline} {radius.200} {radius.hairline} {radius.200}",
+      "$type": "dimension",
+      "$description": "Asymmetric radius for primary/secondary CTAs."
+    },
+    "card-sm": {
+      "$value": "{radius.tight} {radius.300} {radius.tight} {radius.300}",
+      "$type": "dimension",
+      "$description": "Asymmetric radius for archive cards, service cards."
+    },
+    "card-md": {
+      "$value": "{radius.tight} {radius.400} {radius.tight} {radius.400}",
+      "$type": "dimension",
+      "$description": "Asymmetric radius for dialogue boxes."
+    },
+    "card-lg": {
+      "$value": "{radius.tight} {radius.500} {radius.tight} {radius.500}",
+      "$type": "dimension",
+      "$description": "Asymmetric radius for the featured game card."
+    }
+  },
+  "font": {
+    "family": {
+      "heading": {
+        "$value": "{font.family.rajdhani}",
+        "$type": "fontFamily",
+        "$description": "Section titles, hero H1, wordmark. Apply uppercase in component CSS."
+      },
+      "subtitle": {
+        "$value": "{font.family.nunito}",
+        "$type": "fontFamily",
+        "$description": "Taglines, secondary labels. Apply italic in component CSS."
+      },
+      "body": {
+        "$value": "{font.family.barlow-condensed}",
+        "$type": "fontFamily",
+        "$description": "Body copy, BBS feed, badges."
+      }
     }
   }
 }
