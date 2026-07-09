@@ -1,6 +1,7 @@
 {
   "name": "design-system",
   "private": true,
+  "packageManager": "pnpm@10.33.1",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -16,14 +17,9 @@
   "engines": {
     "node": ">=18"
   },
-  "devEngines": {
-    "packageManager": {
-      "name": "yarn",
-      "version": "1.22.22"
-    }
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
 }
