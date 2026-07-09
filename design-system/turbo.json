@@ -28,6 +28,12 @@
     "build-storybook": {
       "inputs": ["$TURBO_DEFAULT$", ".storybook/**"],
       "outputs": ["storybook-static/**"]
+    },
+    "test-visual": {
+      "dependsOn": ["build-storybook"],
+      "env": ["CI"],
+      "inputs": ["$TURBO_DEFAULT$", "tests/**", "playwright.config.ts"],
+      "outputs": ["playwright-report/**"]
     }
   }
 }

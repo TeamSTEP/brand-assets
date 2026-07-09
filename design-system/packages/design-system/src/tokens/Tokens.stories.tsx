@@ -10,34 +10,37 @@ function TokenSwatches() {
   const entries = Object.entries(tokens) as Array<[string, string]>;
 
   return (
-    <table style={{ borderCollapse: "collapse", fontFamily: "monospace", fontSize: 12 }}>
-      <thead>
-        <tr>
-          <th style={{ textAlign: "left", padding: 8 }}>Token</th>
-          <th style={{ textAlign: "left", padding: 8 }}>Value</th>
-          <th style={{ textAlign: "left", padding: 8 }}>Swatch</th>
-        </tr>
-      </thead>
-      <tbody>
-        {entries.map(([name, value]) => (
-          <tr key={name}>
-            <td style={{ padding: 8 }}>{name}</td>
-            <td style={{ padding: 8 }}>{value}</td>
-            <td style={{ padding: 8 }}>
-              <span
-                style={{
-                  display: "inline-block",
-                  width: 24,
-                  height: 24,
-                  border: "1px solid #ccc",
-                  background: value,
-                }}
-              />
-            </td>
+    <main>
+      <h1 style={{ fontFamily: "monospace", fontSize: 14 }}>Design Tokens</h1>
+      <table style={{ borderCollapse: "collapse", fontFamily: "monospace", fontSize: 12 }}>
+        <thead>
+          <tr>
+            <th style={{ textAlign: "left", padding: 8 }}>Token</th>
+            <th style={{ textAlign: "left", padding: 8 }}>Value</th>
+            <th style={{ textAlign: "left", padding: 8 }}>Swatch</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {entries.map(([name, value]) => (
+            <tr key={name}>
+              <td style={{ padding: 8 }}>{name}</td>
+              <td style={{ padding: 8 }}>{value}</td>
+              <td style={{ padding: 8 }}>
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: 24,
+                    height: 24,
+                    border: "1px solid #ccc",
+                    background: value,
+                  }}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </main>
   );
 }
 

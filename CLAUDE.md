@@ -142,10 +142,11 @@ before moving on; don't skip a gate to "come back to it later."
     ">=0.28.1" }` rather than leaving known low-severity debt — `pnpm audit` is clean now, verified.
     CI workflow lives at `.github/workflows/design-system-ci.yml` (repo root — GitHub Actions requires
     this, not `design-system/`), path-filtered to `design-system/**`, `corepack enable` → `actions/setup-node`
-    (pnpm cache) → `pnpm install --frozen-lockfile` → `pnpm audit` → `turbo run lint check-types check-api
-    build build-storybook`. Verified by running the exact same sequence locally end to end, twice (once
-    to prove `--frozen-lockfile` correctly fails without a lockfile, once with a fresh lockfile to prove
-    the real sequence passes clean).
+    (pnpm cache) → `pnpm install --frozen-lockfile` → `pnpm audit` → install Playwright's Chromium →
+    `turbo run lint check-types check-api build build-storybook test-visual` (`test-visual` added in step 10;
+    a `playwright-report` artifact uploads on failure). Verified by running the exact same sequence locally
+    end to end, twice (once to prove `--frozen-lockfile` correctly fails without a lockfile, once with a
+    fresh lockfile to prove the real sequence passes clean).
 10. Add Chromatic (or Playwright screenshot diffing) wired to the Storybook build, snapshotting every
     story at the three breakpoints from step 6. This is the standing regression gate for all future work.
     Expanded scope (same review): visual regression alone leaves `addon-a11y` and the viewport presets
@@ -153,15 +154,45 @@ before moving on; don't skip a gate to "come back to it later."
     config file, inconsistent with the "typed contracts and failing CI, not conventions" principle this
     whole scaffold is built on. Step 10 isn't done until a headless a11y check actually fails a build:
     wire Storybook's test-runner (or Playwright + `axe-playwright`) against the `build-storybook` output
-    so an accessibility violation is a red CI check, not a manual review step.
+    so an accessibility violation is a red CI check, not a manual review step. — **Done.** Chose Playwright
+    over Chromatic — Chromatic needs an external account + `CHROMATIC_PROJECT_TOKEN` only the user can
+    create, so it couldn't be proven end-to-end; Playwright is fully self-hosted and verifiable now (user
+    confirmed this choice explicitly). One Playwright suite covers both concerns per story per viewport,
+    not two separate tools: `@axe-core/playwright` for a11y, `toHaveScreenshot()` for visual regression.
+    `tests/stories.visual.spec.ts` reads story IDs from the *built* `storybook-static/index.json` at
+    collection time — same drift-proof pattern as `Tokens.stories.tsx` (Object.entries over hardcoding):
+    new stories get covered automatically, no test-file edit needed. Runs against the built Storybook via
+    `http-server`, not the dev server, so a green local run means a green CI run.
+    **The a11y half of the gate found two real, legitimate violations on the very first run** — the
+    Tokens story's bare `<table>` wasn't in a landmark region, and the page had no `<h1>`. Fixed the
+    actual component (wrapped in `<main>`, added an `<h1>Design Tokens</h1>`) rather than relaxing the
+    axe rules, same discipline as every other gate in this scaffold. **Proved the visual-regression half
+    separately**: temporarily doubled a swatch's width, confirmed `toHaveScreenshot()` failed with
+    expected/actual/diff images at all three breakpoints, reverted, confirmed clean.
+    Baseline screenshots (`tests/*-snapshots/*.png`) are committed — they're the visual contract, same
+    category as `etc/design-system.api.md`. `test-results/`, `playwright-report/` are gitignored *and*
+    excluded from eslint (same treatment as `storybook-static/`).
+    **Caught a real race condition** running the full task set together: `test-visual`'s script originally
+    re-ran `build-storybook` internally, and when Turbo parallelized both tasks they wrote to
+    `storybook-static/` concurrently (`EEXIST`). Fixed by making `test-visual` `dependsOn: ["build-storybook"]`
+    in `turbo.json` and stripping the redundant internal build from the script — same pattern `check-api`
+    already used relative to `build`. Also caught a real (if minor) finding from the *lint* step itself:
+    `process.env.CI` in `playwright.config.ts` wasn't declared to Turbo, so its cache keys couldn't
+    account for it — added `"env": ["CI"]` to the `test-visual` task.
+    CI workflow updated: installs Chromium only (`playwright install --with-deps chromium` — no
+    firefox/webkit, matching the scoped-footprint pattern used for the stylelint rule elsewhere), runs
+    `test-visual` as part of the main `turbo run` command, uploads the `playwright-report/` artifact on
+    failure only. Verified with a full from-scratch simulation (`rm -rf node_modules`, frozen install,
+    audit, browser install, full turbo run) — green.
 11. **[gate — foundation complete]** Confirm the whole pipeline runs green with nothing but stubs:
-    empty tokens, no real components, a11y/viewport addons active *and CI-enforced*, strict-value lint
-    active, Chromatic baseline captured, `pnpm audit` clean. Only after this passes do real token values
-    or the first component get written.
+    empty tokens, no real components, a11y/viewport checks active *and CI-enforced* (done, step 10),
+    strict-value lint active, visual-regression baseline captured (done, step 10, Playwright not
+    Chromatic), `pnpm audit` clean. Only after this passes do real token values or the first component
+    get written.
 12. **[manual — not file-scaffoldable, track here so it doesn't get lost]** Once this repo is pushed to
-    GitHub: add a `CODEOWNERS` file and turn on branch protection requiring the CI checks above plus a
-    reviewed Chromatic diff before merge to `main`. This is the actual enforcement mechanism behind the
-    "any PR touching `packages/design-system/src` must have a Chromatic diff reviewed" standing rule
+    GitHub: add a `CODEOWNERS` file and turn on branch protection requiring the CI checks above (which
+    now include `test-visual`) before merge to `main`. This is the actual enforcement mechanism behind
+    the "any PR touching `packages/design-system/src` must have a clean `test-visual` run" standing rule
     below — until this is on, that rule is prose. I can draft `CODEOWNERS`, but the branch-protection
     toggle itself is a repo setting only you can flip.
 
@@ -177,7 +208,8 @@ contracts and failing CI do. Prioritize enforcement mechanisms over documentatio
 - **Responsiveness lives inside the component**, not the consumer. Use `clamp()`/container queries in the
   component's own CSS so a new consuming project can't "forget" a breakpoint. Every component ships
   behavior correct at 390 / 768 / 1280px by construction, verified by the Storybook viewport addon (step 6)
-  and Chromatic (step 10) — not by a written note telling the consumer to test it themselves.
+  and the Playwright visual-regression suite (step 10) — not by a written note telling the consumer to
+  test it themselves.
 - **Token layering is one-way.** `primitive.json` → `semantic.json` → `component.json`. Never hand-edit
   the generated `tokens.css`/`tokens.ts` — edit the DTCG JSON and rerun `build:tokens`. Never bypass a
   semantic token to patch one component's color directly from a primitive.
@@ -189,8 +221,11 @@ contracts and failing CI do. Prioritize enforcement mechanisms over documentatio
   never `workspace:*` or `latest` outside this monorepo. Public API changes require a Changesets bump;
   the api-extractor gate (step 8) exists to catch an agent "helpfully" widening a type to unblock itself.
 - **Visual regression is the standing gate**, not optional polish. Any PR touching `packages/design-system/src`
-  must have a Chromatic diff reviewed before merge — this is what catches both brand drift (token/color
-  shift) and responsiveness regressions (layout break at a given width) in one mechanism.
+  must have a clean `test-visual` run (Playwright — visual diff + a11y, step 10) before merge — this is
+  what catches both brand drift (token/color shift) and responsiveness regressions (layout break at a
+  given width) in one mechanism. Update baselines deliberately via `pnpm test-visual:update`, never as a
+  reflex to make a red check go away — a baseline update should be reviewed like a code change, since
+  it's silently redefining "correct."
 - **When something seems missing, add a variant — don't fork or override.** If a consuming project needs
   a look the component doesn't support, that's a signal to extend the component's typed variant set in
   this repo (with a Changesets entry), not to reach for inline styles or a copy-pasted fork downstream.

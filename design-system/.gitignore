@@ -35,6 +35,12 @@ packages/design-system/src/tokens/tokens.ts
 # api-extractor scratch output — etc/*.api.md is the committed contract, temp/ is not
 packages/design-system/temp
 
+# Playwright scratch output — tests/*-snapshots/*.png (the baseline images) are the committed
+# contract, everything below is regenerated per run and never hand-edited
+packages/design-system/test-results
+packages/design-system/playwright-report
+packages/design-system/blob-report
+
 
 # Debug
 npm-debug.log*

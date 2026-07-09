@@ -23,8 +23,8 @@
     "check-types": "tsc --noEmit",
     "check-api": "api-extractor run --verbose",
     "update-api": "api-extractor run --local --verbose",
-    "test-visual": "pnpm run build-storybook && playwright test",
-    "test-visual:update": "pnpm run build-storybook && playwright test --update-snapshots"
+    "test-visual": "playwright test",
+    "test-visual:update": "playwright test --update-snapshots"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
