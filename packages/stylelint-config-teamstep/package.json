@@ -1,6 +1,6 @@
 {
   "name": "@teamstep/stylelint-config",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Stylelint preset for Team STEP design-system consumers — token-backed colors, spacing, and radius.",
   "type": "module",
   "license": "UNLICENSED",
