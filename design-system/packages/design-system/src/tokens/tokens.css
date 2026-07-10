@@ -7,7 +7,7 @@
   --color-void-deep: #060610; /** Deepest background, used for the BBS Board section. */
   --color-shadow: #2d1e3e;
   --color-mid: #4f476d;
-  --color-muted: #7274a2;
+  --color-muted: #8a8db2; /** Lightened from #7274A2 (2026-07-10): the original shade was 3.86:1 on --color-background / 3.46:1 on --color-surface, failing WCAG AA (4.5:1) for normal-size text. This shade holds >=4.5:1 against every sanctioned background token — see scripts/check-token-contrast.mjs. */
   --color-accent: #8591c9; /** Primary lilac. */
   --color-ice: #e9f1f2; /** Near-white text. */
   --color-green: #3c7a45; /** Meltdown / main-quest game-world accent. Scoped to its game-card context only. */
@@ -25,7 +25,7 @@
   --color-border-emphasis: #8591c9;
   --color-accent-primary: #8591c9;
   --color-text-primary: #e9f1f2;
-  --color-text-secondary: #7274a2;
+  --color-text-secondary: #8a8db2;
   --color-text-tertiary: #4f476d;
   --color-game-green: #3c7a45; /** Meltdown / main-quest scope only. */
   --color-game-green-active: #5cba6a; /** Meltdown / main-quest scope only. */

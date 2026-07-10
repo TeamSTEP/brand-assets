@@ -6,7 +6,7 @@ export const ColorVoid = "#231630"; // Page background. Always this or void-deep
 export const ColorVoidDeep = "#060610"; // Deepest background, used for the BBS Board section.
 export const ColorShadow = "#2d1e3e";
 export const ColorMid = "#4f476d";
-export const ColorMuted = "#7274a2";
+export const ColorMuted = "#8a8db2"; // Lightened from #7274A2 (2026-07-10): the original shade was 3.86:1 on --color-background / 3.46:1 on --color-surface, failing WCAG AA (4.5:1) for normal-size text. This shade holds >=4.5:1 against every sanctioned background token — see scripts/check-token-contrast.mjs.
 export const ColorAccent = "#8591c9"; // Primary lilac.
 export const ColorIce = "#e9f1f2"; // Near-white text.
 export const ColorGreen = "#3c7a45"; // Meltdown / main-quest game-world accent. Scoped to its game-card context only.
@@ -24,7 +24,7 @@ export const ColorBorderDefault = "#4f476d";
 export const ColorBorderEmphasis = "#8591c9";
 export const ColorAccentPrimary = "#8591c9";
 export const ColorTextPrimary = "#e9f1f2";
-export const ColorTextSecondary = "#7274a2";
+export const ColorTextSecondary = "#8a8db2";
 export const ColorTextTertiary = "#4f476d";
 export const ColorGameGreen = "#3c7a45"; // Meltdown / main-quest scope only.
 export const ColorGameGreenActive = "#5cba6a"; // Meltdown / main-quest scope only.

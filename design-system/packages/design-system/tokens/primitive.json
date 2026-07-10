@@ -19,8 +19,9 @@
       "$type": "color"
     },
     "muted": {
-      "$value": "#7274A2",
-      "$type": "color"
+      "$value": "#8A8DB2",
+      "$type": "color",
+      "$description": "Lightened from #7274A2 (2026-07-10): the original shade was 3.86:1 on --color-background / 3.46:1 on --color-surface, failing WCAG AA (4.5:1) for normal-size text. This shade holds >=4.5:1 against every sanctioned background token — see scripts/check-token-contrast.mjs."
     },
     "accent": {
       "$value": "#8591C9",

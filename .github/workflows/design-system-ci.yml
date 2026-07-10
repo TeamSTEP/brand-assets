@@ -20,6 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # fetch-depth 0 (not the default shallow clone) so `origin/$BASE_REF` below has
+          # history to diff against — changeset status --since and the changed-components
+          # diff for the PR summary both need a real merge-base.
+          fetch-depth: 0
 
       # Reads the "packageManager" field in design-system/package.json to fetch and pin the
       # exact pnpm version — CI must never run whatever pnpm happens to be on the runner's PATH.
@@ -36,17 +41,176 @@ jobs:
       # the supply-chain gate for the whole pipeline — see CLAUDE.md step 9.
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm audit
+      - id: audit
+        continue-on-error: true
+        run: pnpm audit
+
+      # Fails the PR if publishable packages changed without a changeset — the gap that let
+      # HANDOFF.md claim a v0.1.0 changeset existed when it didn't (see incident log). Only
+      # meaningful on PRs, where there's a base ref to diff against.
+      - id: changeset
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: pnpm exec changeset status --since="origin/$BASE_REF"
 
       # Chromium only — matches the scoped-footprint pattern used elsewhere in this repo
       # (stylelint rule scope, single-package installs); no need for firefox/webkit here.
       - run: pnpm --filter @teamstep/design-system exec playwright install --with-deps chromium
 
-      - run: pnpm turbo run lint check-types check-api build build-storybook test-visual
+      # Each turbo task below is its own step (id + continue-on-error) instead of one combined
+      # `pnpm turbo run lint check-contrast ...` invocation, so the PR summary job can report
+      # per-gate pass/fail from native step outcomes rather than parsing turbo's internal run
+      # summary format. turbo.json's own `dependsOn` graph (e.g. test-visual -> build-storybook,
+      # check-api -> build) is still respected per-invocation, so this doesn't change what runs —
+      # only that independent tasks (lint/check-types/check-contrast/test) that used to run in
+      # parallel under one turbo invocation now run sequentially, trading some CI wall-clock time
+      # for a gate breakdown that doesn't depend on turbo's internal JSON schema.
+      - id: gate-lint
+        continue-on-error: true
+        run: pnpm turbo run lint
 
-      - if: failure()
+      - id: gate-check-contrast
+        continue-on-error: true
+        run: pnpm turbo run check-contrast
+
+      - id: gate-test
+        continue-on-error: true
+        run: pnpm turbo run test
+
+      - id: gate-check-types
+        continue-on-error: true
+        run: pnpm turbo run check-types
+
+      - id: gate-check-api
+        continue-on-error: true
+        run: pnpm turbo run check-api
+
+      - id: gate-build
+        continue-on-error: true
+        run: pnpm turbo run build
+
+      - id: gate-build-storybook
+        continue-on-error: true
+        run: pnpm turbo run build-storybook
+
+      - id: gate-test-visual
+        continue-on-error: true
+        run: pnpm turbo run test-visual
+
+      # Not part of the turbo pipeline above: this reinstalls a real violation into a real
+      # component file and asserts the gate catches it (see verify-governance.mjs), so it must
+      # run after the rest of the pipeline has already built/verified a clean state, and its
+      # non-cacheable rebuild-and-revert cost is deliberately paid on every run rather than
+      # skipped when "nothing changed" — the whole point is re-proving enforcement is live, not
+      # checking whether config files changed since last time.
+      - id: gate-verify-governance
+        continue-on-error: true
+        run: pnpm --filter @teamstep/design-system run verify-governance
+
+      # Every gate step above uses continue-on-error so later gates still run (and the PR
+      # summary sees a full picture) even if an earlier one fails — this step is what actually
+      # fails the job when that happens.
+      - name: Evaluate gate results
+        if: always()
+        env:
+          AUDIT: ${{ steps.audit.outcome }}
+          CHANGESET: ${{ steps.changeset.outcome }}
+          LINT: ${{ steps.gate-lint.outcome }}
+          CHECK_CONTRAST: ${{ steps.gate-check-contrast.outcome }}
+          TEST: ${{ steps.gate-test.outcome }}
+          CHECK_TYPES: ${{ steps.gate-check-types.outcome }}
+          CHECK_API: ${{ steps.gate-check-api.outcome }}
+          BUILD: ${{ steps.gate-build.outcome }}
+          BUILD_STORYBOOK: ${{ steps.gate-build-storybook.outcome }}
+          TEST_VISUAL: ${{ steps.gate-test-visual.outcome }}
+          VERIFY_GOVERNANCE: ${{ steps.gate-verify-governance.outcome }}
+        run: |
+          outcomes="$AUDIT $CHANGESET $LINT $CHECK_CONTRAST $TEST $CHECK_TYPES $CHECK_API $BUILD $BUILD_STORYBOOK $TEST_VISUAL $VERIFY_GOVERNANCE"
+          echo "Gate outcomes: $outcomes"
+          if echo "$outcomes" | grep -q failure; then
+            echo "One or more gates failed — see step outcomes above."
+            exit 1
+          fi
+
+      # Small machine-readable artifact for the pr-summary job below — kept separate from the
+      # full playwright-report (screenshots/traces) so the sticky-comment job doesn't need to
+      # download megabytes of images just to build a text summary.
+      - name: Collect PR summary data
+        if: always() && github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          mkdir -p ci-summary
+          cat <<EOF > ci-summary/gate-results.json
+          {
+            "audit": "${{ steps.audit.outcome }}",
+            "changeset": "${{ steps.changeset.outcome }}",
+            "lint": "${{ steps.gate-lint.outcome }}",
+            "check-contrast": "${{ steps.gate-check-contrast.outcome }}",
+            "test": "${{ steps.gate-test.outcome }}",
+            "check-types": "${{ steps.gate-check-types.outcome }}",
+            "check-api": "${{ steps.gate-check-api.outcome }}",
+            "build": "${{ steps.gate-build.outcome }}",
+            "build-storybook": "${{ steps.gate-build-storybook.outcome }}",
+            "test-visual": "${{ steps.gate-test-visual.outcome }}",
+            "verify-governance": "${{ steps.gate-verify-governance.outcome }}"
+          }
+          EOF
+
+          # Changed components: unique component (or top-level src/) dirs touched by this PR,
+          # so the summary comment names *what* changed without listing every file.
+          git diff --name-only "origin/$BASE_REF...HEAD" -- packages/design-system/src \
+            | sed -E 's#^packages/design-system/src/##' \
+            | awk -F/ '{ if ($1 == "components" && $2 != "") print $1"/"$2; else print $1 }' \
+            | sort -u \
+            > ci-summary/changed-components.txt || true
+
+          if [ -f packages/design-system/playwright-report/results.json ]; then
+            cp packages/design-system/playwright-report/results.json ci-summary/visual-results.json
+          fi
+
+      - if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: design-system/packages/design-system/playwright-report/
+          if-no-files-found: ignore
           retention-days: 14
+
+      - if: always() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-summary
+          path: design-system/ci-summary/
+          if-no-files-found: warn
+          retention-days: 14
+
+  pr-summary:
+    needs: ci
+    if: always() && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github/scripts
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: ci-summary
+          path: ci-summary
+
+      - name: Build summary comment body
+        run: |
+          node .github/scripts/build-pr-summary.mjs ci-summary \
+            "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            > pr-summary-body.md
+
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: design-system-ci-summary
+          path: pr-summary-body.md

@@ -1,9 +1,6 @@
 # Consuming `@teamstep/design-system`
 
-Guide for the Astro landing site (or any other Team STEP consumer repo). The design system
-lives in [TeamSTEP/brand-assets](https://github.com/TeamSTEP/brand-assets) under
-`design-system/packages/design-system` and publishes to **GitHub Packages** under the
-`@teamstep` scope.
+The design system lives in [TeamSTEP/brand-assets](https://github.com/TeamSTEP/brand-assets) under `design-system/packages/design-system` and publishes to **GitHub Packages** under the `@teamstep` scope.
 
 ---
 

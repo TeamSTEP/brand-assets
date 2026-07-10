@@ -17,6 +17,15 @@
       "dependsOn": ["build"],
       "inputs": ["$TURBO_DEFAULT$", "etc/**"]
     },
+    "check-contrast": {
+      "inputs": ["$TURBO_DEFAULT$", "tokens/**", "src/**/*.css", "scripts/check-token-contrast.mjs"]
+    },
+    "test": {
+      "inputs": ["$TURBO_DEFAULT$", "rules/**"]
+    },
+    "verify-governance": {
+      "cache": false
+    },
     "dev": {
       "cache": false,
       "persistent": true
