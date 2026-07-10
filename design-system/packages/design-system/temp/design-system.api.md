@@ -81,6 +81,22 @@ export interface GameCardArchiveProps {
 export type GameCardArchiveStatus = Extract<BadgeVariant, "legacy" | "side-quest">;
 
 // @public
+export function GameCardFeatured(input: GameCardFeaturedProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface GameCardFeaturedProps {
+    // (undocumented)
+    description: string;
+    media: ReactNode;
+    // (undocumented)
+    platforms: PlatformEntry[];
+    // (undocumented)
+    subtitle: string;
+    // (undocumented)
+    title: string;
+}
+
+// @public
 export function PixelGrid(): react_jsx_runtime.JSX.Element;
 
 // @public (undocumented)

@@ -22,3 +22,5 @@ export type {
   PlatformEntry,
   PlatformTier,
 } from "./quest-log/PlatformAccess.js";
+export { GameCardFeatured } from "./quest-log/GameCardFeatured.js";
+export type { GameCardFeaturedProps } from "./quest-log/GameCardFeatured.js";
