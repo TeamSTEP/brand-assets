@@ -105,8 +105,15 @@ for (const story of stories) {
       );
       expect([...accessibilityScanResults.violations, ...unresolvedIncomplete]).toEqual([]);
 
+      // Mask any iframe (currently just BBSPanelIframe's live Discord widget) before comparing
+      // pixels — it's real, live server data (member avatars, online counts, presence), not
+      // anything this design system renders, and it changes on its own between whenever a
+      // baseline was captured and whenever the test re-runs. No maxDiffPixelRatio tolerance
+      // fixes that; the content itself is nondeterministic, so it has to be excluded from the
+      // comparison entirely rather than compared at all. A no-op for every other story.
       await expect(page).toHaveScreenshot(`${story.id}-${viewport.name}.png`, {
         animations: "disabled",
+        mask: [page.locator("iframe")],
       });
     });
   }
