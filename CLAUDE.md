@@ -72,7 +72,24 @@ brand-assets/
   automatically, no test-file edits needed. Baseline screenshots
   (`tests/*-snapshots/*.png`) are committed and are the visual contract; update
   them deliberately via `pnpm run test-visual:update` and review the diff like a
-  code change, never as a reflex to clear a red check.
+  code change, never as a reflex to clear a red check. The a11y assertion fails
+  on axe's `incomplete` results as well as `violations` — axe reports
+  `color-contrast` as `incomplete` (not a `violations`) when layered
+  backgrounds/overlays keep it from resolving a definitive color, and treating
+  `incomplete` as passing let two real sub-AA-contrast components (Hero,
+  Footer) ship undetected. `pnpm run check-contrast` is a second, DOM-independent
+  gate for the same bug class — see below.
+- **`pnpm run check-contrast`** — computes WCAG contrast ratios directly from
+  resolved token hex values (`scripts/check-token-contrast.mjs`), independent of
+  axe/DOM rendering. Both inputs are auto-discovered, not hand-maintained: every
+  `--color-*` token used via a `color:` declaration anywhere in `src/**/*.css`,
+  checked against every token in the sanctioned-background list (currently
+  `background`, `background-recessed`, `surface`) — semantic text tokens are
+  meant to be safe design-system-wide, so a token is checked against every
+  sanctioned background, not just the pairing seen in whatever component
+  introduced it. A genuine large-text exception goes in the script's
+  `ALLOWLIST` with a reason, the same pattern as the axe rule exclusions above —
+  never by loosening the threshold globally.
 - **`pnpm audit` + `pnpm-workspace.yaml`** — supply-chain gates:
   `minimumReleaseAge: 1440` (blocks installing anything published <1 day ago),
   `trustPolicy: no-downgrade` (blocks a package whose provenance evidence
@@ -86,12 +103,24 @@ brand-assets/
   `minimumReleaseAge` block — that one's doing its job; loosen your own version
   range instead so pnpm can resolve to an already-mature version.
 - **CI** (`.github/workflows/design-system-ci.yml`) runs all the above via
-  `turbo run lint check-types check-api build build-storybook test-visual`, plus
-  `pnpm audit`, with `--frozen-lockfile` and a Corepack-pinned pnpm version.
-  `.github/CODEOWNERS` auto-requests review on `/design-system/` and
-  `/CLAUDE.md` but does not block merges by itself — branch protection on `main`
-  (repo Settings → Branches, requiring the CI check + CODEOWNERS review) is what
-  makes it mandatory, and is not yet enabled.
+  `turbo run lint check-contrast test check-types check-api build
+  build-storybook test-visual`, plus `pnpm audit`, with `--frozen-lockfile` and
+  a Corepack-pinned pnpm version. On pull requests it also runs
+  `changeset status --since=origin/$BASE_REF`, which fails the PR if a
+  publishable package changed without a changeset — this replaced a state where
+  a handoff doc could claim a changeset existed when it didn't (see incident
+  log in `design-system/HANDOFF.md` §6). It then separately runs
+  `pnpm --filter @teamstep/design-system run verify-governance`
+  (`scripts/verify-governance.mjs`), which injects a real violation into a real
+  component file and asserts the relevant gate (stylelint, `check-api`) fails,
+  then restores the file — the automated form of the "next agent, please
+  re-run these probes by hand" instructions a handoff doc used to carry; see
+  the script's own header comment before changing what it targets.
+  `.github/CODEOWNERS` auto-requests
+  review on `/design-system/` and `/CLAUDE.md` but does not block merges by
+  itself — branch protection on `main` (repo Settings → Branches, requiring the
+  CI check + CODEOWNERS review) is what makes it mandatory, and is not yet
+  enabled.
 
 ## Standing rules — apply to every change
 
