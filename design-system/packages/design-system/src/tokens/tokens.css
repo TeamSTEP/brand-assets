@@ -3,8 +3,8 @@
  */
 
 :root {
-  --color-void: #231630; /** Page background. Always this or void-deep — never a light background (teamstep-landing-spec.md §2.1). */
-  --color-void-deep: #060610; /** Deepest background, used for the BBS Board section (teamstep-landing-spec.md §3). */
+  --color-void: #231630; /** Page background. Always this or void-deep — never a light background. */
+  --color-void-deep: #060610; /** Deepest background, used for the BBS Board section. */
   --color-shadow: #2d1e3e;
   --color-mid: #4f476d;
   --color-muted: #7274a2;

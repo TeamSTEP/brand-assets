@@ -3,12 +3,12 @@
     "void": {
       "$value": "#231630",
       "$type": "color",
-      "$description": "Page background. Always this or void-deep — never a light background (teamstep-landing-spec.md §2.1)."
+      "$description": "Page background. Always this or void-deep — never a light background."
     },
     "void-deep": {
       "$value": "#060610",
       "$type": "color",
-      "$description": "Deepest background, used for the BBS Board section (teamstep-landing-spec.md §3)."
+      "$description": "Deepest background, used for the BBS Board section."
     },
     "shadow": {
       "$value": "#2d1e3e",

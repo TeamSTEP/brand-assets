@@ -1,7 +1,7 @@
 import "./Badge.css";
 
 /**
- * Closed set of badge meanings used across the Quest Log (teamstep-landing-spec.md §5.4).
+ * Closed set of badge meanings used across the Quest Log.
  * "main-quest" and "in-development" pulse; "side-quest" and "legacy" are static. Label text
  * and color are derived entirely from the variant — there is no separate label/color prop,
  * so a caller can't introduce an off-brand combination.

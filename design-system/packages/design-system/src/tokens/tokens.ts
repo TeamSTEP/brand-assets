@@ -2,8 +2,8 @@
  * Do not edit directly, this file was auto-generated.
  */
 
-export const ColorVoid = "#231630"; // Page background. Always this or void-deep — never a light background (teamstep-landing-spec.md §2.1).
-export const ColorVoidDeep = "#060610"; // Deepest background, used for the BBS Board section (teamstep-landing-spec.md §3).
+export const ColorVoid = "#231630"; // Page background. Always this or void-deep — never a light background.
+export const ColorVoidDeep = "#060610"; // Deepest background, used for the BBS Board section.
 export const ColorShadow = "#2d1e3e";
 export const ColorMid = "#4f476d";
 export const ColorMuted = "#7274a2";

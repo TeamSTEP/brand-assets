@@ -1,0 +1,41 @@
+.ds-service-card {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-card-sm);
+  text-align: center;
+}
+
+.ds-service-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Container-query based, same reasoning as GameCardArchive's thumbnail. */
+  width: clamp(28px, 18cqi, 40px);
+  height: clamp(28px, 18cqi, 40px);
+  margin-bottom: var(--spacing-xs);
+  border: 1px solid var(--color-border-default);
+  border-radius: 50%;
+  color: var(--color-text-primary);
+}
+
+.ds-service-card__title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-heading);
+  font-size: clamp(14px, 6cqi, 16px);
+  text-transform: uppercase;
+}
+
+.ds-service-card__description {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: clamp(12px, 5cqi, 13px);
+}

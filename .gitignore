@@ -31,6 +31,9 @@ storybook-static
 # Style Dictionary generated output — source of truth is packages/design-system/tokens/*.json
 packages/design-system/src/tokens/tokens.css
 packages/design-system/src/tokens/tokens.ts
+playwright-report/
+test-results/
+*.visual.spec.ts-snapshots/
 
 # api-extractor scratch output — etc/*.api.md is the committed contract, temp/ is not
 packages/design-system/temp

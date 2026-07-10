@@ -5,6 +5,7 @@
 ```ts
 
 import * as react_jsx_runtime from 'react/jsx-runtime';
+import { ReactNode } from 'react';
 
 // @public (undocumented)
 export function Badge(input: BadgeProps): react_jsx_runtime.JSX.Element;
@@ -18,11 +19,87 @@ export interface BadgeProps {
 // @public
 export type BadgeVariant = "main-quest" | "side-quest" | "legacy" | "in-development";
 
+// @public (undocumented)
+export function Cta(input: CtaProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export interface CtaProps {
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    href?: string;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    variant: CtaVariant;
+}
+
+// @public
+export type CtaVariant = "primary" | "secondary" | "ghost";
+
+// @public
+export function DialogueBox(input: DialogueBoxProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface DialogueBoxProps {
+    // (undocumented)
+    avatarAlt: string;
+    // (undocumented)
+    avatarSrc: string;
+    // (undocumented)
+    text: string;
+}
+
+// @public
+export function GameCardArchive(input: GameCardArchiveProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface GameCardArchiveCta {
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    url: string;
+}
+
+// @public (undocumented)
+export interface GameCardArchiveProps {
+    // (undocumented)
+    cta: GameCardArchiveCta;
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    posterAlt: string;
+    // (undocumented)
+    posterSrc: string;
+    // (undocumented)
+    status: GameCardArchiveStatus;
+    // (undocumented)
+    title: string;
+}
+
+// @public
+export type GameCardArchiveStatus = Extract<BadgeVariant, "legacy" | "side-quest">;
+
 // @public
 export function PixelGrid(): react_jsx_runtime.JSX.Element;
 
 // @public
 export function ScanlineOverlay(): react_jsx_runtime.JSX.Element;
+
+// @public
+export function ServiceCard(input: ServiceCardProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface ServiceCardProps {
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    icon: ReactNode;
+    // (undocumented)
+    onInspect: () => void;
+    // (undocumented)
+    title: string;
+}
 
 // @public
 export function VignetteOverlay(): react_jsx_runtime.JSX.Element;
