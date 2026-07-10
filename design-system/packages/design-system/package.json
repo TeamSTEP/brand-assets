@@ -11,7 +11,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./tokens.css": "./dist/tokens/tokens.css"
+    "./tokens.css": "./dist/tokens/tokens.css",
+    "./styles.css": "./dist/index.css"
   },
   "scripts": {
     "build": "pnpm run build:tokens && tsup",

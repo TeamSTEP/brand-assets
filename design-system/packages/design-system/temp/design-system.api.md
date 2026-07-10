@@ -4,6 +4,17 @@
 
 ```ts
 
+import * as react_jsx_runtime from 'react/jsx-runtime';
+
+// @public
+export function PixelGrid(): react_jsx_runtime.JSX.Element;
+
+// @public
+export function ScanlineOverlay(): react_jsx_runtime.JSX.Element;
+
+// @public
+export function VignetteOverlay(): react_jsx_runtime.JSX.Element;
+
 // (No @packageDocumentation comment for this package)
 
 ```

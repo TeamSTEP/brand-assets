@@ -74,7 +74,7 @@ brand-assets/
   never by bare package name, so a different future version is still checked. Never exclude a
   `minimumReleaseAge` block — that one's doing its job; loosen your own version range instead so
   pnpm can resolve to an already-mature version.
-- **CI** (`.github/workflows/design-system-ci.yml`) runs all of the above via
+- **CI** (`.github/workflows/design-system-ci.yml`) runs all the above via
   `turbo run lint check-types check-api build build-storybook test-visual`, plus `pnpm audit`,
   with `--frozen-lockfile` and a Corepack-pinned pnpm version. `.github/CODEOWNERS` auto-requests
   review on `/design-system/` and `/CLAUDE.md` but does not block merges by itself — branch

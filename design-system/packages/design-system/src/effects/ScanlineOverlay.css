@@ -1,0 +1,12 @@
+.ds-scanline-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgb(10 8 24 / 10%) 2px,
+    rgb(10 8 24 / 10%) 4px
+  );
+}
