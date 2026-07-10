@@ -15,7 +15,7 @@ spacing, radius, and font-family tiers, primitive → semantic layered per CLAUD
 `component.json` is still `{}` — nothing built so far has needed a value different from its
 semantic role, so no component-tier tokens exist yet. That's a correct, not a lazy, state.
 
-**Components** (10, all exported from the single barrel `src/index.ts`):
+**Components** (12, all exported from the single barrel `src/index.ts`):
 
 | Component | Path | Notes |
 |---|---|---|
@@ -27,13 +27,15 @@ semantic role, so no component-tier tokens exist yet. That's a correct, not a la
 | `GameCardFeatured` | `src/quest-log/` | The one main-quest card; composes `Badge` + `PlatformAccess`; `media: ReactNode` slot |
 | `ServiceCard` | `src/services/` | `icon: ReactNode` slot, `onInspect` callback |
 | `DialogueBox` | `src/manifesto/` | Static shell only — typewriter deferred to Stage A (see §4 D2) |
+| `Hero` | `src/hero/` | 80vh section shell; composes `PixelGrid` + `Cta`; logo float deferred to Stage A |
+| `Footer` | `src/footer/` | End-credits shell; closed `FooterSocialPlatform` union |
 
 Every component: closed variant props (no `className`/`style` passthrough — verified by
 grep, zero hits), asymmetric corner-radius tokens only, `@public` TSDoc tags, a Storybook
 story per meaningful state, and a Playwright visual+a11y baseline per story per viewport
 (390/768/1280).
 
-**Current test surface**: 81 Playwright cases (a11y via axe + visual regression), all
+**Current test surface**: 87 Playwright cases (a11y via axe + visual regression), all
 green. `check-api`, `lint`, `check-types`, `build`, `build-storybook` all green.
 
 ---
@@ -201,10 +203,10 @@ Everything deferred from the static-only build because it needs client-side stat
   for an agent to forget on a second or third hook after getting it right on the first.
 
 ### Stage B — Remaining static shells
-**`Hero`** and **`Footer`** ship in the package (§4 D1):
-- **`Hero`**: 60/40 split, pixel-grid bg (`PixelGrid`), ghost CTA, logo mark slot — logo float
-  animation is Stage A's `useIdleFloat`, but the static layout shell can be built now.
-- **`Footer`**: centered logo, studio name, tagline, social links with closed `platform` union.
+**Complete (2026-07-10):** `Hero` and `Footer` shipped (§4 D1).
+- **`Hero`**: 80vh, `PixelGrid` background, 60/40 split, ghost CTA, logo mark slot, container-query
+  mobile layout (no logo, scroll-cue swap). `useIdleFloat` on logo ring is Stage A.
+- **`Footer`**: centered logo, studio name, tagline, social links with `FooterSocialPlatform` union.
 
 Services grid layout and "GET IN TOUCH →" CTA below the cards stay consumer-side (§4 B1).
 

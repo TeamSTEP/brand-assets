@@ -51,6 +51,36 @@ export interface DialogueBoxProps {
 }
 
 // @public
+export function Footer(input: FooterProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface FooterProps {
+    // (undocumented)
+    logoAlt: string;
+    // (undocumented)
+    logoSrc: string;
+    // (undocumented)
+    socials: FooterSocialLink[];
+    // (undocumented)
+    studioName: string;
+    // (undocumented)
+    tagline: string;
+}
+
+// @public (undocumented)
+export interface FooterSocialLink {
+    // (undocumented)
+    href: string;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    platform: FooterSocialPlatform;
+}
+
+// @public (undocumented)
+export type FooterSocialPlatform = "bluesky" | "substack" | "youtube" | "discord";
+
+// @public
 export function GameCardArchive(input: GameCardArchiveProps): react_jsx_runtime.JSX.Element;
 
 // @public (undocumented)
@@ -92,6 +122,26 @@ export interface GameCardFeaturedProps {
     platforms: PlatformEntry[];
     // (undocumented)
     subtitle: string;
+    // (undocumented)
+    title: string;
+}
+
+// @public
+export function Hero(input: HeroProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface HeroProps {
+    // (undocumented)
+    ctaHref: string;
+    ctaLabel?: string;
+    // (undocumented)
+    eyebrow: string;
+    // (undocumented)
+    logoMarkAlt: string;
+    // (undocumented)
+    logoMarkSrc: string;
+    // (undocumented)
+    tagline: string;
     // (undocumented)
     title: string;
 }

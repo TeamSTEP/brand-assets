@@ -24,3 +24,11 @@ export type {
 } from "./quest-log/PlatformAccess.js";
 export { GameCardFeatured } from "./quest-log/GameCardFeatured.js";
 export type { GameCardFeaturedProps } from "./quest-log/GameCardFeatured.js";
+export { Hero } from "./hero/Hero.js";
+export type { HeroProps } from "./hero/Hero.js";
+export { Footer } from "./footer/Footer.js";
+export type {
+  FooterProps,
+  FooterSocialLink,
+  FooterSocialPlatform,
+} from "./footer/Footer.js";
