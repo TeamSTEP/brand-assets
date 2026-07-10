@@ -66,11 +66,13 @@ jobs:
         continue-on-error: true
         run: pnpm audit
 
-      # Fails the PR if publishable packages changed without a changeset — the gap that let
-      # HANDOFF.md claim a v0.1.0 changeset existed when it didn't (see incident log). Only
-      # meaningful on PRs, where there's a base ref to diff against.
+      # Fails the PR if publishable packages changed without a changeset. Only
+      # meaningful on PRs, where there's a base ref to diff against. Skipped on the
+      # changesets bot's own release PR (branch changeset-release/main): that PR's
+      # version bumps are produced by consuming and deleting changesets, so it always
+      # trips this check otherwise.
       - id: changeset
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && github.head_ref != 'changeset-release/main'
         continue-on-error: true
         env:
           BASE_REF: ${{ github.base_ref }}
