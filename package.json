@@ -1,0 +1,29 @@
+{
+  "name": "design-system",
+  "private": true,
+  "packageManager": "pnpm@11.11.0",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types",
+    "storybook": "turbo run storybook",
+    "build-storybook": "turbo run build-storybook",
+    "check-api": "turbo run check-api",
+    "check-contrast": "turbo run check-contrast",
+    "test-visual": "turbo run test-visual",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "pnpm turbo run build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.31.0",
+    "prettier": "^3.7.4",
+    "turbo": "^2.10.4",
+    "typescript": "5.9.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

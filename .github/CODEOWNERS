@@ -1,0 +1,23 @@
+# CODEOWNERS — see CLAUDE.md "Standing rules" for why this exists: it's the enforcement
+# mechanism behind "any PR touching packages/design-system/src must have a clean test-visual
+# run reviewed before merge." Without a required reviewer, that rule is prose. Pair this file
+# with branch protection on `main` (repo Settings → Branches) requiring:
+#   - a review from a CODEOWNERS-matched reviewer
+#   - the "design-system CI" check (.github/workflows/design-system-ci.yml) to pass
+# CODEOWNERS alone does not block merges — it only auto-requests review. The branch protection
+# rule is what actually makes review + CI mandatory.
+
+# The design system package — tokens, components, build pipeline, CI config for it.
+# (brand-assets/ is intentionally excluded — that's raw brand assets, not the design system.)
+/packages/ @hoonsubin
+/pnpm-workspace.yaml @hoonsubin
+/pnpm-lock.yaml @hoonsubin
+/turbo.json @hoonsubin
+/package.json @hoonsubin
+/.npmrc @hoonsubin
+/.changeset/ @hoonsubin
+/CONSUMER.md @hoonsubin
+
+# Governance document — changes here redefine the rules everything else is reviewed against,
+# so they warrant the same scrutiny as the code they govern.
+/CLAUDE.md @hoonsubin

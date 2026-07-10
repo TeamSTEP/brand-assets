@@ -1,0 +1,81 @@
+{
+  "name": "@teamstep/design-system",
+  "version": "0.1.0",
+  "description": "Team STEP React design system — tokens, effects, and Storybook-documented components.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeamSTEP/brand-assets.git",
+    "directory": "packages/design-system"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./tokens.css": "./dist/tokens/tokens.css",
+    "./styles.css": "./dist/index.css"
+  },
+  "scripts": {
+    "build": "pnpm run build:tokens && tsup",
+    "build:tokens": "style-dictionary build --config style-dictionary.config.mjs",
+    "dev": "tsup --watch",
+    "storybook": "pnpm run build:tokens && storybook dev -p 6006",
+    "build-storybook": "pnpm run build:tokens && storybook build",
+    "lint": "eslint . --max-warnings 0 && stylelint \"src/**/*.css\" --allow-empty-input",
+    "check-contrast": "pnpm run build:tokens && node scripts/check-token-contrast.mjs",
+    "check-types": "tsc --noEmit && tsc --noEmit -p tsconfig.tests.json",
+    "check-api": "api-extractor run --verbose",
+    "update-api": "api-extractor run --local --verbose",
+    "verify-governance": "node scripts/verify-governance.mjs",
+    "test-visual": "playwright test",
+    "test-visual:update": "playwright test --update-snapshots",
+    "prepublishOnly": "pnpm run build && pnpm run check-api"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@microsoft/api-extractor": "^7.58.9",
+    "@playwright/test": "^1.61.1",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@teamstep/stylelint-config": "workspace:*",
+    "@storybook/addon-a11y": "^10.4.6",
+    "@storybook/addon-docs": "^10.4.6",
+    "@storybook/react-vite": "^10.4.6",
+    "@types/node": "^22.15.3",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "eslint": "^9.39.1",
+    "http-server": "^14.1.1",
+    "storybook": "^10.4.6",
+    "style-dictionary": "^5.5.0",
+    "stylelint": "^17.14.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-declaration-strict-value": "^1.11.1",
+    "motion": "^12.42.2",
+    "tsup": "^8.3.5",
+    "typescript": "5.9.2",
+    "vite": "^8.1.0"
+  },
+  "peerDependencies": {
+    "motion": "^12.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@fontsource/barlow-condensed": "^5.2.5",
+    "@fontsource/nunito": "^5.2.5",
+    "@fontsource/rajdhani": "^5.2.5"
+  }
+}

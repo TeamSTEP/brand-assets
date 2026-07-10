@@ -1,0 +1,6 @@
+.ds-vignette-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgb(6 6 16 / 70%) 100%);
+}

@@ -1,0 +1,47 @@
+name: design-system publish
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/**"
+      - "pnpm-workspace.yaml"
+      - "pnpm-lock.yaml"
+      - "turbo.json"
+      - "package.json"
+      - ".npmrc"
+      - ".changeset/**"
+      - ".github/workflows/design-system-publish.yml"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: corepack enable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+          registry-url: https://npm.pkg.github.com
+          scope: "@teamstep"
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Version packages or publish to GitHub Packages
+        uses: changesets/action@v1
+        with:
+          version: pnpm run version
+          publish: pnpm run release
+          commit: "chore(design-system): version packages"
+          title: "chore(design-system): version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

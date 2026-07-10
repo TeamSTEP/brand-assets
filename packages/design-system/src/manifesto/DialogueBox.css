@@ -1,0 +1,27 @@
+.ds-dialogue-box {
+  container-type: inline-size;
+  max-width: 380px;
+  margin: 0 auto;
+  padding: var(--spacing-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-card-md);
+}
+
+.ds-dialogue-box__avatar {
+  width: clamp(28px, 10cqi, 36px);
+  height: clamp(28px, 10cqi, 36px);
+  margin-bottom: var(--spacing-xs);
+  background: var(--color-background-recessed);
+  border: 1px solid var(--color-border-default);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ds-dialogue-box__text {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: clamp(13px, 4cqi, 15px);
+  line-height: 1.5;
+}

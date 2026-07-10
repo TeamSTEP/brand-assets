@@ -1,0 +1,53 @@
+.ds-bbs-panel-api {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-bbs-panel-api__empty {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: clamp(11px, 2.2cqi, 12px);
+  letter-spacing: 0.08em;
+}
+
+.ds-bbs-panel-api__row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.ds-bbs-panel-api__date {
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: clamp(10px, 2cqi, 11px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ds-bbs-panel-api__meta {
+  margin: 0 0 var(--spacing-xs);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: clamp(10px, 2cqi, 11px);
+  letter-spacing: 0.06em;
+}
+
+.ds-bbs-panel-api__text {
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: clamp(12px, 2.4cqi, 13px);
+  line-height: 1.45;
+  text-decoration: none;
+}
+
+.ds-bbs-panel-api__text:hover,
+.ds-bbs-panel-api__text:focus-visible {
+  color: var(--color-accent-primary);
+}

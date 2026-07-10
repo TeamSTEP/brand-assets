@@ -1,0 +1,53 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+.pnpm-store/
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Testing
+coverage
+
+# Turbo
+.turbo
+
+# Vercel
+.vercel
+
+# Build Outputs
+.next/
+out/
+build
+dist
+storybook-static
+
+# Style Dictionary generated output — source of truth is packages/design-system/tokens/*.json
+packages/design-system/src/tokens/tokens.css
+packages/design-system/src/tokens/tokens.ts
+
+# api-extractor scratch output — etc/*.api.md is the committed contract, temp/ is not
+packages/design-system/temp
+
+# Playwright scratch output — tests/*-snapshots/*.png (the baseline images) are the committed
+# contract, everything below is regenerated per run and never hand-edited
+packages/design-system/test-results
+packages/design-system/playwright-report
+packages/design-system/blob-report
+
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Misc
+.DS_Store
+*.pem

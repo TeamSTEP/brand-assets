@@ -1,0 +1,49 @@
+.ds-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-chip-lg);
+  font-family: var(--font-family-body);
+
+  /* Same reasoning as Badge: Cta is sized to content and used in too many different
+     contexts to own a meaningful container, so it scales off the viewport instead. */
+  font-size: clamp(11px, 1.6vw, 12px);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+.ds-cta--primary {
+  border: 1px solid var(--color-game-green);
+  background: var(--color-game-green);
+  color: var(--color-text-primary);
+}
+
+.ds-cta--primary:hover,
+.ds-cta--primary:focus-visible {
+  border-color: var(--color-game-green-active);
+  background: var(--color-game-green-active);
+}
+
+.ds-cta--secondary {
+  border: 1px solid var(--color-status-pending);
+  color: var(--color-status-pending-active);
+}
+
+.ds-cta--secondary:hover,
+.ds-cta--secondary:focus-visible {
+  border-color: var(--color-status-pending-active);
+}
+
+.ds-cta--ghost {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-chip-md);
+  color: var(--color-text-primary);
+}
+
+.ds-cta--ghost:hover,
+.ds-cta--ghost:focus-visible {
+  border-color: var(--color-border-emphasis);
+}

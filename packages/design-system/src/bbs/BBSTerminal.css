@@ -1,0 +1,98 @@
+.ds-bbs-terminal {
+  container-type: inline-size;
+  overflow: hidden;
+  background: var(--color-background-recessed);
+  border: 1px solid var(--color-border-emphasis);
+  border-radius: var(--radius-card-sm);
+}
+
+.ds-bbs-terminal__top {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.ds-bbs-terminal__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-border-default);
+}
+
+.ds-bbs-terminal__title {
+  flex: 1;
+  margin: 0 0 0 var(--spacing-xs);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: clamp(10px, 2cqi, 11px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ds-bbs-terminal__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.ds-bbs-terminal__tab {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-chip-sm);
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: clamp(10px, 2cqi, 11px);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.ds-bbs-terminal__tab--active {
+  border-color: var(--color-border-emphasis);
+  color: var(--color-accent-primary);
+}
+
+.ds-bbs-terminal__tab--api::after,
+.ds-bbs-terminal__tab--widget::after {
+  margin-left: var(--spacing-xs);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.ds-bbs-terminal__tab--api::after {
+  color: var(--color-chrome-accent-active);
+  content: "API";
+}
+
+.ds-bbs-terminal__tab--widget::after {
+  color: var(--color-status-pending-active);
+  content: "WGT";
+}
+
+.ds-bbs-terminal__tab-mobile {
+  display: inline;
+}
+
+.ds-bbs-terminal__tab-desktop {
+  display: none;
+}
+
+@container (min-width: 640px) {
+  .ds-bbs-terminal__tab-mobile {
+    display: none;
+  }
+
+  .ds-bbs-terminal__tab-desktop {
+    display: inline;
+  }
+}
+
+.ds-bbs-terminal__body {
+  position: relative;
+  min-height: 180px;
+  padding: var(--spacing-sm);
+}
