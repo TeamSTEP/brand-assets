@@ -26,7 +26,7 @@ semantic role, so no component-tier tokens exist yet. That's a correct, not a la
 | `PlatformAccess` | `src/quest-log/` | Splits `platforms[]` into Playable Now / Coming Soon, composes `Cta` |
 | `GameCardFeatured` | `src/quest-log/` | The one main-quest card; composes `Badge` + `PlatformAccess`; `media: ReactNode` slot |
 | `ServiceCard` | `src/services/` | `icon: ReactNode` slot, `onInspect` callback |
-| `DialogueBox` | `src/manifesto/` | Static shell only — typewriter deferred (see §3) |
+| `DialogueBox` | `src/manifesto/` | Static shell only — typewriter deferred to Stage A (see §4 D2) |
 
 Every component: closed variant props (no `className`/`style` passthrough — verified by
 grep, zero hits), asymmetric corner-radius tokens only, `@public` TSDoc tags, a Storybook
@@ -70,7 +70,7 @@ Ran fresh against current HEAD, not from memory:
 **Conclusion**: the governance mechanisms described in CLAUDE.md are not aspirational —
 they were independently, adversarially verified to actually block the violations they claim
 to catch. This is the strongest evidence available short of the next agent re-running the
-same probes themselves, which is recommended (see §5).
+same probes themselves, which is recommended (see §8; initial run in §5).
 
 ---
 
@@ -87,11 +87,58 @@ without re-raising them; the user made an explicit call on each.
 | No Changesets entries for any component yet | **Deferred, not urgent** | Package is still `v0.0.0`/`private`, unpublished. Plan is one batched `v0.1.0` changeset at the end of the static-component build-out (arguably: now) |
 | Font-size has no type-scale token tier — still hardcoded px (wrapped in `clamp()`) | **Deferred, documented in `stylelint.config.mjs`'s own comment** | `declaration-strict-value` only covers color/spacing/radius; extending to font-size needs a token tier that doesn't exist yet |
 | `tests/` isn't in `tsconfig.json`'s `include`, so `check-types` silently skips the Playwright spec file | **Pre-existing, not fixed** | Low priority; test file itself isn't shipped, but a `tsc` error inside it would go unnoticed |
-| Companion `eslint-plugin-teamstep`/stylelint preset for consuming repos | **Not started** | CLAUDE.md explicitly scopes this to "when published" — correctly sequenced after, not before |
+| Companion `eslint-plugin-teamstep`/stylelint preset for consuming repos | **Not started** | CLAUDE.md explicitly scopes this to "when published" — correctly sequenced after, not before. Local `className`/`style` ban ships in `@repo/eslint-config` first (§4 D5, implemented §5). |
 
 ---
 
-## 4. Incident log (for context, not action)
+## 4. Phase 0 decisions (locked — 2026-07-10)
+
+Resolved before remaining implementation. `ref/teamstep-landing-spec.md` was used as
+wireframe reference only — not authoritative for the design system. Binding rules remain
+`CLAUDE.md` + this document.
+
+| # | Decision | Resolution |
+|---|---|---|
+| D1 | Hero / Footer placement | **Ship both in the package** (`src/hero/Hero`, `src/footer/Footer` or equivalent). Responsive layout (80vh split, mobile logo removal, scroll-indicator swap, social platform union) lives inside the components per CLAUDE.md. |
+| D2 | `DialogueBox` typewriter | **Default-on.** Add `animated?: boolean` defaulting to `true`. Scroll-triggered once via `useTypewriter` + `useInView`. `prefers-reduced-motion` shows full text immediately. `animated={false}` for static Storybook/docs. Folds into batched `v0.1.0` — no external consumers at `v0.0.0`. |
+| D3 | Cursor trail | **Consumer app owns it.** Not exported from `@teamstep/design-system`. Implement as a landing-page Astro island with `client:media="(pointer: fine)"` (replaces the old `matchMedia` guard). Per-section scroll boot-in animations are consumer-side too — only `useIdleFloat` on the Hero logo mark ships in the package. |
+| D4 | Service inspect overlay | **Ship `ServiceInspectPanel` in Stage A** (name TBD). Separate from `ServiceCard` — card keeps `onInspect` callback; consumer holds `open`/`onClose` state. Props: `open`, `onClose`, `title`, `description`, `contactHref`. Desktop slide-up modal vs mobile bottom sheet is CSS-driven inside the component, not a consumer prop. |
+| D5 | `className`/`style` ESLint rule | **Add now** in `@repo/eslint-config`, scoped to `packages/design-system/src/` (exclude `*.stories.tsx`). Promote to `eslint-plugin-teamstep` at Stage D publish. Probe §7.3 becomes "confirm the rule catches violations" rather than "consider adding." |
+| B1 | Services section grid | **Consumer-side** section assembly. `ServiceCard` is the primitive; 3-col grid, mobile odd-card span, and amber "GET IN TOUCH →" CTA below the grid are page layout in the Astro app — not a `ServicesSection` package export. |
+| B2 | `NavDesktop` scroll frost | **Inside `NavDesktop`.** Transparent → frosted glass on scroll is owned by the component (scroll listener or sentinel `IntersectionObserver`), not passed in from the consumer. |
+| B3 | `BBSPanelIframe` Safari filter | **Manual release checklist**, not a Playwright CI gate. Chromium-only CI cannot catch Safari `filter` rendering bugs. Verify in Safari before shipping Discord panel. |
+
+**D1 clarification:** Section 06 Footer (`Footer` component) is distinct from the Services
+section's "GET IN TOUCH →" CTA (B1) — that CTA is a `Cta variant="secondary"` in consumer
+layout below the service cards, not part of `Footer`.
+
+**Sequencing:** Land D5 (ESLint rule) before Stage A interactive components. Stage B
+(`Hero`, `Footer`) can start immediately — no dependency on D5. **D5 implemented** during
+Phase 1 (see §5).
+
+---
+
+## 5. Phase 1 governance probe results (2026-07-10)
+
+Adversarial probes from §8, run against current HEAD. All probe injections reverted after
+testing unless noted.
+
+| Probe | Result | Notes |
+|---|---|---|
+| **§8.1** Hardcoded color via uncovered CSS property | **Partial gap** | `declaration-strict-value` does not list `box-shadow` or `background-image`. Hex in those properties is still caught by `color-hex-length`; `rgb()` by `color-function-notation`; `hsl()` by `hue-degree-notation`. **Token enforcement** (`var(--…)`) is not applied to shadow/gradient values — a literal could slip through only if it avoids all three standard rules (unlikely in practice). Optional hardening: add `box-shadow` and `background-image` to the strict-value property list in `stylelint.config.mjs`. |
+| **§8.2** Widen `CtaVariant` (added `"danger"`) | **No brand gate** (expected) | `pnpm run lint` passes. Nothing enforces game-color scoping at the type level — still convention/review only (§3 accepted risk). `check-api` would require `update-api` for a deliberate variant addition, but does not judge brand validity. |
+| **§8.3** `className` on exported prop interface | **Blocked** | D5 implemented: `teamstep/no-style-passthrough` in `@repo/eslint-config`, enabled in `eslint.config.mjs` for `src/**/*.tsx` (excludes stories). Injected `className?: string` on `CtaProps` → `pnpm run lint` exits non-zero. |
+| **§8.4** Re-run §2 probes | **Still blocking** | `#ff00ff` in `Badge.css` `color` → stylelint `declaration-strict-value`, non-zero. Removed `@public` from `Badge` exports → `check-api` `ae-missing-release-tag` Error, non-zero. |
+| **§8.5** Axe rule exclusions in visual tests | **Appropriately scoped** | Only `landmark-one-main`, `page-has-heading-one`, and `region` disabled — all document-structure rules false-positive in Storybook's iframe harness. Component-level rules (`color-contrast`, `button-name`, `image-alt`, etc.) remain active. No overlap found that would swallow real component violations. |
+| **§8.6** Container-query `Narrow` stories | **Verified** | `GameCardArchive` Narrow vs Legacy snapshots differ at all three viewports (not identical PNGs). `ServiceCard` Narrow snapshots also committed. **Standing rule for new card components:** ship a `Narrow` story and confirm visual diff before merging. |
+
+**D5 implementation detail:** `packages/eslint-config/rules/no-style-passthrough.js` +
+`teamstep-plugin.js`, exported as `@repo/eslint-config/teamstep-plugin`. Promote to published
+`eslint-plugin-teamstep` at Stage D.
+
+---
+
+## 6. Incident log (for context, not action)
 
 **Git snapshot tracking loss**: commit `af468f6` ("add game card and service card")
 accidentally deleted all 24 previously-committed Playwright baseline PNGs from git tracking
@@ -123,7 +170,7 @@ moment you nest something that needs full-width layout.**
 
 ---
 
-## 5. Remaining implementation stages
+## 7. Remaining implementation stages
 
 Ordered; each stage assumes the previous is done. Adjust if priorities differ, but flag
 the deviation rather than silently reordering.
@@ -134,40 +181,39 @@ Everything deferred from the static-only build because it needs client-side stat
   iframe. Needs `useState` for the clicked/not-clicked toggle. Once built, `GameCardFeatured`
   needs **no changes** — its `media` slot already accepts any `ReactNode`.
 - **`useTypewriter`** hook + wiring into `DialogueBox`: scroll-triggered reveal-on-first-view,
-  per spec. `DialogueBox`'s current static shell renders full text immediately — decide
-  whether the hook is opt-in (new prop) or the default behavior once built, and whether that's
-  a breaking prop change requiring a Changesets major/minor bump.
+  per wireframe reference. **`animated?: boolean` defaults to `true`** (§4 D2); reduced-motion
+  shows full text immediately.
+- **`ServiceInspectPanel`**: slide-up modal (desktop) / bottom sheet (mobile) opened by
+  `ServiceCard`'s `onInspect` — separate component, consumer holds `open`/`onClose` state (§4 D4).
 - **`NavDesktop`** / **`NavHUD`**: sticky top bar (desktop) / bottom HUD (mobile) — NavHUD
-  needs `useInView`/`IntersectionObserver` for active-section highlighting. These are page-
-  chrome components, not yet started at all.
+  needs `useInView`/`IntersectionObserver` for active-section highlighting. `NavDesktop` owns
+  scroll frost internally (§4 B2).
 - **`SocialFeed`**: tab switching + per-platform fetch caching (`useState`/`useRef`). Note:
   per the architecture proposal, this component takes a `fetchEndpoint` prop and does a plain
   `fetch()` — it must not know the endpoint is an Astro server route. Keep that boundary.
 - **`BBSTerminal`**, **`BBSPanelAPI`**, **`BBSPanelIframe`**: terminal chrome, branded feed
-  rendering, and the CSS-filtered Discord iframe. Not started. The iframe filter
-  (`hue-rotate` + scanline overlay) needs testing in both Chromium and Safari per spec —
-  Playwright's `chromium` project alone won't catch a Safari-specific `filter` rendering bug.
-- **Cursor trail** (`useCursorTrail`): a page-level effect, not really a "component." Needs
-  `window.matchMedia('(pointer: coarse)')` guard — skip entirely on touch. Consider whether
-  this belongs in the design system at all vs. the consuming app's own script, since it's not
-  tied to any single component's render tree.
-- **Logo idle-float** (`useIdleFloat`): used in Hero. Depends on Hero existing first.
+  rendering, and the CSS-filtered Discord iframe. Not started. Safari filter verification is a
+  manual release checklist item, not CI (§4 B3).
+- **Logo idle-float** (`useIdleFloat`): used in Hero. Depends on Hero existing first (Stage B).
+- **Cursor trail**: **not in this package** — consumer Astro island (§4 D3).
 - All animation hooks must respect `prefers-reduced-motion` **inside the hook itself**, not
   per call site (explicit architecture-doc requirement) — enforce this in review, it's easy
   for an agent to forget on a second or third hook after getting it right on the first.
 
 ### Stage B — Remaining static shells
-Not yet built at all: **`Hero`** (60/40 split, pixel-grid bg, ghost CTA, logo mark — logo
-float animation is Stage A's concern, but the static layout shell can be built now),
-**Footer/Credits** (centered logo, socials). Both are page-section-level, not small reusable
-primitives — decide during implementation whether they belong in this package at all, or
-whether they're thin enough that the consuming Astro app should just assemble them from
-existing primitives (`Cta`, `PixelGrid`) directly. CLAUDE.md doesn't explicitly settle this;
-it's a real open question, not a gap in prior work.
+**`Hero`** and **`Footer`** ship in the package (§4 D1):
+- **`Hero`**: 60/40 split, pixel-grid bg (`PixelGrid`), ghost CTA, logo mark slot — logo float
+  animation is Stage A's `useIdleFloat`, but the static layout shell can be built now.
+- **`Footer`**: centered logo, studio name, tagline, social links with closed `platform` union.
+
+Services grid layout and "GET IN TOUCH →" CTA below the cards stay consumer-side (§4 B1).
 
 ### Stage C — Cleanup before v0.1.0
 - Populate `component.json` **only if** Stage A/B components actually need a value distinct
   from their semantic role — don't add tokens speculatively.
+- Consider extending `stylelint.config.mjs` strict-value to `box-shadow` and
+  `background-image` (Phase 1 §5 found token enforcement gap on those properties; hex is
+  partially covered by standard color notation rules).
 - Consider documenting the currently-`(undocumented)` interfaces in `etc/design-system.api.md`
   (every prop currently has a release tag but not a description) — not gate-blocking, but
   worth a pass before calling this a real v0.1.0.
@@ -185,10 +231,10 @@ it's a real open question, not a gap in prior work.
 
 ---
 
-## 6. Specific probes for the next agent to run
+## 8. Specific probes for the next agent to run
 
-Since this handoff exists specifically to test governance robustness, don't just read the
-config — try to break it, the way §2 did:
+Phase 1 (§5) completed 2026-07-10. Re-run §8.4 after Stage A/B components land. §8.6 is a
+standing rule per new component, not a one-time probe.
 
 1. **Try to sneak a hardcoded color past review** in a new component's CSS via a property the
    `declaration-strict-value` rule doesn't cover (e.g. `background-image` on a non-effects
@@ -201,11 +247,8 @@ config — try to break it, the way §2 did:
    brand violation — currently nothing would, since that rule is enforced by convention/review
    only for `Cta.primary`, not by types. This is expected per the accepted risk in §3, but
    confirm it's still true and hasn't quietly become enforced by something else.
-3. **Try to add a component that accepts `className`** and confirm nothing currently in CI
-   would catch it (there's no explicit lint rule against a `className` prop specifically —
-   the compliance so far is 100% due to careful authoring, not a gate). Consider whether this
-   should become an actual enforced rule (e.g. a custom ESLint rule banning `className`/`style`
-   in exported prop interfaces) rather than relying on every future author remembering.
+3. **Confirm the `className`/`style` ESLint rule catches violations** (§4 D5) — **done in
+   Phase 1 §5.** Re-run after major eslint-config changes.
 4. **Re-run the two probes from §2** (raw hex color, missing release tag) after Stage A/B
    components exist, to confirm the gates still catch violations in the new files, not just
    the ones that existed when the gates were configured.
