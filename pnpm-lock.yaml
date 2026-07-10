@@ -26,6 +26,15 @@ importers:
 
   packages/design-system:
     dependencies:
+      '@fontsource/barlow-condensed':
+        specifier: ^5.2.5
+        version: 5.2.8
+      '@fontsource/nunito':
+        specifier: ^5.2.5
+        version: 5.2.7
+      '@fontsource/rajdhani':
+        specifier: ^5.2.5
+        version: 5.2.7
       react:
         specifier: ^19.0.0
         version: 19.2.7
@@ -597,6 +606,15 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@fontsource/barlow-condensed@5.2.8':
+    resolution: {integrity: sha512-cmCWNfh7oCmfarGDlhiJRkl4HOgt9aOqki7IYtDOaI3qLCeEO/8VjiZeAx/2PEPf4K36YxXDjAlOWwW/anQUZA==}
+
+  '@fontsource/nunito@5.2.7':
+    resolution: {integrity: sha512-pmtBq0H9ex9nk+RtJYEJOD9pag393iHETnl/PVKleF4i06cd0ttngK5ZCTgYb5eOqR3Xdlrjtev8m7bmgYprew==}
+
+  '@fontsource/rajdhani@5.2.7':
+    resolution: {integrity: sha512-7Gy10U688fCdeFfYKebUF2TZotdgH/ghKyMsseXPmB60lpaUHC8aoCSJl5/OpZ+KHKSU2TqBfKfteVkcIXxTAQ==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -4383,6 +4401,12 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@fontsource/barlow-condensed@5.2.8': {}
+
+  '@fontsource/nunito@5.2.7': {}
+
+  '@fontsource/rajdhani@5.2.7': {}
 
   '@humanfs/core@0.19.2':
     dependencies:

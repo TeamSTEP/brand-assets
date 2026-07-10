@@ -72,5 +72,10 @@
     "motion": "^12.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@fontsource/barlow-condensed": "^5.2.5",
+    "@fontsource/nunito": "^5.2.5",
+    "@fontsource/rajdhani": "^5.2.5"
   }
 }
