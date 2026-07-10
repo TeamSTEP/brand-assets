@@ -71,24 +71,27 @@ A few of these need setup or deliberate review, not just a rerun on failure:
 - **`check-api` fails on a public API change** → run
   `pnpm --filter @teamstep/design-system run update-api` to accept the new baseline
   deliberately (never hand-edit `etc/design-system.api.md`).
-- **`test-visual` fails on a screenshot diff** → review it like a code change:
-  `pnpm --filter @teamstep/design-system run test-visual:update`, then inspect the diff before
-  committing. **Regenerate snapshots on Linux, not macOS** — Chromium's font rendering differs
-  enough between the two to fail every screenshot on CI (`ubuntu-latest`) even when nothing
-  visually changed. Use the devcontainer or Docker directly:
+- **`test-visual` fails on a screenshot diff** → review it like a code change. `toHaveScreenshot`
+  has a small built-in tolerance (`maxDiffPixelRatio: 0.02` in `playwright.config.ts`) for
+  harmless OS-level font-hinting noise, so a failure here means either a real visual change or a
+  diff bigger than that noise floor — worth looking at either way.
+
+  **CI's own `update-visual-snapshots` job is the source of truth for new baselines, not your
+  local machine.** No local environment — Docker included — reliably bit-matches GitHub's hosted
+  `ubuntu-latest` runner's exact font-rendering stack; generating baselines locally and
+  committing them directly caused this exact CI failure twice before this note was added. Instead:
 
   ```bash
-  docker run --rm -v "$PWD":/work -w /work mcr.microsoft.com/playwright:v1.61.1-noble bash -c "
-    corepack enable && corepack prepare pnpm@11.11.0 --activate
-    CI=true pnpm install --frozen-lockfile
-    pnpm --filter @teamstep/design-system exec playwright install --with-deps chromium
-    pnpm --filter @teamstep/design-system run build-storybook
-    pnpm --filter @teamstep/design-system run test-visual:update
-  "
+  gh workflow run design-system-ci.yml --ref <your-branch> -f update-snapshots=true
+  # once it finishes:
+  gh run list --workflow design-system-ci.yml --branch <your-branch> --limit 1   # get the run id
+  gh run download <run-id> --name visual-snapshots \
+    --dir packages/design-system/tests/stories.visual.spec.ts-snapshots
   ```
 
-  Bind-mounting `node_modules` this way rewrites it for Linux — if you're not using the
-  devcontainer, run `pnpm install` again afterward to restore your host's native `node_modules`.
+  Then review the diff and commit it like any other change. Local Docker regeneration (see
+  Devcontainer below) is still useful as a quick sanity check that a change looks roughly right
+  before pushing — just don't treat its output as the final committed baseline.
 
 - **Token or component color changes** → tokens are one-way generated:
   `primitive.json` → `semantic.json` → `component.json` → `pnpm run build:tokens` produces
