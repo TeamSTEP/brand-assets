@@ -1,159 +1,114 @@
-# Turborepo starter
+# Team STEP Brand Assets
 
-This Turborepo starter is maintained by the Turborepo core team.
+`@teamstep/design-system` — a versioned, Storybook-documented component + token library for
+the Team STEP brand — plus the raw brand assets in [`brand-assets/`](brand-assets/). Storybook
+is the docs site; there is no separate app. Full architectural context and locked scope
+decisions live in [CLAUDE.md](CLAUDE.md) — read it before adding components, editing tokens, or
+touching CI/tooling config.
 
-## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
+```
+. (pnpm + Turborepo workspace root)
+├── brand-assets/          raw logo assets, guidelines PDF — not part of the package
+├── packages/
+│   ├── design-system/     @teamstep/design-system — tokens, effects, components, Storybook
+│   ├── eslint-config/
+│   ├── eslint-plugin-teamstep/
+│   ├── stylelint-config-teamstep/
+│   └── typescript-config/
+└── .devcontainer/         reproducible dev environment (Docker + act)
 ```
 
-## What's inside?
+## For consumers
 
-This Turborepo includes the following packages/apps:
+Installing and using `@teamstep/design-system` in another project is covered in **[./packages/CONSUMER.md](./packages/CONSUMER.md)** — auth against GitHub Packages, version pinning, hydration directives, and the companion ESLint/stylelint configs.
 
-### Apps and Packages
+## For contributors
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### Prerequisites
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+- Node >=18, [pnpm 11.11.0](package.json) (pinned via `packageManager` — use `corepack enable`
+  rather than a global pnpm install)
+- Docker, if you want to reproduce CI locally (see [Devcontainer](#devcontainer--reproducing-ci-locally))
 
-### Utilities
+### Setup
 
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+```bash
+corepack enable
+pnpm install --frozen-lockfile
 ```
 
-Without global `turbo`, use your package manager:
+### Day-to-day development
 
-```sh
-cd my-turborepo
-npx turbo build
-yarn dlx turbo build
-yarn exec turbo build
+```bash
+pnpm --filter @teamstep/design-system run storybook   # dev server at :6006
+pnpm run build                                         # turbo build, all packages
+pnpm run dev                                            # turbo dev (watch mode), all packages
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+Working on a single component? Scope commands with `--filter`:
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo build --filter=docs
+```bash
+pnpm --filter @teamstep/design-system run <script>
 ```
 
-Without global `turbo`:
+### Before opening a PR
 
-```sh
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-yarn exec turbo build --filter=docs
+Run the same gates CI runs (`turbo run lint check-contrast test check-types check-api build
+build-storybook test-visual`):
+
+```bash
+pnpm run lint            # ESLint + stylelint (raw color literals outside tokens/ are banned)
+pnpm run check-contrast  # WCAG contrast, computed from resolved token hex values
+pnpm run check-types
+pnpm run check-api       # diffs built .d.ts against etc/design-system.api.md
+pnpm run build
+pnpm run build-storybook
+pnpm run test-visual     # Playwright a11y + visual regression against the built Storybook
 ```
 
-### Develop
+A few of these need setup or deliberate review, not just a rerun on failure:
 
-To develop all apps and packages, run the following command:
+- **`check-api` fails on a public API change** → run
+  `pnpm --filter @teamstep/design-system run update-api` to accept the new baseline
+  deliberately (never hand-edit `etc/design-system.api.md`).
+- **`test-visual` fails on a screenshot diff** → review it like a code change:
+  `pnpm --filter @teamstep/design-system run test-visual:update`, then inspect the diff before
+  committing. **Regenerate snapshots on Linux, not macOS** — Chromium's font rendering differs
+  enough between the two to fail every screenshot on CI (`ubuntu-latest`) even when nothing
+  visually changed. Use the devcontainer or Docker directly:
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+  ```bash
+  docker run --rm -v "$PWD":/work -w /work mcr.microsoft.com/playwright:v1.61.1-noble bash -c "
+    corepack enable && corepack prepare pnpm@11.11.0 --activate
+    CI=true pnpm install --frozen-lockfile
+    pnpm --filter @teamstep/design-system exec playwright install --with-deps chromium
+    pnpm --filter @teamstep/design-system run build-storybook
+    pnpm --filter @teamstep/design-system run test-visual:update
+  "
+  ```
 
-```sh
-cd my-turborepo
-turbo dev
-```
+  Bind-mounting `node_modules` this way rewrites it for Linux — if you're not using the
+  devcontainer, run `pnpm install` again afterward to restore your host's native `node_modules`.
 
-Without global `turbo`, use your package manager:
+- **Token or component color changes** → tokens are one-way generated:
+  `primitive.json` → `semantic.json` → `component.json` → `pnpm run build:tokens` produces
+  `tokens.css`/`tokens.ts`. Never hand-edit the generated files.
+- **Publishable package changed** → add a changeset: `pnpm changeset`. CI's
+  `changeset status --since=origin/$BASE_REF` fails the PR without one.
 
-```sh
-cd my-turborepo
-npx turbo dev
-yarn exec turbo dev
-yarn exec turbo dev
-```
+### Devcontainer / reproducing CI locally
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+`.devcontainer/` builds an image pinned to this repo's exact Playwright version
+(`mcr.microsoft.com/playwright:v1.61.1-noble`) with `act` and pnpm preinstalled, so local runs
+match CI's `ubuntu-latest` byte-for-byte instead of drifting against your host OS.
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+1. Open the repo in VS Code and **Reopen in Container** (or `devcontainer up` from the CLI).
+2. Run any of the commands above as normal — `postCreateCommand` already ran `pnpm install`.
+3. To replay a full CI workflow locally:
 
-```sh
-turbo dev --filter=web
-```
+   ```bash
+   act -W .github/workflows/design-system-ci.yml pull_request
+   ```
 
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-yarn exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-yarn exec turbo login
-yarn exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-yarn exec turbo link
-yarn exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+   `.actrc` points `act` at `catthehacker/ubuntu:act-latest`, the closest published equivalent
+   to GitHub's hosted runner — the default `act` image is too minimal for this repo's CI steps.
