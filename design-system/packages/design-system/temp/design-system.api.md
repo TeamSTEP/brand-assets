@@ -83,6 +83,35 @@ export type GameCardArchiveStatus = Extract<BadgeVariant, "legacy" | "side-quest
 // @public
 export function PixelGrid(): react_jsx_runtime.JSX.Element;
 
+// @public (undocumented)
+export type Platform = "steam" | "itch" | "gog" | "epic" | "browser";
+
+// @public
+export function PlatformAccess(input: PlatformAccessProps): react_jsx_runtime.JSX.Element | null;
+
+// @public (undocumented)
+export interface PlatformAccessProps {
+    // (undocumented)
+    platforms: PlatformEntry[];
+}
+
+// @public
+export interface PlatformEntry {
+    // (undocumented)
+    available: boolean;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    platform: Platform;
+    // (undocumented)
+    tier: PlatformTier;
+    // (undocumented)
+    url: string;
+}
+
+// @public (undocumented)
+export type PlatformTier = "demo" | "full" | "free" | "dlc";
+
 // @public
 export function ScanlineOverlay(): react_jsx_runtime.JSX.Element;
 

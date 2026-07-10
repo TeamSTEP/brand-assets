@@ -15,3 +15,10 @@ export { ServiceCard } from "./services/ServiceCard.js";
 export type { ServiceCardProps } from "./services/ServiceCard.js";
 export { DialogueBox } from "./manifesto/DialogueBox.js";
 export type { DialogueBoxProps } from "./manifesto/DialogueBox.js";
+export { PlatformAccess } from "./quest-log/PlatformAccess.js";
+export type {
+  Platform,
+  PlatformAccessProps,
+  PlatformEntry,
+  PlatformTier,
+} from "./quest-log/PlatformAccess.js";
