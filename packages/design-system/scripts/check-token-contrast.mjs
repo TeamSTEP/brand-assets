@@ -1,13 +1,10 @@
 #!/usr/bin/env node
-// Guardrail for the "text-secondary used unsafely" bug class documented in HANDOFF.md §6
-// (caught twice by axe, then recurred in Hero/Footer where axe's color-contrast check
-// reports `incomplete` instead of `violations` — see stories.visual.spec.ts — and so is
-// silently swallowed by DOM-based a11y tooling). This is a second, DOM-independent gate:
-// it doesn't render anything, just computes WCAG contrast ratios from the resolved token
-// hex values, so it can't be fooled by layered backgrounds/overlays axe can't resolve.
+// Second, DOM-independent contrast gate: axe (see stories.visual.spec.ts) reports
+// `incomplete` instead of `violations` when layered backgrounds/overlays keep it from
+// resolving a color, which silently passes DOM-based a11y tooling. This computes WCAG
+// ratios directly from resolved token hex values instead of rendering anything.
 //
-// Both inputs are auto-discovered, not hand-maintained, so this can't go stale the way the
-// HANDOFF.md prose claim did:
+// Both inputs are auto-discovered, not hand-maintained:
 //   - text tokens: every `--color-*` token actually used via a `color:` declaration
 //     anywhere in src/**/*.css (excludes border-color/background-color/outline-color/etc.
 //     via the anchored regex below).

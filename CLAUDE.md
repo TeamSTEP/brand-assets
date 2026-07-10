@@ -116,9 +116,7 @@ workspace.
   build-storybook test-visual`, plus `pnpm audit`, with `--frozen-lockfile` and
   a Corepack-pinned pnpm version. On pull requests it also runs
   `changeset status --since=origin/$BASE_REF`, which fails the PR if a
-  publishable package changed without a changeset — this replaced a state where
-  a handoff doc could claim a changeset existed when it didn't (see incident
-  log in `design-system/HANDOFF.md` §6). It then separately runs
+  publishable package changed without a changeset. It then separately runs
   `pnpm --filter @teamstep/design-system run verify-governance`
   (`scripts/verify-governance.mjs`), which injects a real violation into a real
   component file and asserts the relevant gate (stylelint, `check-api`) fails,
