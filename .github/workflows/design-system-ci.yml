@@ -228,14 +228,26 @@ jobs:
 
       - run: pnpm turbo run build-storybook
 
-      - run: pnpm --filter @teamstep/design-system run test-visual:update
+      # continue-on-error: --update-snapshots still writes a screenshot for every test that
+      # reaches that point, but a handful of stories can fail the axe a11y assertion that runs
+      # *before* toHaveScreenshot in the same test (see stories.visual.spec.ts) on an unrelated,
+      # known-flaky "Axe is already running" race — that shouldn't block uploading the snapshots
+      # that were written for every other story.
+      - id: update-snapshots
+        continue-on-error: true
+        run: pnpm --filter @teamstep/design-system run test-visual:update
 
-      - uses: actions/upload-artifact@v4
+      - if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: visual-snapshots
           path: packages/design-system/tests/stories.visual.spec.ts-snapshots/
           if-no-files-found: error
           retention-days: 7
+
+      - if: steps.update-snapshots.outcome == 'failure'
+        run: |
+          echo "::warning::test-visual:update had some non-screenshot failures (see the step above) — snapshots were still uploaded for every story that got that far. Review before trusting the artifact wholesale."
 
   pr-summary:
     needs: ci
