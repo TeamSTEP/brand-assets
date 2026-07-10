@@ -13,7 +13,8 @@
     "check-api": "turbo run check-api",
     "test-visual": "turbo run test-visual",
     "changeset": "changeset",
-    "version": "changeset version"
+    "version": "changeset version",
+    "release": "pnpm turbo run build && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",

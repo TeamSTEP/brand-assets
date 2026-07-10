@@ -2,7 +2,7 @@
 
 > Written for the agent picking up this work next. Read `/Users/hoonkim/Projects/brand-assets/CLAUDE.md`
 > in full first — it is the binding spec for this repo and everything below assumes it.
-> This document is a snapshot as of Stage C completion (2026-07-10).
+> This document is a snapshot as of Stage D completion (2026-07-10).
 > Re-verify anything below against current repo state before trusting it — it is a record of
 > what was true at write time, not a live source of truth.
 
@@ -46,7 +46,8 @@ story per meaningful state, and a Playwright visual+a11y baseline per story per 
 (390/768/1280).
 
 **Current test surface**: 117 Playwright cases (a11y via axe + visual regression), all
-green. `check-api`, `lint`, `check-types`, `build`, `build-storybook` all green.
+green. `check-api`, `lint`, `check-types`, `build`, `build-storybook` all green. Package
+version **0.1.0** (unpublished until merge + Changesets publish workflow runs).
 
 ---
 
@@ -99,7 +100,7 @@ without re-raising them; the user made an explicit call on each.
 | No Changesets entries for any component yet | **Resolved in Stage C** | Batched `v0.1.0` changeset at `design-system/.changeset/v0-1-0-initial-release.md` |
 | Font-size has no type-scale token tier — still hardcoded px (wrapped in `clamp()`) | **Deferred, documented in `stylelint.config.mjs`'s own comment** | `declaration-strict-value` covers color/spacing/radius/shadow/gradient; font-size tier still deferred |
 | `tests/` isn't in `tsconfig.json`'s `include`, so `check-types` silently skips the Playwright spec file | **Resolved in Stage C** | `tsconfig.tests.json` + dual `tsc` in `check-types`; `AxeBuilder` named import |
-| Companion `eslint-plugin-teamstep`/stylelint preset for consuming repos | **Not started** | CLAUDE.md explicitly scopes this to "when published" — correctly sequenced after, not before. Local `className`/`style` ban ships in `@repo/eslint-config` first (§4 D5, implemented §5). |
+| Companion `eslint-plugin-teamstep`/stylelint preset for consuming repos | **Resolved in Stage D** | Published as `@teamstep/eslint-plugin` and `@teamstep/stylelint-config`; see `CONSUMER.md` |
 
 ---
 
@@ -144,9 +145,9 @@ testing unless noted.
 | **§8.5** Axe rule exclusions in visual tests | **Appropriately scoped** | Only `landmark-one-main`, `page-has-heading-one`, and `region` disabled — all document-structure rules false-positive in Storybook's iframe harness. Component-level rules (`color-contrast`, `button-name`, `image-alt`, etc.) remain active. No overlap found that would swallow real component violations. |
 | **§8.6** Container-query `Narrow` stories | **Verified** | `GameCardArchive` Narrow vs Legacy snapshots differ at all three viewports (not identical PNGs). `ServiceCard` Narrow snapshots also committed. **Standing rule for new card components:** ship a `Narrow` story and confirm visual diff before merging. |
 
-**D5 implementation detail:** `packages/eslint-config/rules/no-style-passthrough.js` +
-`teamstep-plugin.js`, exported as `@repo/eslint-config/teamstep-plugin`. Promote to published
-`eslint-plugin-teamstep` at Stage D.
+**D5 implementation detail:** `packages/eslint-plugin-teamstep/` (published as
+`@teamstep/eslint-plugin` at Stage D). `@repo/eslint-config/teamstep-plugin` re-exports it
+for monorepo dev.
 
 ---
 
@@ -216,12 +217,22 @@ Services grid layout and "GET IN TOUCH →" CTA below the cards stay consumer-si
 - **Gates green:** `lint`, `check-types`, `check-api`, `build`, `test-visual` — 117/117.
 
 ### Stage D — Cross-repo publish
-- Wire GitHub Packages (or equivalent) publish in CI per the original strategy document.
-- Companion `eslint-plugin-teamstep`/stylelint preset for consuming repos, per CLAUDE.md's
-  standing rule — sequenced here, not earlier, since there's nothing to lint against until a
-  second consumer exists.
-- Hand the landing-page repo its first pinned (`^0.1.x`, never `workspace:*`/`latest`)
-  dependency.
+**Complete (2026-07-10).**
+- **`@teamstep/design-system`** publishable to GitHub Packages (`publishConfig`, `prepublishOnly`,
+  `sideEffects` for CSS, `private` removed).
+- **Companion packages:** `@teamstep/eslint-plugin` (`no-style-passthrough` + `configs.recommended`),
+  `@teamstep/stylelint-config` (token `declaration-strict-value` preset). `@repo/eslint-config`
+  re-exports the plugin via workspace for monorepo dev.
+- **Publish CI:** `.github/workflows/design-system-publish.yml` — Changesets version PR or
+  `pnpm run release` (`turbo build` + `changeset publish`) on merge to `main`.
+- **Consumer guide:** `design-system/CONSUMER.md` — GitHub Packages auth, `^0.1.x` pinning,
+  token/CSS imports, Astro hydration table, ESLint/Stylelint setup, consumer-side layout scope.
+- **Landing page repo:** not in this workspace — wire dependency per `CONSUMER.md` when the Astro
+  app is scaffolded (`pnpm add @teamstep/design-system@^0.1.0`).
+
+**To ship v0.1.0:** merge this branch, let Changesets open the version PR (or run
+`pnpm run version` locally), merge that PR — publish workflow uploads all three `@teamstep/*`
+packages to `npm.pkg.github.com`.
 
 ---
 

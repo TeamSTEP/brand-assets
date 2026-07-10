@@ -1,0 +1,28 @@
+{
+  "name": "@teamstep/eslint-plugin",
+  "version": "0.1.0",
+  "description": "ESLint rules for Team STEP design-system consumers — closed component APIs, no className/style passthrough.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeamSTEP/brand-assets.git",
+    "directory": "design-system/packages/eslint-plugin-teamstep"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "rules",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "eslint": "^9.0.0"
+  }
+}

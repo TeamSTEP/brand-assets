@@ -1,8 +1,21 @@
 {
   "name": "@teamstep/design-system",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
+  "description": "Team STEP React design system — tokens, effects, and Storybook-documented components.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeamSTEP/brand-assets.git",
+    "directory": "design-system/packages/design-system"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist"
   ],
@@ -25,7 +38,8 @@
     "check-api": "api-extractor run --verbose",
     "update-api": "api-extractor run --local --verbose",
     "test-visual": "playwright test",
-    "test-visual:update": "playwright test --update-snapshots"
+    "test-visual:update": "playwright test --update-snapshots",
+    "prepublishOnly": "pnpm run build && pnpm run check-api"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
@@ -33,6 +47,7 @@
     "@playwright/test": "^1.61.1",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@teamstep/stylelint-config": "workspace:*",
     "@storybook/addon-a11y": "^10.4.6",
     "@storybook/addon-docs": "^10.4.6",
     "@storybook/react-vite": "^10.4.6",

@@ -1,0 +1,29 @@
+{
+  "name": "@teamstep/stylelint-config",
+  "version": "0.1.0",
+  "description": "Stylelint preset for Team STEP design-system consumers — token-backed colors, spacing, and radius.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeamSTEP/brand-assets.git",
+    "directory": "design-system/packages/stylelint-config-teamstep"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "exports": {
+    ".": "./index.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.mjs",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "stylelint": "^16.0.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-declaration-strict-value": "^1.11.1"
+  }
+}
