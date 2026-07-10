@@ -1,6 +1,19 @@
 name: design-system CI
 
 on:
+  # Manual only — regenerates Playwright visual-regression baselines from *this* workflow's
+  # actual ubuntu-latest runner and uploads them as an artifact (no auto-commit). Exists because
+  # no local Docker image, however well-matched, reliably bit-matches GitHub's hosted runner's
+  # font-rendering stack (fontconfig/freetype/harfbuzz point versions drift independently of the
+  # pinned Playwright/Chromium version) — see the test-visual section of CLAUDE.md. Trigger via
+  # `gh workflow run design-system-ci.yml --ref <branch> -f update-snapshots=true`, download the
+  # `visual-snapshots` artifact, and commit the changed PNGs like any other baseline update.
+  workflow_dispatch:
+    inputs:
+      update-snapshots:
+        description: "Regenerate visual-regression baselines and upload as an artifact"
+        type: boolean
+        default: true
   pull_request:
     paths:
       - "packages/**"
@@ -194,6 +207,35 @@ jobs:
           path: ci-summary/
           if-no-files-found: warn
           retention-days: 14
+
+  update-visual-snapshots:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: corepack enable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm --filter @teamstep/design-system exec playwright install --with-deps chromium
+
+      - run: pnpm turbo run build-storybook
+
+      - run: pnpm --filter @teamstep/design-system run test-visual:update
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-snapshots
+          path: packages/design-system/tests/stories.visual.spec.ts-snapshots/
+          if-no-files-found: error
+          retention-days: 7
 
   pr-summary:
     needs: ci
