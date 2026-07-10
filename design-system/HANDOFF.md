@@ -153,6 +153,26 @@ for monorepo dev.
 
 ## 6. Incident log (for context, not action)
 
+**macOS baselines on Linux CI (PR #3, 2026-07-10)**: All 117 Playwright snapshot PNGs were
+committed as `*-chromium-darwin.png` (generated on macOS). CI runs `ubuntu-latest`, where
+Playwright looks for `*-chromium-linux.png` — none existed, so every visual test failed with
+"snapshot doesn't exist." **Fix:** regenerate via Linux Docker (see §6 standing rule below),
+commit `*-linux.png`, remove `*-darwin.png`. Local macOS runs still pass because Playwright
+uses platform-specific paths — but **never commit darwin baselines as the CI contract.**
+
+**Standing rule — visual baseline updates:** CI is Linux; baselines must be generated on
+Linux, not macOS. From `design-system/`:
+
+```bash
+docker run --rm -v "$PWD/..:/work" -w /work/design-system -e CI=true node:22-bookworm \
+  bash -lc 'corepack enable && pnpm install --frozen-lockfile && \
+  pnpm --filter @teamstep/design-system exec playwright install --with-deps chromium && \
+  pnpm --filter @teamstep/design-system run build-storybook && \
+  cd packages/design-system && pnpm exec playwright test --update-snapshots'
+```
+
+Then commit only `*-chromium-linux.png` files; do not commit `*-darwin.png`.
+
 **Git snapshot tracking loss**: commit `af468f6` ("add game card and service card")
 accidentally deleted all 24 previously-committed Playwright baseline PNGs from git tracking
 as collateral damage (likely a broad `git add -A` at a moment the working tree's snapshots
