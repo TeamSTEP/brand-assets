@@ -1,22 +1,42 @@
 import type { ReactElement } from "react";
 import "./Footer.css";
 
-/** @public */
+/**
+ * Closed set of footer social link platforms.
+ *
+ * @public
+ */
 export type FooterSocialPlatform = "bluesky" | "substack" | "youtube" | "discord";
 
-/** @public */
+/**
+ * One social link in {@link Footer}.
+ *
+ * @public
+ */
 export interface FooterSocialLink {
+  /** Which platform icon to render. */
   platform: FooterSocialPlatform;
+  /** Destination URL. */
   href: string;
+  /** Accessible label (e.g. "Team STEP on Bluesky"). */
   label: string;
 }
 
-/** @public */
+/**
+ * Props for {@link Footer}.
+ *
+ * @public
+ */
 export interface FooterProps {
+  /** Studio logo image URL. */
   logoSrc: string;
+  /** Accessible alt text for the logo. */
   logoAlt: string;
+  /** Studio name shown below the logo. */
   studioName: string;
+  /** Tagline shown under the studio name. */
   tagline: string;
+  /** Social profile links. */
   socials: FooterSocialLink[];
 }
 

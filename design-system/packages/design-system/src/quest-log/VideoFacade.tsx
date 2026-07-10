@@ -1,9 +1,15 @@
 import { useState } from "react";
 import "./VideoFacade.css";
 
-/** @public */
+/**
+ * Props for {@link VideoFacade}.
+ *
+ * @public
+ */
 export interface VideoFacadeProps {
+  /** Poster image URL shown before play. */
   posterSrc: string;
+  /** Accessible alt text for the poster / video. */
   posterAlt: string;
   /** Looping gameplay clip shown before the trailer is requested. */
   loopSrc?: string;

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import AxeBuilder from "@axe-core/playwright";
+import { AxeBuilder } from "@axe-core/playwright";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -39,6 +39,7 @@ for (const story of stories) {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto(`/iframe.html?id=${story.id}&viewMode=story`);
       await page.waitForLoadState("domcontentloaded");
+      await page.evaluate(() => document.fonts.ready);
 
       const accessibilityScanResults = await new AxeBuilder({ page })
         // These rules check document-level page structure (one <main>, one <h1>, all content

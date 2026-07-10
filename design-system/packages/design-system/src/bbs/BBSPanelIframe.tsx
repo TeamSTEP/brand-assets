@@ -2,9 +2,15 @@ import { ScanlineOverlay } from "../effects/ScanlineOverlay.js";
 import { VignetteOverlay } from "../effects/VignetteOverlay.js";
 import "./BBSPanelIframe.css";
 
-/** @public */
+/**
+ * Props for {@link BBSPanelIframe}.
+ *
+ * @public
+ */
 export interface BBSPanelIframeProps {
+  /** Discord server ID for the widget embed. */
   serverId: string;
+  /** Accessible title for the iframe. */
   title: string;
 }
 

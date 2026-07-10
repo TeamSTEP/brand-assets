@@ -1,14 +1,25 @@
 import { useEffect, useState } from "react";
 import "./NavHUD.css";
 
-/** @public */
+/**
+ * One item in the mobile {@link NavHUD}.
+ *
+ * @public
+ */
 export interface NavHUDItem {
+  /** Short label (e.g. `GAMES`). */
   label: string;
+  /** `id` of the page section to observe for the active state. */
   sectionId: string;
 }
 
-/** @public */
+/**
+ * Props for {@link NavHUD}.
+ *
+ * @public
+ */
 export interface NavHUDProps {
+  /** HUD items in display order. */
   items: NavHUDItem[];
 }
 

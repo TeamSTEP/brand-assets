@@ -4,18 +4,21 @@ import { PlatformAccess } from "./PlatformAccess.js";
 import type { PlatformEntry } from "./PlatformAccess.js";
 import "./GameCardFeatured.css";
 
-/** @public */
+/**
+ * Props for {@link GameCardFeatured}.
+ *
+ * @public
+ */
 export interface GameCardFeaturedProps {
+  /** Game title. */
   title: string;
+  /** Subtitle shown above the title. */
   subtitle: string;
+  /** Longer description paragraph. */
   description: string;
-  /**
-   * Key art / video slot. VideoFacade (poster + click-to-load YouTube trailer) isn't built
-   * yet — it needs client-side state and belongs in a later interactive-components pass —
-   * so this accepts any media element for now (e.g. a plain poster `<img>`). Once
-   * VideoFacade exists, callers pass it here with no change to this component.
-   */
+  /** Key art / video slot — pass {@link VideoFacade} or a plain poster `<img>`. */
   media: ReactNode;
+  /** Platform entries driving PlatformAccess and the in-development badge. */
   platforms: PlatformEntry[];
 }
 

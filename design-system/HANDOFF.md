@@ -2,7 +2,7 @@
 
 > Written for the agent picking up this work next. Read `/Users/hoonkim/Projects/brand-assets/CLAUDE.md`
 > in full first — it is the binding spec for this repo and everything below assumes it.
-> This document is a snapshot as of the `GameCardFeatured` milestone (10 components shipped).
+> This document is a snapshot as of Stage C completion (2026-07-10).
 > Re-verify anything below against current repo state before trusting it — it is a record of
 > what was true at write time, not a live source of truth.
 
@@ -96,9 +96,9 @@ without re-raising them; the user made an explicit call on each.
 |---|---|---|
 | `ServiceCard.icon: ReactNode` is unenforced — a consumer can pass an off-brand-colored SVG and no lint rule catches it (stylelint only scans `.css`, not inline SVG attrs in `.tsx`) | **Accepted risk**, user's explicit call | Standard practice for icon slots in most design systems; revisit only if actual misuse shows up in review |
 | `Cta`'s `primary` variant is scoped to game-card contexts by TSDoc comment only, not the type system | **Accepted risk**, user's explicit call | Only 3 variants exist; misuse is easy to catch in review; not worth the added type complexity right now |
-| No Changesets entries for any component yet | **Deferred, not urgent** | Package is still `v0.0.0`/`private`, unpublished. Plan is one batched `v0.1.0` changeset at the end of the static-component build-out (arguably: now) |
-| Font-size has no type-scale token tier — still hardcoded px (wrapped in `clamp()`) | **Deferred, documented in `stylelint.config.mjs`'s own comment** | `declaration-strict-value` only covers color/spacing/radius; extending to font-size needs a token tier that doesn't exist yet |
-| `tests/` isn't in `tsconfig.json`'s `include`, so `check-types` silently skips the Playwright spec file | **Pre-existing, not fixed** | Low priority; test file itself isn't shipped, but a `tsc` error inside it would go unnoticed |
+| No Changesets entries for any component yet | **Resolved in Stage C** | Batched `v0.1.0` changeset at `design-system/.changeset/v0-1-0-initial-release.md` |
+| Font-size has no type-scale token tier — still hardcoded px (wrapped in `clamp()`) | **Deferred, documented in `stylelint.config.mjs`'s own comment** | `declaration-strict-value` covers color/spacing/radius/shadow/gradient; font-size tier still deferred |
+| `tests/` isn't in `tsconfig.json`'s `include`, so `check-types` silently skips the Playwright spec file | **Resolved in Stage C** | `tsconfig.tests.json` + dual `tsc` in `check-types`; `AxeBuilder` named import |
 | Companion `eslint-plugin-teamstep`/stylelint preset for consuming repos | **Not started** | CLAUDE.md explicitly scopes this to "when published" — correctly sequenced after, not before. Local `className`/`style` ban ships in `@repo/eslint-config` first (§4 D5, implemented §5). |
 
 ---
@@ -137,7 +137,7 @@ testing unless noted.
 
 | Probe | Result | Notes |
 |---|---|---|
-| **§8.1** Hardcoded color via uncovered CSS property | **Partial gap** | `declaration-strict-value` does not list `box-shadow` or `background-image`. Hex in those properties is still caught by `color-hex-length`; `rgb()` by `color-function-notation`; `hsl()` by `hue-degree-notation`. **Token enforcement** (`var(--…)`) is not applied to shadow/gradient values — a literal could slip through only if it avoids all three standard rules (unlikely in practice). Optional hardening: add `box-shadow` and `background-image` to the strict-value property list in `stylelint.config.mjs`. |
+| **§8.1** Hardcoded color via uncovered CSS property | **Hardened in Stage C** | `box-shadow` and `background-image` added to `declaration-strict-value` (effects CSS exempt). Hex/rgb/hsl still caught by standard notation rules on any property. |
 | **§8.2** Widen `CtaVariant` (added `"danger"`) | **No brand gate** (expected) | `pnpm run lint` passes. Nothing enforces game-color scoping at the type level — still convention/review only (§3 accepted risk). `check-api` would require `update-api` for a deliberate variant addition, but does not judge brand validity. |
 | **§8.3** `className` on exported prop interface | **Blocked** | D5 implemented: `teamstep/no-style-passthrough` in `@repo/eslint-config`, enabled in `eslint.config.mjs` for `src/**/*.tsx` (excludes stories). Injected `className?: string` on `CtaProps` → `pnpm run lint` exits non-zero. |
 | **§8.4** Re-run §2 probes | **Still blocking** | `#ff00ff` in `Badge.css` `color` → stylelint `declaration-strict-value`, non-zero. Removed `@public` from `Badge` exports → `check-api` `ae-missing-release-tag` Error, non-zero. |
@@ -205,17 +205,15 @@ the deviation rather than silently reordering.
 Services grid layout and "GET IN TOUCH →" CTA below the cards stay consumer-side (§4 B1).
 
 ### Stage C — Cleanup before v0.1.0
-- Populate `component.json` **only if** Stage A/B components actually need a value distinct
-  from their semantic role — don't add tokens speculatively.
-- Consider extending `stylelint.config.mjs` strict-value to `box-shadow` and
-  `background-image` (Phase 1 §5 found token enforcement gap on those properties; hex is
-  partially covered by standard color notation rules).
-- Consider documenting the currently-`(undocumented)` interfaces in `etc/design-system.api.md`
-  (every prop currently has a release tag but not a description) — not gate-blocking, but
-  worth a pass before calling this a real v0.1.0.
-- Decide whether `Cta`'s `primary`/`icon`-as-`ReactNode` accepted risks (§3) still hold once
-  more components exist and more real usage patterns emerge.
-- Cut the batched `v0.1.0` Changeset.
+**Complete (2026-07-10).**
+- **`component.json` stays `{}`** — no Stage A/B component needed a value distinct from its semantic role; correct state, not a gap.
+- **Stylelint hardened:** `box-shadow` and `background-image` added to `declaration-strict-value`; `src/effects/**/*.css` exempt (procedural overlays).
+- **TSDoc pass:** all public exports in `etc/design-system.api.md` documented — zero `(undocumented)` entries.
+- **`tsconfig.tests.json`:** Playwright spec type-checked; `AxeBuilder` named import.
+- **Visual test stability:** `workers: 1` + `document.fonts.ready` wait before screenshots (parallel runs were flaky against the static http-server).
+- **Accepted risks reaffirmed (§3):** `Cta.primary` scoping and `ServiceCard.icon` slot still hold — convention/review only.
+- **Changeset cut:** `design-system/.changeset/v0-1-0-initial-release.md` (`minor` → `0.1.0` on publish).
+- **Gates green:** `lint`, `check-types`, `check-api`, `build`, `test-visual` — 117/117.
 
 ### Stage D — Cross-repo publish
 - Wire GitHub Packages (or equivalent) publish in CI per the original strategy document.

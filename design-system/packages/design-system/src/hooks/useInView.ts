@@ -1,11 +1,17 @@
 import { useEffect, useState, type RefObject } from "react";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion.js";
 
-/** @public */
+/**
+ * Options for {@link useInView}.
+ *
+ * @public
+ */
 export interface UseInViewOptions {
   /** Fire only the first time the element enters the viewport. */
   once?: boolean;
+  /** Passed to `IntersectionObserver` (`rootMargin`). */
   rootMargin?: string;
+  /** Passed to `IntersectionObserver` (`threshold`). */
   threshold?: number | number[];
 }
 

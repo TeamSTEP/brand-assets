@@ -2,17 +2,31 @@ import { useEffect, useState } from "react";
 import { Cta } from "../ui/Cta.js";
 import "./NavDesktop.css";
 
-/** @public */
+/**
+ * One anchor link in {@link NavDesktop}.
+ *
+ * @public
+ */
 export interface NavDesktopLink {
+  /** Link label (e.g. `HOME`). */
   label: string;
+  /** Section anchor href (e.g. `#hero`). */
   href: string;
 }
 
-/** @public */
+/**
+ * Props for {@link NavDesktop}.
+ *
+ * @public
+ */
 export interface NavDesktopProps {
+  /** Logo image URL. */
   logoSrc: string;
+  /** Accessible alt text for the logo. */
   logoAlt: string;
+  /** Centre navigation links. */
   links: NavDesktopLink[];
+  /** Destination for the CONTACT ghost CTA. */
   contactHref: string;
 }
 

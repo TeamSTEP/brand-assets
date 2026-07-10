@@ -13,21 +13,26 @@ import "./Cta.css";
 export type CtaVariant = "primary" | "secondary" | "ghost";
 
 /**
- * Pass exactly one of `href` (renders an <a>, for navigation) or `onClick` (renders a
- * <button>, for in-page interaction) — not a discriminated union because that shape defeats
- * Storybook/CSF's args typing for this component. Passing both or neither isn't a
- * brand-safety issue (unlike variant), just a usage mistake, so it isn't worth the friction.
+ * Props for {@link Cta}.
  *
  * @public
  */
 export interface CtaProps {
+  /** Visual hierarchy — `primary` is for game-card demo-play contexts only. */
   variant: CtaVariant;
+  /** Button or link label. */
   children: ReactNode;
+  /** When set, renders an `<a>` for navigation. */
   href?: string;
+  /** When set (and `href` is omitted), renders a `<button>`. */
   onClick?: () => void;
 }
 
-/** @public */
+/**
+ * Branded call-to-action control. Renders `<a>` when `href` is set, otherwise `<button>`.
+ *
+ * @public
+ */
 export function Cta({ variant, children, href, onClick }: CtaProps) {
   const className = `ds-cta ds-cta--${variant}`;
 

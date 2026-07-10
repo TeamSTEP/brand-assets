@@ -6,12 +6,22 @@ import type { BBSTab } from "./BBSTerminal.js";
 import type { FeedPlatform, UnifiedPost } from "./types.js";
 import "./SocialFeed.css";
 
-/** @public */
+/**
+ * Tab identifiers for {@link SocialFeed} (API feeds plus Discord iframe).
+ *
+ * @public
+ */
 export type SocialFeedTab = FeedPlatform | "discord";
 
-/** @public */
+/**
+ * Props for {@link SocialFeed}.
+ *
+ * @public
+ */
 export interface SocialFeedProps {
+  /** Feed API base URL. Defaults to `/api/feed`. */
   fetchEndpoint?: string;
+  /** Discord server ID for the widget tab. */
   discordServerId: string;
 }
 

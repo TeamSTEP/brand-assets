@@ -2,11 +2,19 @@ import type { ReactNode } from "react";
 import { Cta } from "../ui/Cta.js";
 import "./ServiceCard.css";
 
-/** @public */
+/**
+ * Props for {@link ServiceCard}.
+ *
+ * @public
+ */
 export interface ServiceCardProps {
+  /** Service icon slot (caller-supplied SVG or image). */
   icon: ReactNode;
+  /** Service name. */
   title: string;
+  /** Short card description. */
   description: string;
+  /** Called when the visitor clicks INSPECT ITEM — open {@link ServiceInspectPanel} in the consumer. */
   onInspect: () => void;
 }
 

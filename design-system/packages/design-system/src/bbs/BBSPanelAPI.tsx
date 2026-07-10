@@ -1,8 +1,13 @@
 import type { UnifiedPost } from "./types.js";
 import "./BBSPanelAPI.css";
 
-/** @public */
+/**
+ * Props for {@link BBSPanelAPI}.
+ *
+ * @public
+ */
 export interface BBSPanelAPIProps {
+  /** Feed items to render in the branded mono list. */
   posts: UnifiedPost[];
 }
 

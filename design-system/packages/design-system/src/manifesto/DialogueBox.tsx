@@ -3,10 +3,17 @@ import { useInView } from "../hooks/useInView.js";
 import { useTypewriter } from "../hooks/useTypewriter.js";
 import "./DialogueBox.css";
 
-/** @public */
+/**
+ * Props for {@link DialogueBox}.
+ *
+ * @public
+ */
 export interface DialogueBoxProps {
+  /** Avatar image URL (typically the studio logo mark). */
   avatarSrc: string;
+  /** Accessible alt text for the avatar. */
   avatarAlt: string;
+  /** Dialogue body text. */
   text: string;
   /** Typewriter-on-first-view. Defaults to `true`; reduced motion shows full text immediately. */
   animated?: boolean;

@@ -11,19 +11,35 @@ import "./GameCardArchive.css";
  */
 export type GameCardArchiveStatus = Extract<BadgeVariant, "legacy" | "side-quest">;
 
-/** @public */
+/**
+ * CTA link on an archive game card.
+ *
+ * @public
+ */
 export interface GameCardArchiveCta {
+  /** Button label text. */
   label: string;
+  /** Destination URL. */
   url: string;
 }
 
-/** @public */
+/**
+ * Props for {@link GameCardArchive}.
+ *
+ * @public
+ */
 export interface GameCardArchiveProps {
+  /** Game title. */
   title: string;
+  /** Short description. */
   description: string;
+  /** Archive-row badge variant (`legacy` or `side-quest`). */
   status: GameCardArchiveStatus;
+  /** Poster thumbnail URL. */
   posterSrc: string;
+  /** Accessible alt text for the poster. */
   posterAlt: string;
+  /** Single ghost CTA for the archive row. */
   cta: GameCardArchiveCta;
 }
 

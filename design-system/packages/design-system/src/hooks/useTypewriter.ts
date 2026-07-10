@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion.js";
 
-/** @public */
+/**
+ * Options for {@link useTypewriter}.
+ *
+ * @public
+ */
 export interface UseTypewriterOptions {
+  /** When false, shows the full string immediately. */
   enabled?: boolean;
   /** Milliseconds per character. */
   speed?: number;

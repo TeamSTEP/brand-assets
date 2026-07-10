@@ -24,12 +24,21 @@ const PULSES: Record<BadgeVariant, boolean> = {
   "in-development": true,
 };
 
-/** @public */
+/**
+ * Props for {@link Badge}.
+ *
+ * @public
+ */
 export interface BadgeProps {
+  /** Which badge meaning to render (label, color, and pulse are derived from this). */
   variant: BadgeVariant;
 }
 
-/** @public */
+/**
+ * Quest Log status badge. Label, color, and pulse are derived from `variant`.
+ *
+ * @public
+ */
 export function Badge({ variant }: BadgeProps) {
   return (
     <span className={`ds-badge ds-badge--${variant}`}>

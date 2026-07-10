@@ -1,10 +1,18 @@
 import { Cta } from "../ui/Cta.js";
 import "./PlatformAccess.css";
 
-/** @public */
+/**
+ * Supported game-store / browser platform identifiers for {@link PlatformAccess}.
+ *
+ * @public
+ */
 export type Platform = "steam" | "itch" | "gog" | "epic" | "browser";
 
-/** @public */
+/**
+ * Access tier for a platform entry (demo, full game, free, or DLC).
+ *
+ * @public
+ */
 export type PlatformTier = "demo" | "full" | "free" | "dlc";
 
 /**
@@ -15,15 +23,25 @@ export type PlatformTier = "demo" | "full" | "free" | "dlc";
  * @public
  */
 export interface PlatformEntry {
+  /** Store or distribution channel. */
   platform: Platform;
+  /** Release tier (demo, full, free, dlc). */
   tier: PlatformTier;
+  /** CTA label shown on the pill. */
   label: string;
+  /** Destination URL for the CTA. */
   url: string;
+  /** When false, renders in the Coming Soon section. */
   available: boolean;
 }
 
-/** @public */
+/**
+ * Props for {@link PlatformAccess}.
+ *
+ * @public
+ */
 export interface PlatformAccessProps {
+  /** Platform entries to split into Playable Now / Coming Soon. */
   platforms: PlatformEntry[];
 }
 

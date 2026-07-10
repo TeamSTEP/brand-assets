@@ -8,12 +8,11 @@ import * as react_jsx_runtime from 'react/jsx-runtime';
 import { ReactNode } from 'react';
 import { RefObject } from 'react';
 
-// @public (undocumented)
+// @public
 export function Badge(input: BadgeProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface BadgeProps {
-    // (undocumented)
     variant: BadgeVariant;
 }
 
@@ -23,67 +22,51 @@ export type BadgeVariant = "main-quest" | "side-quest" | "legacy" | "in-developm
 // @public
 export function BBSPanelAPI(input: BBSPanelAPIProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface BBSPanelAPIProps {
-    // (undocumented)
     posts: UnifiedPost[];
 }
 
 // @public
 export function BBSPanelIframe(input: BBSPanelIframeProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface BBSPanelIframeProps {
-    // (undocumented)
     serverId: string;
-    // (undocumented)
     title: string;
 }
 
-// @public (undocumented)
+// @public
 export interface BBSTab {
-    // (undocumented)
     badge: BBSTabBadge;
-    // (undocumented)
     desktopLabel: string;
-    // (undocumented)
     id: string;
-    // (undocumented)
     mobileLabel: string;
 }
 
-// @public (undocumented)
+// @public
 export type BBSTabBadge = "api" | "widget";
 
 // @public
 export function BBSTerminal(input: BBSTerminalProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface BBSTerminalProps {
-    // (undocumented)
     activeTabId: string;
-    // (undocumented)
     children: ReactNode;
-    // (undocumented)
     onTabChange: (tabId: string) => void;
-    // (undocumented)
     tabs: BBSTab[];
-    // (undocumented)
     title: string;
 }
 
-// @public (undocumented)
+// @public
 export function Cta(input: CtaProps): react_jsx_runtime.JSX.Element;
 
 // @public
 export interface CtaProps {
-    // (undocumented)
     children: ReactNode;
-    // (undocumented)
     href?: string;
-    // (undocumented)
     onClick?: () => void;
-    // (undocumented)
     variant: CtaVariant;
 }
 
@@ -93,74 +76,55 @@ export type CtaVariant = "primary" | "secondary" | "ghost";
 // @public
 export function DialogueBox(input: DialogueBoxProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface DialogueBoxProps {
     animated?: boolean;
-    // (undocumented)
     avatarAlt: string;
-    // (undocumented)
     avatarSrc: string;
-    // (undocumented)
     text: string;
 }
 
-// @public (undocumented)
+// @public
 export type FeedPlatform = "bluesky" | "substack" | "youtube";
 
 // @public
 export function Footer(input: FooterProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface FooterProps {
-    // (undocumented)
     logoAlt: string;
-    // (undocumented)
     logoSrc: string;
-    // (undocumented)
     socials: FooterSocialLink[];
-    // (undocumented)
     studioName: string;
-    // (undocumented)
     tagline: string;
 }
 
-// @public (undocumented)
+// @public
 export interface FooterSocialLink {
-    // (undocumented)
     href: string;
-    // (undocumented)
     label: string;
-    // (undocumented)
     platform: FooterSocialPlatform;
 }
 
-// @public (undocumented)
+// @public
 export type FooterSocialPlatform = "bluesky" | "substack" | "youtube" | "discord";
 
 // @public
 export function GameCardArchive(input: GameCardArchiveProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface GameCardArchiveCta {
-    // (undocumented)
     label: string;
-    // (undocumented)
     url: string;
 }
 
-// @public (undocumented)
+// @public
 export interface GameCardArchiveProps {
-    // (undocumented)
     cta: GameCardArchiveCta;
-    // (undocumented)
     description: string;
-    // (undocumented)
     posterAlt: string;
-    // (undocumented)
     posterSrc: string;
-    // (undocumented)
     status: GameCardArchiveStatus;
-    // (undocumented)
     title: string;
 }
 
@@ -170,110 +134,85 @@ export type GameCardArchiveStatus = Extract<BadgeVariant, "legacy" | "side-quest
 // @public
 export function GameCardFeatured(input: GameCardFeaturedProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface GameCardFeaturedProps {
-    // (undocumented)
     description: string;
     media: ReactNode;
-    // (undocumented)
     platforms: PlatformEntry[];
-    // (undocumented)
     subtitle: string;
-    // (undocumented)
     title: string;
 }
 
 // @public
 export function Hero(input: HeroProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface HeroProps {
-    // (undocumented)
     ctaHref: string;
     ctaLabel?: string;
-    // (undocumented)
     eyebrow: string;
     logoAnimated?: boolean;
-    // (undocumented)
     logoMarkAlt: string;
-    // (undocumented)
     logoMarkSrc: string;
-    // (undocumented)
     tagline: string;
-    // (undocumented)
     title: string;
 }
 
 // @public
 export function NavDesktop(input: NavDesktopProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface NavDesktopLink {
-    // (undocumented)
     href: string;
-    // (undocumented)
     label: string;
 }
 
-// @public (undocumented)
+// @public
 export interface NavDesktopProps {
-    // (undocumented)
     contactHref: string;
-    // (undocumented)
     links: NavDesktopLink[];
-    // (undocumented)
     logoAlt: string;
-    // (undocumented)
     logoSrc: string;
 }
 
 // @public
 export function NavHUD(input: NavHUDProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface NavHUDItem {
-    // (undocumented)
     label: string;
-    // (undocumented)
     sectionId: string;
 }
 
-// @public (undocumented)
+// @public
 export interface NavHUDProps {
-    // (undocumented)
     items: NavHUDItem[];
 }
 
 // @public
 export function PixelGrid(): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export type Platform = "steam" | "itch" | "gog" | "epic" | "browser";
 
 // @public
 export function PlatformAccess(input: PlatformAccessProps): react_jsx_runtime.JSX.Element | null;
 
-// @public (undocumented)
+// @public
 export interface PlatformAccessProps {
-    // (undocumented)
     platforms: PlatformEntry[];
 }
 
 // @public
 export interface PlatformEntry {
-    // (undocumented)
     available: boolean;
-    // (undocumented)
     label: string;
-    // (undocumented)
     platform: Platform;
-    // (undocumented)
     tier: PlatformTier;
-    // (undocumented)
     url: string;
 }
 
-// @public (undocumented)
+// @public
 export type PlatformTier = "demo" | "full" | "free" | "dlc";
 
 // @public
@@ -282,62 +221,46 @@ export function ScanlineOverlay(): react_jsx_runtime.JSX.Element;
 // @public
 export function ServiceCard(input: ServiceCardProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface ServiceCardProps {
-    // (undocumented)
     description: string;
-    // (undocumented)
     icon: ReactNode;
-    // (undocumented)
     onInspect: () => void;
-    // (undocumented)
     title: string;
 }
 
 // @public
 export function ServiceInspectPanel(input: ServiceInspectPanelProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface ServiceInspectPanelProps {
-    // (undocumented)
     contactHref: string;
-    // (undocumented)
     description: string;
-    // (undocumented)
     onClose: () => void;
-    // (undocumented)
     open: boolean;
-    // (undocumented)
     title: string;
 }
 
 // @public
 export function SocialFeed(input: SocialFeedProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface SocialFeedProps {
-    // (undocumented)
     discordServerId: string;
-    // (undocumented)
     fetchEndpoint?: string;
 }
 
-// @public (undocumented)
+// @public
 export type SocialFeedTab = FeedPlatform | "discord";
 
 // @public
 export interface UnifiedPost {
-    // (undocumented)
     author: string;
     date: string;
-    // (undocumented)
     id: string;
-    // (undocumented)
     platform: FeedPlatform;
-    // (undocumented)
     text: string;
     thumb?: string;
-    // (undocumented)
     url: string;
 }
 
@@ -347,21 +270,18 @@ export function useIdleFloat<T extends HTMLElement>(ref: RefObject<T | null>, en
 // @public
 export function useInView<T extends Element>(ref: RefObject<T | null>, input?: UseInViewOptions): boolean;
 
-// @public (undocumented)
+// @public
 export interface UseInViewOptions {
     once?: boolean;
-    // (undocumented)
     rootMargin?: string;
-    // (undocumented)
     threshold?: number | number[];
 }
 
 // @public
 export function useTypewriter(text: string, input?: UseTypewriterOptions): string;
 
-// @public (undocumented)
+// @public
 export interface UseTypewriterOptions {
-    // (undocumented)
     enabled?: boolean;
     speed?: number;
 }
@@ -369,12 +289,10 @@ export interface UseTypewriterOptions {
 // @public
 export function VideoFacade(input: VideoFacadeProps): react_jsx_runtime.JSX.Element;
 
-// @public (undocumented)
+// @public
 export interface VideoFacadeProps {
     loopSrc?: string;
-    // (undocumented)
     posterAlt: string;
-    // (undocumented)
     posterSrc: string;
     trailerUrl?: string;
 }

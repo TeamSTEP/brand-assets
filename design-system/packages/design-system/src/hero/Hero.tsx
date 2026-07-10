@@ -4,15 +4,25 @@ import { useIdleFloat } from "../hooks/useIdleFloat.js";
 import { Cta } from "../ui/Cta.js";
 import "./Hero.css";
 
-/** @public */
+/**
+ * Props for {@link Hero}.
+ *
+ * @public
+ */
 export interface HeroProps {
+  /** Italic eyebrow line above the title. */
   eyebrow: string;
+  /** Main H1 wordmark text. */
   title: string;
+  /** Supporting tagline below the title. */
   tagline: string;
+  /** Destination for the ghost CTA. */
   ctaHref: string;
   /** Defaults to "▶ ENTER THE GUILD" — the studio ambient CTA, not a game CTA. */
   ctaLabel?: string;
+  /** Logo mark image URL for the desktop ring. */
   logoMarkSrc: string;
+  /** Accessible alt text for the logo mark. */
   logoMarkAlt: string;
   /** Idle-float on the logo ring. Defaults to `true`; disabled when reduced motion is preferred. */
   logoAnimated?: boolean;

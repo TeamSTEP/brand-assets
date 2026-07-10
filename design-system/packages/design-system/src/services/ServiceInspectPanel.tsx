@@ -2,12 +2,21 @@ import { useEffect, useRef } from "react";
 import { Cta } from "../ui/Cta.js";
 import "./ServiceInspectPanel.css";
 
-/** @public */
+/**
+ * Props for {@link ServiceInspectPanel}.
+ *
+ * @public
+ */
 export interface ServiceInspectPanelProps {
+  /** Whether the panel is open. */
   open: boolean;
+  /** Called when the panel should close (escape, backdrop click, or close button). */
   onClose: () => void;
+  /** Service title shown in the panel header. */
   title: string;
+  /** Full service description. */
   description: string;
+  /** Destination for the GET IN TOUCH CTA. */
   contactHref: string;
 }
 
