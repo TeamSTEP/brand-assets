@@ -80,13 +80,16 @@ for (const story of stories) {
         // `incomplete` on every story (verified directly against axe, including on
         // content-free stories like Effects/PixelGrid), for the identical harness reason as
         // the other three — it just wasn't visible while this test only checked `violations`.
-        // `frame-tested` is a different limitation, not a document-structure one: axe can't
-        // inject its script into BBSPanelIframe's cross-origin Discord embed, so it can't
-        // verify that iframe's *inside* content at all — an unfixable property of testing
-        // third-party embeds, the same reason HANDOFF.md already carves out BBSPanelIframe's
-        // Safari-only CSS filter rendering as a manual release check rather than a CI gate.
-        // Disabling it doesn't skip scanning BBSPanelIframe itself, only the impossible-to-run
-        // check on content this repo doesn't own or ship.
+        // `frame-tested` was disabled on the assumption axe can't reach into BBSPanelIframe's
+        // cross-origin Discord embed at all — turns out it can (Discord's widget doesn't block
+        // axe's cross-frame script injection), and it surfaces a real color-contrast violation
+        // in Discord's own widget footer text, not anything this design system renders. We still
+        // don't own or ship that content and can't fix Discord's contrast choices, so `.exclude`
+        // it from the scan entirely — the same "don't verify third-party embed content" intent
+        // `frame-tested` was meant to express, just enforced correctly instead of assumed. This
+        // is the same unfixable-third-party-embed category HANDOFF.md already carves out
+        // BBSPanelIframe's Safari-only CSS filter rendering into a manual release check for.
+        .exclude("iframe")
         .disableRules(["landmark-one-main", "page-has-heading-one", "region", "bypass", "frame-tested"])
         .analyze();
       // Also assert on `incomplete`, not just `violations`. axe reports color-contrast as
