@@ -5,6 +5,8 @@ import "./Badge.css";
  * "main-quest" and "in-development" pulse; "side-quest" and "legacy" are static. Label text
  * and color are derived entirely from the variant — there is no separate label/color prop,
  * so a caller can't introduce an off-brand combination.
+ *
+ * @public
  */
 export type BadgeVariant = "main-quest" | "side-quest" | "legacy" | "in-development";
 
