@@ -41,12 +41,12 @@ for (const story of stories) {
       await page.waitForLoadState("networkidle");
 
       const accessibilityScanResults = await new AxeBuilder({ page })
-        // These two rules check document-level page structure (one <main>, one <h1> for the
-        // whole page). Each story here renders a single component in isolation inside
+        // These rules check document-level page structure (one <main>, one <h1>, all content
+        // inside a landmark). Each story here renders a single component in isolation inside
         // Storybook's own iframe.html — that's the harness's document, not a page this design
         // system ships, so the rule is a structural false positive here, not a real a11y gap.
         // Component-level checks (aria-*, color-contrast, name/role/value, etc.) still run.
-        .disableRules(["landmark-one-main", "page-has-heading-one"])
+        .disableRules(["landmark-one-main", "page-has-heading-one", "region"])
         .analyze();
       expect(accessibilityScanResults.violations).toEqual([]);
 

@@ -1,0 +1,53 @@
+.ds-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-chip-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-default);
+
+  /* text-primary, not text-secondary: at 12px, muted (~3.5:1 on --color-surface) fails
+     WCAG AA's 4.5:1 for normal text. "legacy" de-emphasis is a card-level 60% opacity
+     (teamstep-landing-spec.md §5.4), not something the badge itself should encode. */
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.ds-badge--main-quest {
+  border-color: var(--color-game-green);
+  color: var(--color-game-green-active);
+}
+
+.ds-badge--in-development {
+  border-color: var(--color-status-pending);
+  color: var(--color-status-pending-active);
+}
+
+.ds-badge__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentcolor;
+  animation: ds-badge-pulse 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-badge__dot {
+    animation: none;
+  }
+}
+
+@keyframes ds-badge-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}

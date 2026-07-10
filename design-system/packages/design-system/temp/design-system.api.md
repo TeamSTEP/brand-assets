@@ -6,6 +6,18 @@
 
 import * as react_jsx_runtime from 'react/jsx-runtime';
 
+// @public (undocumented)
+export function Badge(input: BadgeProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface BadgeProps {
+    // (undocumented)
+    variant: BadgeVariant;
+}
+
+// @public
+export type BadgeVariant = "main-quest" | "side-quest" | "legacy" | "in-development";
+
 // @public
 export function PixelGrid(): react_jsx_runtime.JSX.Element;
 

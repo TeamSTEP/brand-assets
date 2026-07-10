@@ -22,7 +22,7 @@ export default {
         ignoreValues: [
           "inherit",
           "transparent",
-          "currentColor",
+          "currentcolor",
           "unset",
           "initial",
           "0",
@@ -33,5 +33,10 @@ export default {
         disableFix: true,
       },
     ],
+    // stylelint-config-standard's default selector-class-pattern only allows plain
+    // kebab-case, which rejects the BEM __element/--modifier separators every component
+    // uses (e.g. .ds-badge--main-quest, .ds-badge__dot). Every class is still required to
+    // carry the "ds-" design-system prefix.
+    "selector-class-pattern": "^ds-[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$",
   },
 };
