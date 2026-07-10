@@ -68,11 +68,15 @@ jobs:
 
       # Fails the PR if publishable packages changed without a changeset. Only
       # meaningful on PRs, where there's a base ref to diff against. Skipped on the
-      # changesets bot's own release PR (branch changeset-release/main): that PR's
-      # version bumps are produced by consuming and deleting changesets, so it always
-      # trips this check otherwise.
+      # changesets bot's own release PR (same-repo branch changeset-release/main): that
+      # PR's version bumps are produced by consuming and deleting changesets, so it always
+      # trips this check otherwise. Also requires head.repo == base repo so a fork can't
+      # spoof the branch name to skip the gate.
       - id: changeset
-        if: github.event_name == 'pull_request' && github.head_ref != 'changeset-release/main'
+        if: >-
+          github.event_name == 'pull_request' &&
+          !(github.head_ref == 'changeset-release/main' &&
+            github.event.pull_request.head.repo.full_name == github.repository)
         continue-on-error: true
         env:
           BASE_REF: ${{ github.base_ref }}
