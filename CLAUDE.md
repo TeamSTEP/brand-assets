@@ -2,7 +2,7 @@
 
 This repo is the home of `@teamstep/design-system` — a versioned,
 Storybook-documented component + token library for the Team STEP brand — plus
-the raw brand assets in `brand/`. It is consumed by other projects (e.g. the
+the raw brand assets in `brand-assets/`. It is consumed by other projects (e.g. the
 Astro landing site) as a package dependency, not by copy-pasting files. Those
 consuming projects live in separate repos.
 
@@ -25,32 +25,41 @@ CI/tooling config, or reviewing a PR here.
 
 ## Repo shape
 
+The design-system workspace lives at the repo root — there is no nested
+`design-system/` wrapper directory. `pnpm-workspace.yaml`, `turbo.json`, and
+`package.json` at repo root are the design-system workspace root; the raw
+brand assets in `brand-assets/` (a subdirectory that happens to share the
+repo's own name — not the same thing) are a sibling, not part of the pnpm
+workspace.
+
 ```
-brand-assets/
+. (repo root — also the pnpm + Turborepo workspace root)
 ├── .github/
 │   ├── workflows/design-system-ci.yml
+│   ├── workflows/design-system-publish.yml
 │   └── CODEOWNERS
-├── brand/                    raw logo assets, guidelines PDF — not part of the package
-└── design-system/            pnpm + Turborepo workspace root
-    ├── pnpm-workspace.yaml   supply-chain settings live here — see below
-    ├── turbo.json
-    └── packages/
-        ├── design-system/    @teamstep/design-system
-        │   ├── tsup.config.ts
-        │   ├── playwright.config.ts
-        │   ├── api-extractor.json
-        │   ├── style-dictionary.config.mjs
-        │   ├── stylelint.config.mjs
-        │   ├── .storybook/
-        │   ├── tokens/           DTCG JSON source of truth (primitive → semantic → component)
-        │   ├── tests/             Playwright: a11y + visual regression, one story per viewport
-        │   ├── etc/design-system.api.md   committed API contract — see check-api below
-        │   └── src/
-        │       ├── tokens/       tokens.css + tokens.ts, GENERATED — do not hand-edit
-        │       ├── effects/      PixelGrid, ScanlineOverlay, VignetteOverlay
-        │       └── index.ts      barrel export — this is the only public surface
-        ├── eslint-config/
-        └── typescript-config/
+├── brand-assets/              raw logo assets, guidelines PDF — not part of the package
+├── pnpm-workspace.yaml       supply-chain settings live here — see below
+├── turbo.json
+└── packages/
+    ├── design-system/        @teamstep/design-system
+    │   ├── tsup.config.ts
+    │   ├── playwright.config.ts
+    │   ├── api-extractor.json
+    │   ├── style-dictionary.config.mjs
+    │   ├── stylelint.config.mjs
+    │   ├── .storybook/
+    │   ├── tokens/           DTCG JSON source of truth (primitive → semantic → component)
+    │   ├── tests/             Playwright: a11y + visual regression, one story per viewport
+    │   ├── etc/design-system.api.md   committed API contract — see check-api below
+    │   └── src/
+    │       ├── tokens/       tokens.css + tokens.ts, GENERATED — do not hand-edit
+    │       ├── effects/      PixelGrid, ScanlineOverlay, VignetteOverlay
+    │       └── index.ts      barrel export — this is the only public surface
+    ├── eslint-config/
+    ├── eslint-plugin-teamstep/
+    ├── stylelint-config-teamstep/
+    └── typescript-config/
 ```
 
 ## How the gates work (read before touching config, not just code)
@@ -117,7 +126,8 @@ brand-assets/
   re-run these probes by hand" instructions a handoff doc used to carry; see
   the script's own header comment before changing what it targets.
   `.github/CODEOWNERS` auto-requests
-  review on `/design-system/` and `/CLAUDE.md` but does not block merges by
+  review on `/packages/` (plus the workspace root config files) and `/CLAUDE.md`
+  but does not block merges by
   itself — branch protection on `main` (repo Settings → Branches, requiring the
   CI check + CODEOWNERS review) is what makes it mandatory, and is not yet
   enabled.

@@ -3,17 +3,25 @@ name: design-system CI
 on:
   pull_request:
     paths:
-      - "design-system/**"
+      - "packages/**"
+      - "pnpm-workspace.yaml"
+      - "pnpm-lock.yaml"
+      - "turbo.json"
+      - "package.json"
+      - ".npmrc"
+      - ".changeset/**"
       - ".github/workflows/design-system-ci.yml"
   push:
     branches: [main]
     paths:
-      - "design-system/**"
+      - "packages/**"
+      - "pnpm-workspace.yaml"
+      - "pnpm-lock.yaml"
+      - "turbo.json"
+      - "package.json"
+      - ".npmrc"
+      - ".changeset/**"
       - ".github/workflows/design-system-ci.yml"
-
-defaults:
-  run:
-    working-directory: design-system
 
 jobs:
   ci:
@@ -26,7 +34,7 @@ jobs:
           # diff for the PR summary both need a real merge-base.
           fetch-depth: 0
 
-      # Reads the "packageManager" field in design-system/package.json to fetch and pin the
+      # Reads the "packageManager" field in package.json to fetch and pin the
       # exact pnpm version — CI must never run whatever pnpm happens to be on the runner's PATH.
       - run: corepack enable
 
@@ -34,7 +42,7 @@ jobs:
         with:
           node-version: lts/*
           cache: pnpm
-          cache-dependency-path: design-system/pnpm-lock.yaml
+          cache-dependency-path: pnpm-lock.yaml
 
       # --frozen-lockfile: fail instead of silently updating the lockfile. Combined with the
       # minimumReleaseAge / trustPolicy / allowBuilds settings in pnpm-workspace.yaml, this is
@@ -175,7 +183,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
-          path: design-system/packages/design-system/playwright-report/
+          path: packages/design-system/playwright-report/
           if-no-files-found: ignore
           retention-days: 14
 
@@ -183,7 +191,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ci-summary
-          path: design-system/ci-summary/
+          path: ci-summary/
           if-no-files-found: warn
           retention-days: 14
 
