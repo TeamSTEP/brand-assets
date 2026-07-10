@@ -1,0 +1,27 @@
+{
+  "name": "brand-assets (design system)",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    // Supplies the Docker daemon `act` talks to (the Dockerfile only installs the CLI).
+    // Runs the daemon inside the devcontainer rather than bind-mounting the host socket, so
+    // `act`'s runner containers can't see or touch the host's Docker state.
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest"
+    }
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace",
+  "postCreateCommand": "pnpm install --frozen-lockfile && pnpm --filter @teamstep/design-system exec playwright install --with-deps chromium",
+  "customizations": {
+    "vscode": {
+      "extensions": ["dbaeumer.vscode-eslint", "stylelint.vscode-stylelint", "esbenp.prettier-vscode"]
+    }
+  },
+  "remoteEnv": {
+    // pnpm-workspace.yaml's minimumReleaseAge/trustPolicy gates (see CLAUDE.md) apply the
+    // same inside the container — this only affects act's own bookkeeping, not those gates.
+    "CI": "false"
+  }
+}

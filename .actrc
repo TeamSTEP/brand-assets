@@ -1,0 +1,10 @@
+# Config for `act` (https://github.com/nektos/act), which replays .github/workflows/*.yml
+# locally in Docker. Run from inside the devcontainer (its docker-in-docker feature supplies
+# the daemon `act` needs) via: act -W .github/workflows/design-system-ci.yml pull_request
+#
+# GitHub's ubuntu-latest hosted runner has far more preinstalled tooling than act's default
+# minimal image, and this repo's CI relies on some of it (corepack, actions/setup-node's
+# caching). catthehacker/ubuntu:act-latest is the closest published equivalent — using the
+# default image here would fail on missing tools that have nothing to do with this repo's
+# actual gates.
+-P ubuntu-latest=catthehacker/ubuntu:act-latest
