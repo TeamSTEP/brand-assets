@@ -1,0 +1,15 @@
+.ds-bbs-panel-iframe {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  min-height: 220px;
+  border-radius: var(--radius-card-sm);
+}
+
+.ds-bbs-panel-iframe__frame {
+  display: block;
+  width: 100%;
+  min-height: 220px;
+  border: 0;
+  filter: brightness(0.85) saturate(0.65) hue-rotate(225deg);
+}

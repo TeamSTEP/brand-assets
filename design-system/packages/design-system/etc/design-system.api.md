@@ -6,6 +6,7 @@
 
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import { ReactNode } from 'react';
+import { RefObject } from 'react';
 
 // @public (undocumented)
 export function Badge(input: BadgeProps): react_jsx_runtime.JSX.Element;
@@ -18,6 +19,58 @@ export interface BadgeProps {
 
 // @public
 export type BadgeVariant = "main-quest" | "side-quest" | "legacy" | "in-development";
+
+// @public
+export function BBSPanelAPI(input: BBSPanelAPIProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface BBSPanelAPIProps {
+    // (undocumented)
+    posts: UnifiedPost[];
+}
+
+// @public
+export function BBSPanelIframe(input: BBSPanelIframeProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface BBSPanelIframeProps {
+    // (undocumented)
+    serverId: string;
+    // (undocumented)
+    title: string;
+}
+
+// @public (undocumented)
+export interface BBSTab {
+    // (undocumented)
+    badge: BBSTabBadge;
+    // (undocumented)
+    desktopLabel: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    mobileLabel: string;
+}
+
+// @public (undocumented)
+export type BBSTabBadge = "api" | "widget";
+
+// @public
+export function BBSTerminal(input: BBSTerminalProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface BBSTerminalProps {
+    // (undocumented)
+    activeTabId: string;
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    onTabChange: (tabId: string) => void;
+    // (undocumented)
+    tabs: BBSTab[];
+    // (undocumented)
+    title: string;
+}
 
 // @public (undocumented)
 export function Cta(input: CtaProps): react_jsx_runtime.JSX.Element;
@@ -42,6 +95,7 @@ export function DialogueBox(input: DialogueBoxProps): react_jsx_runtime.JSX.Elem
 
 // @public (undocumented)
 export interface DialogueBoxProps {
+    animated?: boolean;
     // (undocumented)
     avatarAlt: string;
     // (undocumented)
@@ -49,6 +103,9 @@ export interface DialogueBoxProps {
     // (undocumented)
     text: string;
 }
+
+// @public (undocumented)
+export type FeedPlatform = "bluesky" | "substack" | "youtube";
 
 // @public
 export function Footer(input: FooterProps): react_jsx_runtime.JSX.Element;
@@ -136,6 +193,7 @@ export interface HeroProps {
     ctaLabel?: string;
     // (undocumented)
     eyebrow: string;
+    logoAnimated?: boolean;
     // (undocumented)
     logoMarkAlt: string;
     // (undocumented)
@@ -144,6 +202,46 @@ export interface HeroProps {
     tagline: string;
     // (undocumented)
     title: string;
+}
+
+// @public
+export function NavDesktop(input: NavDesktopProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface NavDesktopLink {
+    // (undocumented)
+    href: string;
+    // (undocumented)
+    label: string;
+}
+
+// @public (undocumented)
+export interface NavDesktopProps {
+    // (undocumented)
+    contactHref: string;
+    // (undocumented)
+    links: NavDesktopLink[];
+    // (undocumented)
+    logoAlt: string;
+    // (undocumented)
+    logoSrc: string;
+}
+
+// @public
+export function NavHUD(input: NavHUDProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface NavHUDItem {
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    sectionId: string;
+}
+
+// @public (undocumented)
+export interface NavHUDProps {
+    // (undocumented)
+    items: NavHUDItem[];
 }
 
 // @public
@@ -194,6 +292,91 @@ export interface ServiceCardProps {
     onInspect: () => void;
     // (undocumented)
     title: string;
+}
+
+// @public
+export function ServiceInspectPanel(input: ServiceInspectPanelProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface ServiceInspectPanelProps {
+    // (undocumented)
+    contactHref: string;
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    open: boolean;
+    // (undocumented)
+    title: string;
+}
+
+// @public
+export function SocialFeed(input: SocialFeedProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface SocialFeedProps {
+    // (undocumented)
+    discordServerId: string;
+    // (undocumented)
+    fetchEndpoint?: string;
+}
+
+// @public (undocumented)
+export type SocialFeedTab = FeedPlatform | "discord";
+
+// @public
+export interface UnifiedPost {
+    // (undocumented)
+    author: string;
+    date: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    platform: FeedPlatform;
+    // (undocumented)
+    text: string;
+    thumb?: string;
+    // (undocumented)
+    url: string;
+}
+
+// @public
+export function useIdleFloat<T extends HTMLElement>(ref: RefObject<T | null>, enabled?: boolean): void;
+
+// @public
+export function useInView<T extends Element>(ref: RefObject<T | null>, input?: UseInViewOptions): boolean;
+
+// @public (undocumented)
+export interface UseInViewOptions {
+    once?: boolean;
+    // (undocumented)
+    rootMargin?: string;
+    // (undocumented)
+    threshold?: number | number[];
+}
+
+// @public
+export function useTypewriter(text: string, input?: UseTypewriterOptions): string;
+
+// @public (undocumented)
+export interface UseTypewriterOptions {
+    // (undocumented)
+    enabled?: boolean;
+    speed?: number;
+}
+
+// @public
+export function VideoFacade(input: VideoFacadeProps): react_jsx_runtime.JSX.Element;
+
+// @public (undocumented)
+export interface VideoFacadeProps {
+    loopSrc?: string;
+    // (undocumented)
+    posterAlt: string;
+    // (undocumented)
+    posterSrc: string;
+    trailerUrl?: string;
 }
 
 // @public

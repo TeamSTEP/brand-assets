@@ -7,11 +7,14 @@ import { usePrefersReducedMotion } from "./usePrefersReducedMotion.js";
  *
  * @public
  */
-export function useIdleFloat<T extends HTMLElement>(ref: RefObject<T | null>): void {
+export function useIdleFloat<T extends HTMLElement>(
+  ref: RefObject<T | null>,
+  enabled = true,
+): void {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (prefersReducedMotion) {
+    if (!enabled || prefersReducedMotion) {
       return;
     }
 
@@ -27,5 +30,5 @@ export function useIdleFloat<T extends HTMLElement>(ref: RefObject<T | null>): v
     );
 
     return () => controls.stop();
-  }, [prefersReducedMotion, ref]);
+  }, [enabled, prefersReducedMotion, ref]);
 }

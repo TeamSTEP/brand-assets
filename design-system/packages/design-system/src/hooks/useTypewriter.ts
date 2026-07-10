@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion.js";
 
+/** @public */
 export interface UseTypewriterOptions {
   enabled?: boolean;
   /** Milliseconds per character. */

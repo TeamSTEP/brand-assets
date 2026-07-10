@@ -1,6 +1,7 @@
 import { useEffect, useState, type RefObject } from "react";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion.js";
 
+/** @public */
 export interface UseInViewOptions {
   /** Fire only the first time the element enters the viewport. */
   once?: boolean;

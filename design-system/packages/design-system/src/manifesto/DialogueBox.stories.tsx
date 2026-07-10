@@ -29,6 +29,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     text: "Creativity is a human right. One step at a time. We're building the home for the indie game world.",
+    animated: false,
   },
 };
 
@@ -44,5 +45,6 @@ export const Narrow: Story = {
   ],
   args: {
     text: "Creativity is a human right. One step at a time. We're building the home for the indie game world.",
+    animated: false,
   },
 };

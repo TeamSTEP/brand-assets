@@ -1,3 +1,6 @@
+import { useRef } from "react";
+import { useInView } from "../hooks/useInView.js";
+import { useTypewriter } from "../hooks/useTypewriter.js";
 import "./DialogueBox.css";
 
 /** @public */
@@ -5,22 +8,30 @@ export interface DialogueBoxProps {
   avatarSrc: string;
   avatarAlt: string;
   text: string;
+  /** Typewriter-on-first-view. Defaults to `true`; reduced motion shows full text immediately. */
+  animated?: boolean;
 }
 
 /**
- * NPC-style dialogue box for the Manifesto section,
- * with the studio logo mark as the speaker avatar. This is the static shell only — the
- * spec's typewriter-on-first-scroll effect is a scroll-triggered animation that belongs in
- * a hook (`useTypewriter`, per the architecture proposal §4), added in a later pass once
- * interactive components are in scope. Renders the full text immediately.
+ * NPC-style dialogue box for the Manifesto section. Typewriter reveal triggers on first
+ * scroll into view when `animated` is true (the default).
  *
  * @public
  */
-export function DialogueBox({ avatarSrc, avatarAlt, text }: DialogueBoxProps) {
+export function DialogueBox({
+  avatarSrc,
+  avatarAlt,
+  text,
+  animated = true,
+}: DialogueBoxProps) {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(boxRef, { once: true, threshold: 0.35 });
+  const displayedText = useTypewriter(text, { enabled: animated && isInView });
+
   return (
-    <div className="ds-dialogue-box">
+    <div ref={boxRef} className="ds-dialogue-box">
       <img className="ds-dialogue-box__avatar" src={avatarSrc} alt={avatarAlt} />
-      <p className="ds-dialogue-box__text">{text}</p>
+      <p className="ds-dialogue-box__text">{displayedText}</p>
     </div>
   );
 }

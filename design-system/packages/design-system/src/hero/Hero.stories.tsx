@@ -17,6 +17,7 @@ const meta: Meta<typeof Hero> = {
     ctaHref: "#quest-log",
     logoMarkSrc: PLACEHOLDER_LOGO,
     logoMarkAlt: "Team STEP logo mark",
+    logoAnimated: false,
   },
 };
 

@@ -38,7 +38,7 @@ for (const story of stories) {
     test(`${story.title} > ${story.name} @ ${viewport.name}`, async ({ page }) => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto(`/iframe.html?id=${story.id}&viewMode=story`);
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
 
       const accessibilityScanResults = await new AxeBuilder({ page })
         // These rules check document-level page structure (one <main>, one <h1>, all content
@@ -50,7 +50,9 @@ for (const story of stories) {
         .analyze();
       expect(accessibilityScanResults.violations).toEqual([]);
 
-      await expect(page).toHaveScreenshot(`${story.id}-${viewport.name}.png`);
+      await expect(page).toHaveScreenshot(`${story.id}-${viewport.name}.png`, {
+        animations: "disabled",
+      });
     });
   }
 }

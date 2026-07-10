@@ -1,0 +1,64 @@
+.ds-nav-desktop {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: 64px;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    backdrop-filter 0.2s ease;
+}
+
+@media (width >= 768px) {
+  .ds-nav-desktop {
+    display: block;
+  }
+}
+
+.ds-nav-desktop--scrolled {
+  border-bottom-color: var(--color-border-default);
+  background: color-mix(in srgb, var(--color-background) 80%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.ds-nav-desktop__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  max-width: 1280px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.ds-nav-desktop__logo img {
+  display: block;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.ds-nav-desktop__links {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  gap: var(--spacing-lg);
+}
+
+.ds-nav-desktop__link {
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.ds-nav-desktop__link:hover,
+.ds-nav-desktop__link:focus-visible {
+  color: var(--color-accent-primary);
+}

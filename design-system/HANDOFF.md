@@ -15,7 +15,7 @@ spacing, radius, and font-family tiers, primitive → semantic layered per CLAUD
 `component.json` is still `{}` — nothing built so far has needed a value different from its
 semantic role, so no component-tier tokens exist yet. That's a correct, not a lazy, state.
 
-**Components** (12, all exported from the single barrel `src/index.ts`):
+**Components** (22, all exported from the single barrel `src/index.ts`):
 
 | Component | Path | Notes |
 |---|---|---|
@@ -29,13 +29,23 @@ semantic role, so no component-tier tokens exist yet. That's a correct, not a la
 | `DialogueBox` | `src/manifesto/` | Static shell only — typewriter deferred to Stage A (see §4 D2) |
 | `Hero` | `src/hero/` | 80vh section shell; composes `PixelGrid` + `Cta`; logo float deferred to Stage A |
 | `Footer` | `src/footer/` | End-credits shell; closed `FooterSocialPlatform` union |
+| `VideoFacade` | `src/quest-log/` | Poster/loop + click-to-load YouTube iframe |
+| `ServiceInspectPanel` | `src/services/` | Modal/bottom sheet; consumer owns `open`/`onClose` |
+| `NavDesktop` | `src/nav/` | Sticky desktop top bar; internal scroll frost |
+| `NavHUD` | `src/nav/` | Mobile bottom HUD; `IntersectionObserver` active section |
+| `BBSTerminal` | `src/bbs/` | Terminal chrome + tab bar |
+| `BBSPanelAPI` | `src/bbs/` | API feed renderer (`UnifiedPost[]`) |
+| `BBSPanelIframe` | `src/bbs/` | Discord widget + CSS filter |
+| `SocialFeed` | `src/bbs/` | Tab switching + per-platform fetch cache |
+
+**Hooks** (exported): `useInView`, `useTypewriter`, `useIdleFloat`
 
 Every component: closed variant props (no `className`/`style` passthrough — verified by
 grep, zero hits), asymmetric corner-radius tokens only, `@public` TSDoc tags, a Storybook
 story per meaningful state, and a Playwright visual+a11y baseline per story per viewport
 (390/768/1280).
 
-**Current test surface**: 87 Playwright cases (a11y via axe + visual regression), all
+**Current test surface**: 117 Playwright cases (a11y via axe + visual regression), all
 green. `check-api`, `lint`, `check-types`, `build`, `build-storybook` all green.
 
 ---
@@ -178,29 +188,13 @@ Ordered; each stage assumes the previous is done. Adjust if priorities differ, b
 the deviation rather than silently reordering.
 
 ### Stage A — Interactive layer (hooks + stateful components)
-Everything deferred from the static-only build because it needs client-side state:
-- **`VideoFacade`**: poster image + play button; on click, swaps to a lazily-loaded YouTube
-  iframe. Needs `useState` for the clicked/not-clicked toggle. Once built, `GameCardFeatured`
-  needs **no changes** — its `media` slot already accepts any `ReactNode`.
-- **`useTypewriter`** hook + wiring into `DialogueBox`: scroll-triggered reveal-on-first-view,
-  per wireframe reference. **`animated?: boolean` defaults to `true`** (§4 D2); reduced-motion
-  shows full text immediately.
-- **`ServiceInspectPanel`**: slide-up modal (desktop) / bottom sheet (mobile) opened by
-  `ServiceCard`'s `onInspect` — separate component, consumer holds `open`/`onClose` state (§4 D4).
-- **`NavDesktop`** / **`NavHUD`**: sticky top bar (desktop) / bottom HUD (mobile) — NavHUD
-  needs `useInView`/`IntersectionObserver` for active-section highlighting. `NavDesktop` owns
-  scroll frost internally (§4 B2).
-- **`SocialFeed`**: tab switching + per-platform fetch caching (`useState`/`useRef`). Note:
-  per the architecture proposal, this component takes a `fetchEndpoint` prop and does a plain
-  `fetch()` — it must not know the endpoint is an Astro server route. Keep that boundary.
-- **`BBSTerminal`**, **`BBSPanelAPI`**, **`BBSPanelIframe`**: terminal chrome, branded feed
-  rendering, and the CSS-filtered Discord iframe. Not started. Safari filter verification is a
-  manual release checklist item, not CI (§4 B3).
-- **Logo idle-float** (`useIdleFloat`): used in Hero. Depends on Hero existing first (Stage B).
-- **Cursor trail**: **not in this package** — consumer Astro island (§4 D3).
-- All animation hooks must respect `prefers-reduced-motion` **inside the hook itself**, not
-  per call site (explicit architecture-doc requirement) — enforce this in review, it's easy
-  for an agent to forget on a second or third hook after getting it right on the first.
+**Complete (2026-07-10).** Cursor trail remains consumer-side (§4 D3).
+- **Hooks** (`src/hooks/`): `useInView`, `useTypewriter`, `useIdleFloat`, internal `usePrefersReducedMotion`
+- **`VideoFacade`**, **`ServiceInspectPanel`**, **`NavDesktop`**, **`NavHUD`**
+- **`BBSTerminal`**, **`BBSPanelAPI`**, **`BBSPanelIframe`**, **`SocialFeed`** + `UnifiedPost` type
+- **`DialogueBox`**: `animated?: boolean` default `true` (stories use `false` for stable Playwright baselines)
+- **`Hero`**: `useIdleFloat` via `logoAnimated?: boolean` default `true` (story uses `false` for baselines)
+- **`motion`** added as peer dependency; visual tests use `animations: "disabled"` + `domcontentloaded` wait
 
 ### Stage B — Remaining static shells
 **Complete (2026-07-10):** `Hero` and `Footer` shipped (§4 D1).

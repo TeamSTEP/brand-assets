@@ -74,7 +74,7 @@
 .ds-hero__scroll--mobile {
   display: block;
   margin: var(--spacing-sm) 0 0;
-  color: var(--color-text-tertiary);
+  color: var(--color-text-primary);
   font-family: var(--font-family-body);
   font-size: clamp(11px, 2cqi, 12px);
   letter-spacing: 0.08em;
@@ -98,7 +98,7 @@
 }
 
 .ds-hero__scroll-label {
-  color: var(--color-text-tertiary);
+  color: var(--color-text-primary);
   font-family: var(--font-family-body);
   font-size: clamp(10px, 1.8cqi, 11px);
   letter-spacing: 0.12em;

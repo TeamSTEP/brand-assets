@@ -26,9 +26,6 @@ importers:
 
   packages/design-system:
     dependencies:
-      motion:
-        specifier: ^12.42.2
-        version: 12.42.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react:
         specifier: ^19.0.0
         version: 19.2.7
@@ -75,6 +72,9 @@ importers:
       http-server:
         specifier: ^14.1.1
         version: 14.1.1
+      motion:
+        specifier: ^12.42.2
+        version: 12.42.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       storybook:
         specifier: ^10.4.6
         version: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.2)(prettier@3.9.4)(react@19.2.7)
