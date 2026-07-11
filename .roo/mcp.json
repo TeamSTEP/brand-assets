@@ -42,16 +42,6 @@
 				"searxng_instance_info"
 			],
 			"disabled": false
-		},
-		"litellm-git-mcp": {
-			"type": "streamable-http",
-			"url": "https://gitmcp.io/BerriAI/litellm",
-			"alwaysAllow": [
-				"search_litellm_documentation",
-				"fetch_litellm_documentation",
-				"search_litellm_code",
-				"fetch_generic_url_content"
-			]
 		}
 	}
 }
