@@ -1,9 +1,5 @@
-.ds-game-card-featured {
-  container-type: inline-size;
+.ds-game-card-featured__layout {
   overflow: hidden;
-  background: var(--color-surface);
-  border-top: 2px solid var(--color-game-green);
-  border-radius: var(--radius-card-lg);
 }
 
 .ds-game-card-featured__header {

@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
-import { Cta } from "../ui/Cta.js";
+import { Card } from "../primitives/Card.js";
+import { Cta } from "../primitives/Cta.js";
+import { IconButton } from "../primitives/IconButton.js";
 import "./ServiceInspectPanel.css";
 
 /**
@@ -63,19 +65,16 @@ export function ServiceInspectPanel({
       }}
     >
       <div className="ds-service-inspect-panel__sheet">
-        <button
-          type="button"
-          className="ds-service-inspect-panel__close"
-          aria-label="Close inspect panel"
-          onClick={onClose}
-        >
-          ×
-        </button>
-        <h2 className="ds-service-inspect-panel__title">{title}</h2>
-        <p className="ds-service-inspect-panel__description">{description}</p>
-        <Cta variant="secondary" href={contactHref}>
-          GET IN TOUCH →
-        </Cta>
+        <Card size="md">
+          <IconButton size="sm" aria-label="Close inspect panel" onClick={onClose}>
+            ×
+          </IconButton>
+          <h2 className="ds-service-inspect-panel__title">{title}</h2>
+          <p className="ds-service-inspect-panel__description">{description}</p>
+          <Cta variant="secondary" href={contactHref}>
+            GET IN TOUCH →
+          </Cta>
+        </Card>
       </div>
     </dialog>
   );

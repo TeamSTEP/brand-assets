@@ -107,17 +107,17 @@
     "card-sm": {
       "$value": "{radius.tight} {radius.300} {radius.tight} {radius.300}",
       "$type": "dimension",
-      "$description": "Asymmetric radius for archive cards, service cards."
+      "$description": "Asymmetric radius for compact card surfaces."
     },
     "card-md": {
       "$value": "{radius.tight} {radius.400} {radius.tight} {radius.400}",
       "$type": "dimension",
-      "$description": "Asymmetric radius for dialogue boxes."
+      "$description": "Asymmetric radius for medium card surfaces."
     },
     "card-lg": {
       "$value": "{radius.tight} {radius.500} {radius.tight} {radius.500}",
       "$type": "dimension",
-      "$description": "Asymmetric radius for the featured game card."
+      "$description": "Asymmetric radius for large featured card surfaces."
     }
   },
   "font": {

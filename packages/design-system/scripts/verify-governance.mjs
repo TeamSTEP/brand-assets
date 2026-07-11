@@ -90,6 +90,90 @@ let failed = false;
   }
 }
 
+// Probe 3: IconButton.css must also be covered by declaration-strict-value.
+{
+  const cssPath = path.join(pkgRoot, "src/primitives/IconButton.css");
+  const result = withTemporaryEdit(
+    cssPath,
+    (css) => css.replace("color: var(--color-text-primary);", "color: #ff00ff;"),
+    () => run('pnpm exec stylelint "src/**/*.css"'),
+  );
+  if (result.ok) {
+    failed = true;
+    console.error(
+      "FAIL - a hardcoded #ff00ff color in IconButton.css did NOT fail stylelint. " +
+        "declaration-strict-value has a gap — this is a real governance regression, not a test bug.",
+    );
+  } else {
+    console.log("ok  - hardcoded color in IconButton.css is caught by stylelint");
+  }
+}
+
+// Probe 4: Card.css must also be covered by declaration-strict-value.
+{
+  const cssPath = path.join(pkgRoot, "src/primitives/Card.css");
+  const result = withTemporaryEdit(
+    cssPath,
+    (css) => css.replace("background: var(--color-surface);", "background: #ff00ff;"),
+    () => run('pnpm exec stylelint "src/**/*.css"'),
+  );
+  if (result.ok) {
+    failed = true;
+    console.error(
+      "FAIL - a hardcoded #ff00ff background in Card.css did NOT fail stylelint. " +
+        "declaration-strict-value has a gap — this is a real governance regression, not a test bug.",
+    );
+  } else {
+    console.log("ok  - hardcoded background in Card.css is caught by stylelint");
+  }
+}
+
+// Probe 5: IconButton exported type missing @public must fail check-api.
+{
+  const tsxPath = path.join(pkgRoot, "src/primitives/IconButton.tsx");
+  const result = withTemporaryEdit(
+    tsxPath,
+    (src) => src.replace(" * @public\n */\nexport type IconButtonSize", " */\nexport type IconButtonSize"),
+    () => {
+      const build = run("pnpm run build");
+      if (!build.ok) return build;
+      return run("pnpm exec api-extractor run --verbose");
+    },
+  );
+  if (result.ok) {
+    failed = true;
+    console.error(
+      "FAIL - removing @public from IconButtonSize did NOT fail check-api. " +
+        "ae-missing-release-tag has a gap — this is a real governance regression, not a test bug.",
+    );
+  } else {
+    console.log("ok  - a missing @public release tag on IconButtonSize is caught by check-api");
+  }
+}
+
+// Probe 6: Card exported type missing @public must fail check-api.
+{
+  const tsxPath = path.join(pkgRoot, "src/primitives/Card.tsx");
+  const result = withTemporaryEdit(
+    tsxPath,
+    (src) => src.replace(" * @public\n */\nexport type CardSize", " */\nexport type CardSize"),
+    () => {
+      const build = run("pnpm run build");
+      if (!build.ok) return build;
+      return run("pnpm exec api-extractor run --verbose");
+    },
+  );
+  if (result.ok) {
+    failed = true;
+    console.error(
+      "FAIL - removing @public from CardSize did NOT fail check-api. " +
+        "ae-missing-release-tag has a gap — this is a real governance regression, not a test bug.",
+    );
+  } else {
+    console.log("ok  - a missing @public release tag on CardSize is caught by check-api");
+  }
+}
+
 // Rebuild once more so a subsequent `check-api` step in the same CI run (or a local re-run)
 // sees dist/ reflecting the real, unmutated source rather than whatever the last probe left
 // mid-build.
