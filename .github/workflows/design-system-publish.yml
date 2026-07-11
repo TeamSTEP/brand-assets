@@ -45,3 +45,60 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Builds and deploys the Storybook docs site to GitHub Pages. Independent of the
+  # `release` job above (no `needs:`) — it deploys whatever Storybook looks like at this
+  # commit regardless of whether there happened to be a changeset to version/publish, so
+  # it runs in parallel rather than waiting on release to finish.
+  pages-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: corepack enable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+
+      # build-storybook depends on build:tokens internally (see the design-system
+      # package.json script) — turbo runs it fresh from the current tokens/*.json, it
+      # never reuses a stale storybook-static/ from a previous local run.
+      - run: pnpm turbo run build-storybook
+
+      # Wires up the Pages environment (sets the correct base URL for the artifact,
+      # enables the "pages build and deployment" run) — required once per job before
+      # upload-pages-artifact, even though this workflow doesn't read its outputs.
+      - uses: actions/configure-pages@v5
+
+      # Storybook's static build already emits relative asset references, so it serves
+      # correctly whether Pages is at the repo's default <org>.github.io/brand-assets/
+      # path or a custom domain — no extra --base flag needed here.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: packages/design-system/storybook-static
+
+  pages-deploy:
+    needs: pages-build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    # Only one Pages deployment should ever be in flight — a second push while a deploy is
+    # running should replace it, not queue behind it. cancel-in-progress: false on the
+    # group instead: actions/deploy-pages needs the in-progress run to finish (or be
+    # gh-cancelled) rather than yanked mid-upload, matching the official
+    # actions/deploy-pages guidance.
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
