@@ -1,5 +1,5 @@
 /**
- * Ban className/style on exported prop interfaces — enforces CLAUDE.md closed API rule.
+ * Ban className/style on exported prop interfaces — enforces the closed API rule (see AGENTS.md).
  *
  * Follows `extends` heritage clauses and intersection/union types so a prop shape that
  * reaches className/style only indirectly (`interface FooProps extends WithClassName {}`,

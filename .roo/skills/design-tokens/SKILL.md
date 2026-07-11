@@ -18,7 +18,7 @@ Tokens flow one-way: `tokens/primitive.json` → `tokens/semantic.json` → `tok
 
 ## The Rule: Never Skip a Tier
 
-A component's CSS references a **semantic** token (`var(--color-text-primary)`), which resolves to a **primitive** (`{color.ice}`). A component must never reference a primitive directly, and must never hardcode a hex/rgb value — `stylelint`'s `scale-unlimited/declaration-strict-value` rule blocks this for color properties today (not yet spacing/radius — don't treat that gap as license to hardcode those either; extend the rule instead once those tiers exist).
+A component's CSS references a **semantic** token (`var(--color-text-primary)`), which resolves to a **primitive** (`{color.ice}`). A component must never reference a primitive directly, and must never hardcode a raw literal — `stylelint`'s `scale-unlimited/declaration-strict-value` rule (defined in `@teamstep/stylelint-config`, not this package) enforces this per-property, for whichever tiers currently have tokens. Check that config's rule list before assuming a property is or isn't covered — don't infer scope from this doc, since the enforced property list changes independently of it.
 
 ```json
 // tokens/primitive.json — raw value + description of what it physically is
@@ -47,7 +47,7 @@ If a component needs a color the semantic tier doesn't have: add a new semantic 
 
 - Background is always `--color-background` (void) or `--color-background-recessed` (void-deep). Never introduce a lighter background token.
 - `green`/`green-hi` (game-world "main quest" accent) and any future game-world colors are scoped to their game-card context — don't reference them from a general-purpose component just because they're available.
-- Corner radius follows the top-left + bottom-right pattern (`2px 12px 2px 12px`, scaled by size) — never all four corners. If/when a radius token tier exists, model it the same way spacing will be: primitive → semantic, not raw values in component CSS.
+- Corner radius follows the top-left + bottom-right pattern (`2px 12px 2px 12px`, scaled by size) — never all four corners. Radius, like color, is a token: reference the semantic radius tier (e.g. `--radius-card-sm`), never a raw value in component CSS.
 
 ## Contrast Is a Real Gate, Not a Suggestion
 

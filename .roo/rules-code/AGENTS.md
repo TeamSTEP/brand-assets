@@ -5,7 +5,7 @@
 - **Every exported type/function needs `@public` TSDoc** — enforced by `ae-missing-release-tag` in [`api-extractor.json`](packages/design-system/api-extractor.json:22). Missing it causes `verify-governance` to fail CI by injecting a real violation into `Badge.tsx`.
 - **Responsiveness uses container queries** (`container-type: inline-size` + `@container`), never media queries. Every component must be correct at 390/768/1280px.
 - **BEM class naming**: all classes must match `^ds-[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$` with `ds-` prefix.
-- **No raw hex/rgb in component CSS** (except `src/effects/**`). Every color must be `var(--color-*)`. Stylelint `scale-unlimited/declaration-strict-value` enforces this.
+- **No raw literals in component CSS** (except `src/effects/**`) for any property with a token tier — color, spacing, and radius today, more as tiers are added. Reference `var(--token)` instead. Stylelint's `scale-unlimited/declaration-strict-value` (in `@teamstep/stylelint-config`) enforces this; check that config for the current property list rather than assuming.
 - **Tokens are one-way**: edit DTCG JSON → run `build:tokens`. Never hand-edit generated `src/tokens/tokens.css` or `tokens.ts`. Style Dictionary merge order is explicit (`primitive.json` → `semantic.json` → `component.json`), not glob — glob would sort `component.json` first and break the merge.
 - **Asymmetric border-radius only** — top-left + bottom-right (`2px 12px 2px 12px` pattern). Use semantic tokens like `--radius-card-sm`, `--radius-chip-md`. Never uniform corners.
 - **`motion` is peer dependency**, not bundled — don't import it in tsup's external list incorrectly or mark it as a dependency.

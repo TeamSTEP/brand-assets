@@ -8,7 +8,7 @@
 //   - text tokens: every `--color-*` token actually used via a `color:` declaration
 //     anywhere in src/**/*.css (excludes border-color/background-color/outline-color/etc.
 //     via the anchored regex below).
-//   - background tokens: the fixed set of tokens CLAUDE.md's brand rule sanctions as page
+//   - background tokens: the fixed set of tokens AGENTS.md's brand rule sanctions as page
 //     backgrounds ("Background is always --color-void or darker"). Semantic text tokens are
 //     meant to be safe design-system-wide, so every discovered text token is checked against
 //     every sanctioned background, not just the specific pairing seen in each component.

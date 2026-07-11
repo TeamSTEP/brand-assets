@@ -3,7 +3,7 @@ import "../src/tokens/tokens.css";
 import "../src/fonts.css";
 
 // Matches the wireframe's desktop/mobile breakpoints (teamstep_final_wireframe_v2.html) —
-// every story gets checked at these three widths before merge, per CLAUDE.md step 6.
+// every story gets checked at these three widths before merge — see AGENTS.md's Components section.
 const preview: Preview = {
   parameters: {
     // @storybook/addon-a11y runs its own automatic axe-core scan on every story render

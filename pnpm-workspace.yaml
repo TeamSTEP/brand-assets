@@ -1,7 +1,7 @@
 packages:
   - "packages/*"
 
-# Supply-chain hardening (CLAUDE.md step 9). An agent suggesting/installing a newly published
+# Supply-chain hardening (see AGENTS.md CI/CD and review gates). An agent suggesting/installing a newly published
 # package doesn't get the pause a human naturally has before trusting it — these settings close
 # that gap structurally instead of relying on review discipline.
 minimumReleaseAge: 1440 # minutes (1 day) — v11 default, pinned explicitly rather than left implicit
@@ -23,11 +23,11 @@ trustPolicyExclude:
     # threat signal, for any well-known package encountered this way.
 
 # Explicit allowlist for postinstall scripts — replaces the old package.json "pnpm.onlyBuiltDependencies"
-# array, which pnpm 11 no longer reads at all (see CLAUDE.md step 9).
+# array, which pnpm 11 no longer reads at all (see AGENTS.md).
 allowBuilds:
   esbuild: true
 
-# Forces every transitive resolution of esbuild to the patched version. `pnpm audit` (step 9) found
+# Forces every transitive resolution of esbuild to the patched version. `pnpm audit` found
 # GHSA-g7r4-m6w7-qqqr (low severity, Windows dev-server-only file read) via several Storybook/Vite
 # transitive chains that hadn't picked up 0.28.1 yet even though other parts of the tree already had.
 overrides:

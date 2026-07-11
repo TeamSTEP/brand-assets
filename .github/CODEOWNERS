@@ -1,4 +1,4 @@
-# CODEOWNERS — see CLAUDE.md "Standing rules" for why this exists: it's the enforcement
+# CODEOWNERS — see AGENTS.md "CI/CD and review gates" for why this exists: it's the enforcement
 # mechanism behind "any PR touching packages/design-system/src must have a clean test-visual
 # run reviewed before merge." Without a required reviewer, that rule is prose. Pair this file
 # with branch protection on `main` (repo Settings → Branches) requiring:
@@ -19,5 +19,6 @@
 /CONSUMER.md @hoonsubin
 
 # Governance document — changes here redefine the rules everything else is reviewed against,
-# so they warrant the same scrutiny as the code they govern.
-/CLAUDE.md @hoonsubin
+# so they warrant the same scrutiny as the code they govern. CLAUDE.md is a stub pointing at
+# AGENTS.md and doesn't need this same scrutiny, so it's deliberately not listed here.
+/AGENTS.md @hoonsubin
