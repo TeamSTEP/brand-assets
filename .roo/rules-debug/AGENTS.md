@@ -1,0 +1,11 @@
+# Debug Mode Rules (Non-Obvious Only)
+
+- **Visual baselines are OS/font-rendering sensitive.** Local macOS snapshots won't match CI's ubuntu-latest baselines. Regenerate via `workflow_dispatch` with `update-snapshots: true` on [`design-system-ci.yml`](.github/workflows/design-system-ci.yml:9), download the `visual-snapshots` artifact.
+- **`test-visual` runs against built Storybook** (`storybook-static/`), not the dev server. If tests fail with "connection refused," ensure `pnpm run build-storybook` ran first.
+- **axe reports `color-contrast` as `incomplete`** (not `violations`) for text behind CSS gradients/overlays. If a story fails a11y with only `bgGradient`-tagged incompletes, the real check is `pnpm run check-contrast` — the DOM-independent WCAG ratio script.
+- **"Axe is already running" errors** mean the Storybook a11y addon's automatic scan collided with Playwright's AxeBuilder. The addon is set to `test: "off"` in [`.storybook/preview.ts`](packages/design-system/.storybook/preview.ts:17) — if this error reappears, the addon config was likely re-enabled.
+- **`verify-governance` injects real violations** into `Badge.css` and `Badge.tsx` to prove enforcement gates fire. If the probe says "didn't change the file," the target pattern in Badge moved — update the regex in [`verify-governance.mjs`](packages/design-system/scripts/verify-governance.mjs:13).
+- **`check-contrast` auto-discovers text tokens** from `color: var(--color-*)` declarations in `src/**/*.css`. If it reports "No color declarations found," the discovery regex may be broken — verify the anchored `^\s*color:\s*var\(--color-` pattern still matches the CSS.
+- **Single Playwright test isolation**: `cd packages/design-system && pnpm run build-storybook && pnpm exec playwright test --grep "Badge"`.
+- **`playwright.config.ts` uses `workers: 1`** — tests are `fullyParallel` within the single worker, but no cross-worker contention. Don't increase this without verifying AxeBuilder doesn't race.
+- **iframe content (Discord widget) is masked** from both visual comparison and axe scans. If a new iframe-based component is added, it needs the same treatment in [`stories.visual.spec.ts`](packages/design-system/tests/stories.visual.spec.ts:1).
