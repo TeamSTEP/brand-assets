@@ -1,11 +1,7 @@
 #!/usr/bin/env node
-// Automates the adversarial governance probes HANDOFF.md described as manual, "next agent
-// please re-run this by hand" instructions (§8). A probe that only exists as prose is exactly
-// the thing that goes stale unnoticed — HANDOFF claimed these were "confirmed working" as of a
-// specific date, and there was no way to know if that was still true without an agent manually
-// redoing the same steps. This runs both probes on every CI run instead: injects a real
-// violation into a real component file, asserts the relevant gate fails, then restores the
-// file byte-for-byte no matter what (even if the probe itself throws).
+// Runs adversarial governance probes on every CI run: injects a real violation into a real
+// component file, asserts the relevant gate fails, then restores the file byte-for-byte no
+// matter what (even if the probe itself throws).
 //
 // Both probes target components chosen only because they already contain the exact patterns
 // needed (a `color:` declaration to corrupt, an `@public` tag to strip) — not because Badge is
@@ -51,8 +47,7 @@ function withTemporaryEdit(filePath, transform, probe) {
 
 let failed = false;
 
-// Probe 1 (HANDOFF §8.1/§8.4): a hardcoded color must fail stylelint's
-// `scale-unlimited/declaration-strict-value` gate.
+// Probe 1: a hardcoded color must fail stylelint's `scale-unlimited/declaration-strict-value` gate.
 {
   const cssPath = path.join(pkgRoot, "src/quest-log/Badge.css");
   const result = withTemporaryEdit(
@@ -71,9 +66,8 @@ let failed = false;
   }
 }
 
-// Probe 2 (HANDOFF §8.4): an exported type missing its `@public` TSDoc tag must fail
-// check-api's `ae-missing-release-tag` gate (requires a fresh build for the .d.ts to reflect
-// the missing tag).
+// Probe 2: an exported type missing its `@public` TSDoc tag must fail check-api's
+// `ae-missing-release-tag` gate (requires a fresh build for the .d.ts to reflect the missing tag).
 {
   const tsxPath = path.join(pkgRoot, "src/quest-log/Badge.tsx");
   const result = withTemporaryEdit(

@@ -1,6 +1,6 @@
 # Pinned to the same Playwright version this repo resolves in pnpm-lock.yaml
 # (@playwright/test@1.61.1) so screenshots taken in here match the ones CI produces on
-# ubuntu-latest — see CLAUDE.md's test-visual section and the incident that motivated this:
+# ubuntu-latest — see AGENTS.md's Testing gotchas section and the incident that motivated this:
 # baselines regenerated on a Mac don't match Linux-rendered screenshots byte-for-byte.
 FROM mcr.microsoft.com/playwright:v1.61.1-noble
 

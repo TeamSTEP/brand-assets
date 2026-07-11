@@ -26,7 +26,7 @@ const index = JSON.parse(fs.readFileSync(indexPath, "utf-8")) as StoryIndex;
 const stories = Object.values(index.entries).filter((entry) => entry.type === "story");
 
 // Matches the wireframe's desktop/mobile breakpoints and the Storybook viewport presets
-// configured in .storybook/preview.ts (CLAUDE.md step 6).
+// configured in .storybook/preview.ts (see AGENTS.md Testing gotchas).
 const VIEWPORTS = [
   { name: "mobile", width: 390, height: 844 },
   { name: "tablet", width: 768, height: 1024 },

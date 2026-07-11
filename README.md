@@ -3,7 +3,7 @@
 `@teamstep/design-system` — a versioned, Storybook-documented component + token library for
 the Team STEP brand — plus the raw brand assets in [`brand-assets/`](brand-assets/). Storybook
 is the docs site; there is no separate app. Full architectural context and locked scope
-decisions live in [CLAUDE.md](CLAUDE.md) — read it before adding components, editing tokens, or
+decisions live in [AGENTS.md](AGENTS.md) — read it before adding components, editing tokens, or
 touching CI/tooling config.
 
 ```

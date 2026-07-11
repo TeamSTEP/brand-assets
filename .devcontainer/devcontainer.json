@@ -20,7 +20,7 @@
     }
   },
   "remoteEnv": {
-    // pnpm-workspace.yaml's minimumReleaseAge/trustPolicy gates (see CLAUDE.md) apply the
+    // pnpm-workspace.yaml's minimumReleaseAge/trustPolicy gates (see AGENTS.md) apply the
     // same inside the container — this only affects act's own bookkeeping, not those gates.
     "CI": "false"
   }

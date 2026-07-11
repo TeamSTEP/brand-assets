@@ -5,7 +5,7 @@
  * silently falls back to whatever generic sans-serif the host OS happens to have —
  * different per machine, which made the Playwright visual-regression baselines
  * impossible to reproduce deterministically across environments (see incident log in
- * CLAUDE.md's test-visual section). Importing this file is what actually loads the
+ * AGENTS.md Testing gotchas). Importing this file is what actually loads the
  * fonts; only the weights/styles used by component CSS are pulled in, not full families.
  */
 @import url("@fontsource/rajdhani/400.css"); /* heading default weight */

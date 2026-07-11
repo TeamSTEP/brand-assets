@@ -5,7 +5,7 @@ on:
   # actual ubuntu-latest runner and uploads them as an artifact (no auto-commit). Exists because
   # no local Docker image, however well-matched, reliably bit-matches GitHub's hosted runner's
   # font-rendering stack (fontconfig/freetype/harfbuzz point versions drift independently of the
-  # pinned Playwright/Chromium version) — see the test-visual section of CLAUDE.md. Trigger via
+  # pinned Playwright/Chromium version) — see AGENTS.md Testing gotchas. Trigger via
   # `gh workflow run design-system-ci.yml --ref <branch> -f update-snapshots=true`, download the
   # `visual-snapshots` artifact, and commit the changed PNGs like any other baseline update.
   workflow_dispatch:
@@ -59,7 +59,7 @@ jobs:
 
       # --frozen-lockfile: fail instead of silently updating the lockfile. Combined with the
       # minimumReleaseAge / trustPolicy / allowBuilds settings in pnpm-workspace.yaml, this is
-      # the supply-chain gate for the whole pipeline — see CLAUDE.md step 9.
+      # the supply-chain gate for the whole pipeline — see AGENTS.md CI/CD and review gates.
       - run: pnpm install --frozen-lockfile
 
       - id: audit

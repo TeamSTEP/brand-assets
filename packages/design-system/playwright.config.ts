@@ -28,7 +28,7 @@ export default defineConfig({
       // generated against) — observed consistently around a 1% pixel ratio for genuinely
       // unchanged stories, never higher. A real visual regression (broken layout, wrong color,
       // missing element) moves far more than 2% of pixels, so this doesn't hide real breakage;
-      // it only stops re-litigating rendering noise. See the test-visual section of CLAUDE.md.
+      // it only stops re-litigating rendering noise. See AGENTS.md Testing gotchas.
       maxDiffPixelRatio: 0.02,
     },
   },

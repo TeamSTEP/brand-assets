@@ -6,9 +6,9 @@
 //
 // These cases exist because the rule was originally AST-shallow: it only checked properties
 // declared directly on an exported interface/type body, so `className`/`style` reachable via
-// `extends` or an intersection type (`&`) passed lint with zero warnings — a real, silent gap
-// found during a governance audit (see HANDOFF.md). Cases 4-6 guard against the false
-// positives that came up while fixing that (generic utility types, plain aliases, unions).
+// `extends` or an intersection type (`&`) passed lint with zero warnings. Cases 4-6 guard
+// against the false positives that came up while fixing that (generic utility types, plain
+// aliases, unions).
 
 import { Linter } from "eslint";
 import tseslint from "typescript-eslint";
