@@ -41,6 +41,8 @@
 }
 
 .ds-bbs-terminal__tab {
+  /* Reset values mirror IconButton's unstyled-button reset (transparent bg, pointer cursor,
+     body font) — tabs keep their own bordered chrome. */
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-chip-sm);
   background: transparent;

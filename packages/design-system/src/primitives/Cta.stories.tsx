@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Cta } from "./Cta.js";
 
 const meta: Meta<typeof Cta> = {
-  title: "UI/Cta",
+  title: "Primitives/Cta",
   component: Cta,
   decorators: [
     (Story) => (

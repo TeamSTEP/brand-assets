@@ -13,30 +13,11 @@
   object-fit: cover;
 }
 
-.ds-video-facade__play {
+.ds-video-facade .ds-icon-button--lg {
   position: absolute;
   top: 50%;
   left: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: clamp(44px, 12cqi, 56px);
-  height: clamp(44px, 12cqi, 56px);
-  border: 1px solid var(--color-border-emphasis);
-  border-radius: 50%;
-  background: var(--color-surface);
-  color: var(--color-text-primary);
-  font-family: var(--font-family-body);
-  font-size: clamp(16px, 4cqi, 20px);
-  line-height: 1;
-  cursor: pointer;
   transform: translate(-50%, -50%);
-}
-
-.ds-video-facade__play:hover,
-.ds-video-facade__play:focus-visible {
-  border-color: var(--color-accent-primary);
-  color: var(--color-accent-primary);
 }
 
 .ds-video-facade__iframe {

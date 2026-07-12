@@ -1,11 +1,7 @@
-.ds-dialogue-box {
-  container-type: inline-size;
+.ds-dialogue-box__layout {
   max-width: 380px;
   margin: 0 auto;
   padding: var(--spacing-sm);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-card-md);
 }
 
 .ds-dialogue-box__avatar {

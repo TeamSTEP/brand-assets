@@ -60,6 +60,22 @@ export interface BBSTerminalProps {
 }
 
 // @public
+export function Card(input: CardProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export type CardAccent = "none" | "game-border" | "game-top";
+
+// @public
+export interface CardProps {
+    accent?: CardAccent;
+    children: ReactNode;
+    size: CardSize;
+}
+
+// @public
+export type CardSize = "sm" | "md" | "lg";
+
+// @public
 export function Cta(input: CtaProps): react_jsx_runtime.JSX.Element;
 
 // @public
@@ -157,6 +173,20 @@ export interface HeroProps {
     tagline: string;
     title: string;
 }
+
+// @public
+export function IconButton(input: IconButtonProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export interface IconButtonProps {
+    "aria-label": string;
+    children: ReactNode;
+    onClick: () => void;
+    size?: IconButtonSize;
+}
+
+// @public
+export type IconButtonSize = "sm" | "lg";
 
 // @public
 export function NavDesktop(input: NavDesktopProps): react_jsx_runtime.JSX.Element;

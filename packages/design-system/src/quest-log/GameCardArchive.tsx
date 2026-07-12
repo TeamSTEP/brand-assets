@@ -1,6 +1,7 @@
 import type { BadgeVariant } from "./Badge.js";
 import { Badge } from "./Badge.js";
-import { Cta } from "../ui/Cta.js";
+import { Card } from "../primitives/Card.js";
+import { Cta } from "../primitives/Cta.js";
 import "./GameCardArchive.css";
 
 /**
@@ -60,16 +61,18 @@ export function GameCardArchive({
   cta,
 }: GameCardArchiveProps) {
   return (
-    <div className={`ds-game-card-archive ds-game-card-archive--${status}`}>
-      <img className="ds-game-card-archive__thumb" src={posterSrc} alt={posterAlt} />
-      <div className="ds-game-card-archive__body">
-        <Badge variant={status} />
-        <h3 className="ds-game-card-archive__title">{title}</h3>
-        <p className="ds-game-card-archive__description">{description}</p>
-        <Cta variant="ghost" href={cta.url}>
-          {cta.label}
-        </Cta>
+    <Card size="sm">
+      <div className={`ds-game-card-archive__layout ds-game-card-archive__layout--${status}`}>
+        <img className="ds-game-card-archive__thumb" src={posterSrc} alt={posterAlt} />
+        <div className="ds-game-card-archive__body">
+          <Badge variant={status} />
+          <h3 className="ds-game-card-archive__title">{title}</h3>
+          <p className="ds-game-card-archive__description">{description}</p>
+          <Cta variant="ghost" href={cta.url}>
+            {cta.label}
+          </Cta>
+        </div>
       </div>
-    </div>
+    </Card>
   );
 }

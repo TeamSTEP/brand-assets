@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IconButton } from "../primitives/IconButton.js";
 import "./VideoFacade.css";
 
 /**
@@ -62,14 +63,9 @@ export function VideoFacade({ posterSrc, posterAlt, loopSrc, trailerUrl }: Video
       )}
 
       {embedUrl && !showTrailer ? (
-        <button
-          type="button"
-          className="ds-video-facade__play"
-          aria-label="Play trailer"
-          onClick={() => setShowTrailer(true)}
-        >
+        <IconButton size="lg" aria-label="Play trailer" onClick={() => setShowTrailer(true)}>
           ▶
-        </button>
+        </IconButton>
       ) : null}
 
       {embedUrl && showTrailer ? (

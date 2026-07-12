@@ -1,4 +1,5 @@
-import { Cta } from "../ui/Cta.js";
+import { Card } from "../primitives/Card.js";
+import { Cta } from "../primitives/Cta.js";
 import "./PlatformAccess.css";
 
 /**
@@ -62,33 +63,35 @@ export function PlatformAccess({ platforms }: PlatformAccessProps) {
   }
 
   return (
-    <div className="ds-platform-access">
-      <div className="ds-platform-access__header">{"// PLATFORM ACCESS"}</div>
-      {available.length > 0 && (
-        <div className="ds-platform-access__section">
-          <div className="ds-platform-access__label ds-platform-access__label--now">▶ PLAYABLE NOW</div>
-          <div className="ds-platform-access__pills">
-            {available.map((entry) => (
-              <Cta key={entry.url} variant="primary" href={entry.url}>
-                {entry.label}
-              </Cta>
-            ))}
+    <Card size="sm" accent="game-border">
+      <div className="ds-platform-access__layout">
+        <div className="ds-platform-access__header">{"// PLATFORM ACCESS"}</div>
+        {available.length > 0 && (
+          <div className="ds-platform-access__section">
+            <div className="ds-platform-access__label ds-platform-access__label--now">▶ PLAYABLE NOW</div>
+            <div className="ds-platform-access__pills">
+              {available.map((entry) => (
+                <Cta key={entry.url} variant="primary" href={entry.url}>
+                  {entry.label}
+                </Cta>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-      {available.length > 0 && coming.length > 0 && <div className="ds-platform-access__divider" />}
-      {coming.length > 0 && (
-        <div className="ds-platform-access__section">
-          <div className="ds-platform-access__label ds-platform-access__label--soon">★ COMING SOON</div>
-          <div className="ds-platform-access__pills">
-            {coming.map((entry) => (
-              <Cta key={entry.url} variant="secondary" href={entry.url}>
-                {entry.label}
-              </Cta>
-            ))}
+        )}
+        {available.length > 0 && coming.length > 0 && <div className="ds-platform-access__divider" />}
+        {coming.length > 0 && (
+          <div className="ds-platform-access__section">
+            <div className="ds-platform-access__label ds-platform-access__label--soon">★ COMING SOON</div>
+            <div className="ds-platform-access__pills">
+              {coming.map((entry) => (
+                <Cta key={entry.url} variant="secondary" href={entry.url}>
+                  {entry.label}
+                </Cta>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </Card>
   );
 }

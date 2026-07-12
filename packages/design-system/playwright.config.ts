@@ -32,6 +32,7 @@ export default defineConfig({
       maxDiffPixelRatio: 0.02,
     },
   },
+  snapshotPathTemplate: "{testDir}/{testFileDir}/{testFileName}-snapshots/{arg}-{projectName}-linux.png",
   webServer: {
     command: "pnpm exec http-server storybook-static -p 6006 -s",
     url: "http://127.0.0.1:6006",

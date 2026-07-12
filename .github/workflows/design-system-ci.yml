@@ -2,16 +2,22 @@ name: design-system CI
 
 on:
   # Manual only — regenerates Playwright visual-regression baselines from *this* workflow's
-  # actual ubuntu-latest runner and uploads them as an artifact (no auto-commit). Exists because
-  # no local Docker image, however well-matched, reliably bit-matches GitHub's hosted runner's
-  # font-rendering stack (fontconfig/freetype/harfbuzz point versions drift independently of the
-  # pinned Playwright/Chromium version) — see AGENTS.md Testing gotchas. Trigger via
-  # `gh workflow run design-system-ci.yml --ref <branch> -f update-snapshots=true`, download the
-  # `visual-snapshots` artifact, and commit the changed PNGs like any other baseline update.
+  # actual ubuntu-latest runner and pushes them as a commit directly to the dispatched branch
+  # (never main — the job refuses to run against it). Exists because no local Docker image,
+  # however well-matched (including `act`, which approximates but does not bit-match the hosted
+  # runner image), reliably bit-matches GitHub's hosted runner's font-rendering stack
+  # (fontconfig/freetype/harfbuzz point versions drift independently of the pinned
+  # Playwright/Chromium version) — see AGENTS.md Testing gotchas. Baselines regenerated any other
+  # way (locally, via `act`, or otherwise) are not trustworthy and will likely fail `test-visual`
+  # in the real `ci` job even when the underlying change is correct. Trigger via
+  # `gh workflow run design-system-ci.yml --ref <branch> -f update-snapshots=true`; review the
+  # resulting commit's image diff in the PR's Files Changed tab before merging — regenerating is
+  # not the same as reviewing, and this workflow does not skip that step, it only relocates it to
+  # where the PR review already happens.
   workflow_dispatch:
     inputs:
       update-snapshots:
-        description: "Regenerate visual-regression baselines and upload as an artifact"
+        description: "Regenerate visual-regression baselines and commit them to this branch"
         type: boolean
         default: true
   pull_request:
@@ -194,8 +200,23 @@ jobs:
             | sort -u \
             > ci-summary/changed-components.txt || true
 
+          # Full repo-relative paths (not basenames) of every visual-baseline PNG this PR
+          # touches — build-pr-summary.mjs needs the full path to compute each file's GitHub
+          # diff-anchor hash (sha256 of the path, see that script), and the basename to parse
+          # out which story/viewport it belongs to.
+          git diff --name-only "origin/$BASE_REF...HEAD" \
+            -- packages/design-system/tests/stories.visual.spec.ts-snapshots \
+            > ci-summary/changed-snapshots.txt || true
+
           if [ -f packages/design-system/playwright-report/results.json ]; then
             cp packages/design-system/playwright-report/results.json ci-summary/visual-results.json
+          fi
+
+          # Storybook's id -> {title, name} index, so the summary comment can label each
+          # changed snapshot by its real story name instead of a raw filename. Only exists if
+          # the build-storybook gate above succeeded; the summary script tolerates its absence.
+          if [ -f packages/design-system/storybook-static/index.json ]; then
+            cp packages/design-system/storybook-static/index.json ci-summary/story-index.json
           fi
 
       - if: always()
@@ -217,7 +238,18 @@ jobs:
   update-visual-snapshots:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
+      # Refuse to touch main. This job commits directly to whatever branch it was dispatched
+      # against — dispatching it with the default branch pre-selected (easy to do by accident
+      # in the Actions UI) must not silently push "reviewed" baselines straight to main.
+      - name: Guard against dispatching against main
+        if: github.ref_name == 'main'
+        run: |
+          echo "::error::update-visual-snapshots must not run against main — dispatch it against the feature branch that needs new baselines."
+          exit 1
+
       - uses: actions/checkout@v4
 
       - run: corepack enable
@@ -243,6 +275,28 @@ jobs:
         continue-on-error: true
         run: pnpm --filter @teamstep/design-system run test-visual:update
 
+      # Primary delivery mechanism: commit whatever was regenerated straight to the dispatched
+      # branch. This does not skip human review of the pixel diff — it moves that review to the
+      # PR's Files Changed tab (GitHub renders an image diff for changed PNGs), which is a review
+      # surface that already exists and that this PR will already go through before merge, rather
+      # than requiring a separate download-artifact-and-inspect-locally step first. `if: always()`
+      # mirrors the artifact upload below: a partial failure in update-snapshots still writes
+      # screenshots for every story that got that far, and those are still worth committing.
+      - name: Commit regenerated baselines
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add packages/design-system/tests/stories.visual.spec.ts-snapshots
+          if git diff --cached --quiet; then
+            echo "No baseline changes to commit."
+          else
+            git commit -m "chore(design-system): regenerate visual baselines from CI runner"
+            git push origin "HEAD:${{ github.ref_name }}"
+          fi
+
+      # Secondary debug aid, not the delivery mechanism — useful for inspecting what a failed
+      # update-snapshots step produced without pulling the commit above locally first.
       - if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -253,7 +307,7 @@ jobs:
 
       - if: steps.update-snapshots.outcome == 'failure'
         run: |
-          echo "::warning::test-visual:update had some non-screenshot failures (see the step above) — snapshots were still uploaded for every story that got that far. Review before trusting the artifact wholesale."
+          echo "::warning::test-visual:update had some non-screenshot failures (see the step above) — whatever screenshots were produced were still committed/uploaded. Review the PR's image diff before trusting them wholesale."
 
   pr-summary:
     needs: ci
@@ -276,6 +330,7 @@ jobs:
         run: |
           node .github/scripts/build-pr-summary.mjs ci-summary \
             "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            "${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}" \
             > pr-summary-body.md
 
       - uses: marocchino/sticky-pull-request-comment@773744901bac0e8cbb5a0dc842800d45e9b2b405 # v2.9.4

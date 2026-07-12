@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Card } from "../primitives/Card.js";
 import { useInView } from "../hooks/useInView.js";
 import { useTypewriter } from "../hooks/useTypewriter.js";
 import "./DialogueBox.css";
@@ -36,9 +37,11 @@ export function DialogueBox({
   const displayedText = useTypewriter(text, { enabled: animated && isInView });
 
   return (
-    <div ref={boxRef} className="ds-dialogue-box">
-      <img className="ds-dialogue-box__avatar" src={avatarSrc} alt={avatarAlt} />
-      <p className="ds-dialogue-box__text">{displayedText}</p>
-    </div>
+    <Card size="md">
+      <div ref={boxRef} className="ds-dialogue-box__layout">
+        <img className="ds-dialogue-box__avatar" src={avatarSrc} alt={avatarAlt} />
+        <p className="ds-dialogue-box__text">{displayedText}</p>
+      </div>
+    </Card>
   );
 }

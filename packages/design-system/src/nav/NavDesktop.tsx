@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Cta } from "../ui/Cta.js";
+import { Cta } from "../primitives/Cta.js";
 import "./NavDesktop.css";
 
 /**

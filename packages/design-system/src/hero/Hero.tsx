@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { PixelGrid } from "../effects/PixelGrid.js";
 import { useIdleFloat } from "../hooks/useIdleFloat.js";
-import { Cta } from "../ui/Cta.js";
+import { Cta } from "../primitives/Cta.js";
 import "./Hero.css";
 
 /**
