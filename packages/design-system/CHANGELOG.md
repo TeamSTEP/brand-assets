@@ -1,5 +1,11 @@
 # @teamstep/design-system
 
+## 0.5.1
+
+### Patch Changes
+
+- f20e02e: Stack GameCardArchive thumbnail above body below 480px container width, matching GameCardFeatured.
+
 ## 0.5.0
 
 ### Minor Changes
