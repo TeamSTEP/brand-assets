@@ -130,8 +130,6 @@ export function Footer(input: FooterProps): react_jsx_runtime.JSX.Element;
 
 // @public
 export interface FooterProps {
-    logoAlt: string;
-    logoSrc: string;
     socials: FooterSocialLink[];
     studioName: string;
     tagline: string;
