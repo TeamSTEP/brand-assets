@@ -49,9 +49,10 @@ export const SideQuest: Story = {
 };
 
 // Container queries respond to the card's own rendered width, not the page viewport — a
-// single isolated card is wide enough to hit the fluid sizing's max at every Playwright
-// viewport (390–1280px) tested here. This story proves the compact end of the range
-// (thumbnail/title/description all shrink) independent of that viewport/container mismatch.
+// single isolated card is wide enough to hit the side-by-side layout (≥480px) at every
+// Playwright viewport (390–1280px) tested on the default stories. This story forces a
+// sub-480px container so the stacked thumb-above-body layout (and fluid type/thumb sizing)
+// stays covered independent of that viewport/container mismatch.
 export const Narrow: Story = {
   decorators: [
     (Story) => (
