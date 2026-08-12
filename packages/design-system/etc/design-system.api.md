@@ -76,12 +76,10 @@ export interface BrandLogoProps {
 }
 
 // @public
-export function BrandTitle(input: BrandTitleProps): react_jsx_runtime.JSX.Element;
+export function BrandTitle(_props?: BrandTitleProps): react_jsx_runtime.JSX.Element;
 
 // @public
-export interface BrandTitleProps {
-    variant?: LogoVariant;
-}
+export type BrandTitleProps = Record<string, never>;
 
 // @public
 export function Card(input: CardProps): react_jsx_runtime.JSX.Element;

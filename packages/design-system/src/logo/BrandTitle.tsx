@@ -1,39 +1,23 @@
 import "./BrandTitle.css";
-import type { LogoVariant } from "./BrandLogo.js";
-import { brandTitleSvgs } from "./svgs.js";
+import { brandTitleSvg } from "./svgs.js";
 
 /**
- * Props for {@link BrandTitle}.
+ * Props for {@link BrandTitle}. Closed — no variants (filled wordmark only).
  *
  * @public
  */
-export interface BrandTitleProps {
-  /** Visual treatment. Defaults to `"brand-filled"`. */
-  variant?: LogoVariant;
-}
-
-function resolveTitleVariant(variant: LogoVariant): Exclude<LogoVariant, "brand-hollow"> {
-  if (variant === "brand-hollow") {
-    console.warn(
-      '[BrandTitle] variant "brand-hollow" has no SVG; falling back to "brand-filled".',
-    );
-    return "brand-filled";
-  }
-  return variant;
-}
+export type BrandTitleProps = Record<string, never>;
 
 /**
- * Team STEP wordmark only (no circle mark).
- *
- * `"brand-hollow"` falls back to `"brand-filled"` (no hollow title artwork exists).
+ * Team STEP wordmark only (no circle mark). Single filled treatment — no hollow variant.
  *
  * @public
  */
-export function BrandTitle({ variant = "brand-filled" }: BrandTitleProps) {
-  const resolved = resolveTitleVariant(variant);
+export function BrandTitle(_props?: BrandTitleProps) {
+  void _props;
   return (
     <div className="ds-logo-title" role="img" aria-label="Team STEP">
-      {brandTitleSvgs[resolved]}
+      {brandTitleSvg}
     </div>
   );
 }
