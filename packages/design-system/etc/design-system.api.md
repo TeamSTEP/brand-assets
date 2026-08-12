@@ -224,8 +224,6 @@ export interface NavDesktopLink {
 export interface NavDesktopProps {
     contactHref: string;
     links: NavDesktopLink[];
-    logoAlt: string;
-    logoSrc: string;
 }
 
 // @public
