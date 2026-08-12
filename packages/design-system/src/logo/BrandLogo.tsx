@@ -6,13 +6,10 @@ import { brandLogoSvgs } from "./svgs.js";
  *
  * "brand-filled" — filled circle with stroked border, multicolor brand gradient
  * "brand-hollow" — transparent circle, multicolor brand gradient
- * "dark"         — monochrome dark for light backgrounds
- * "void"         — solid void silhouette
- * "light"        — all-white for dark backgrounds
  *
  * @public
  */
-export type LogoVariant = "brand-filled" | "brand-hollow" | "dark" | "void" | "light";
+export type LogoVariant = "brand-filled" | "brand-hollow";
 
 /**
  * Props for {@link BrandLogo}.

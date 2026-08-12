@@ -213,7 +213,7 @@ export interface IconButtonProps {
 export type IconButtonSize = "sm" | "lg";
 
 // @public
-export type LogoVariant = "brand-filled" | "brand-hollow" | "dark" | "void" | "light";
+export type LogoVariant = "brand-filled" | "brand-hollow";
 
 // @public
 export function NavDesktop(input: NavDesktopProps): react_jsx_runtime.JSX.Element;
