@@ -60,6 +60,30 @@ export interface BBSTerminalProps {
 }
 
 // @public
+export function BrandIcon(input: BrandIconProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export interface BrandIconProps {
+    variant?: LogoVariant;
+}
+
+// @public
+export function BrandLogo(input: BrandLogoProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export interface BrandLogoProps {
+    variant?: LogoVariant;
+}
+
+// @public
+export function BrandTitle(input: BrandTitleProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export interface BrandTitleProps {
+    variant?: LogoVariant;
+}
+
+// @public
 export function Card(input: CardProps): react_jsx_runtime.JSX.Element;
 
 // @public
@@ -187,6 +211,9 @@ export interface IconButtonProps {
 
 // @public
 export type IconButtonSize = "sm" | "lg";
+
+// @public
+export type LogoVariant = "brand-filled" | "brand-hollow" | "dark" | "void" | "light";
 
 // @public
 export function NavDesktop(input: NavDesktopProps): react_jsx_runtime.JSX.Element;

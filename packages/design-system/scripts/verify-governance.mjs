@@ -174,6 +174,29 @@ let failed = false;
   }
 }
 
+// Probe 7: LogoVariant (BrandLogo) missing @public must fail check-api.
+{
+  const tsxPath = path.join(pkgRoot, "src/logo/BrandLogo.tsx");
+  const result = withTemporaryEdit(
+    tsxPath,
+    (src) => src.replace(" * @public\n */\nexport type LogoVariant", " */\nexport type LogoVariant"),
+    () => {
+      const build = run("pnpm run build");
+      if (!build.ok) return build;
+      return run("pnpm exec api-extractor run --verbose");
+    },
+  );
+  if (result.ok) {
+    failed = true;
+    console.error(
+      "FAIL - removing @public from LogoVariant did NOT fail check-api. " +
+        "ae-missing-release-tag has a gap — this is a real governance regression, not a test bug.",
+    );
+  } else {
+    console.log("ok  - a missing @public release tag on LogoVariant is caught by check-api");
+  }
+}
+
 // Rebuild once more so a subsequent `check-api` step in the same CI run (or a local re-run)
 // sees dist/ reflecting the real, unmutated source rather than whatever the last probe left
 // mid-build.

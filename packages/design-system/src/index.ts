@@ -36,6 +36,12 @@ export { VideoFacade } from "./quest-log/VideoFacade.js";
 export type { VideoFacadeProps } from "./quest-log/VideoFacade.js";
 export { Hero } from "./hero/Hero.js";
 export type { HeroProps } from "./hero/Hero.js";
+export { BrandIcon } from "./logo/BrandIcon.js";
+export type { BrandIconProps } from "./logo/BrandIcon.js";
+export { BrandTitle } from "./logo/BrandTitle.js";
+export type { BrandTitleProps } from "./logo/BrandTitle.js";
+export { BrandLogo } from "./logo/BrandLogo.js";
+export type { BrandLogoProps, LogoVariant } from "./logo/BrandLogo.js";
 export { Footer } from "./footer/Footer.js";
 export type {
   FooterProps,
