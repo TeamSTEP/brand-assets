@@ -1,5 +1,11 @@
 # @teamstep/design-system
 
+## 0.4.0
+
+### Minor Changes
+
+- b2d2c17: Add BrandIcon, BrandTitle, and BrandLogo. Wire BrandIcon into Footer/NavDesktop and BrandLogo into Hero (replacing the text wordmark); drop logo URL props from Footer and NavDesktop.
+
 ## 0.3.0
 
 ### Minor Changes
