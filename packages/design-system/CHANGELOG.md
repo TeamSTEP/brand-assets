@@ -1,5 +1,11 @@
 # @teamstep/design-system
 
+## 0.5.0
+
+### Minor Changes
+
+- 1738162: Replace in-text glyphs with typed SVG icons on Cta and IconButton so consumers pass text-only labels.
+
 ## 0.4.0
 
 ### Minor Changes
