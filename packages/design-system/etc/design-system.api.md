@@ -191,7 +191,6 @@ export interface HeroProps {
     logoMarkAlt: string;
     logoMarkSrc: string;
     tagline: string;
-    title: string;
 }
 
 // @public

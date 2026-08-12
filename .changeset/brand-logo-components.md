@@ -2,4 +2,4 @@
 "@teamstep/design-system": minor
 ---
 
-Add BrandIcon, BrandTitle, and BrandLogo. Footer and NavDesktop render BrandIcon (brand-hollow) and drop logoSrc/logoAlt; Footer studio wordmark uses heading font + text-secondary.
+Add BrandIcon, BrandTitle, and BrandLogo. Wire BrandIcon into Footer/NavDesktop and BrandLogo into Hero (replacing the text wordmark); drop logo URL props from Footer and NavDesktop.

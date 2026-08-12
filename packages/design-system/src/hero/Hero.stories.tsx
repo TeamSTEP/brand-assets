@@ -12,7 +12,6 @@ const meta: Meta<typeof Hero> = {
   },
   args: {
     eyebrow: "indie game studio",
-    title: "TEAM STEP",
     tagline: "Building the home for the indie game world — one step at a time.",
     ctaHref: "#quest-log",
     logoMarkSrc: PLACEHOLDER_LOGO,
