@@ -9,6 +9,15 @@ import { ReactNode } from 'react';
 import { RefObject } from 'react';
 
 // @public
+export function ArrowDownIcon(): react_jsx_runtime.JSX.Element;
+
+// @public
+export function ArrowRightIcon(): react_jsx_runtime.JSX.Element;
+
+// @public
+export function ArrowUpRightIcon(): react_jsx_runtime.JSX.Element;
+
+// @public
 export function Badge(input: BadgeProps): react_jsx_runtime.JSX.Element;
 
 // @public
@@ -98,18 +107,25 @@ export interface CardProps {
 export type CardSize = "sm" | "md" | "lg";
 
 // @public
+export function CloseIcon(): react_jsx_runtime.JSX.Element;
+
+// @public
 export function Cta(input: CtaProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export type CtaIcon = "hexagon" | "gamepad" | "download";
 
 // @public
 export interface CtaProps {
     children: ReactNode;
     href?: string;
+    icon?: CtaIcon;
     onClick?: () => void;
     variant: CtaVariant;
 }
 
 // @public
-export type CtaVariant = "primary" | "secondary" | "ghost";
+export type CtaVariant = "primary" | "secondary" | "contact" | "ghost" | "inspect" | "ambient";
 
 // @public
 export function DialogueBox(input: DialogueBoxProps): react_jsx_runtime.JSX.Element;
@@ -150,6 +166,7 @@ export function GameCardArchive(input: GameCardArchiveProps): react_jsx_runtime.
 
 // @public
 export interface GameCardArchiveCta {
+    icon: CtaIcon;
     label: string;
     url: string;
 }
@@ -180,6 +197,9 @@ export interface GameCardFeaturedProps {
 }
 
 // @public
+export function GamepadIcon(): react_jsx_runtime.JSX.Element;
+
+// @public
 export function Hero(input: HeroProps): react_jsx_runtime.JSX.Element;
 
 // @public
@@ -194,12 +214,18 @@ export interface HeroProps {
 }
 
 // @public
+export function HexagonIcon(): react_jsx_runtime.JSX.Element;
+
+// @public
 export function IconButton(input: IconButtonProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export type IconButtonIcon = "close" | "play";
 
 // @public
 export interface IconButtonProps {
     "aria-label": string;
-    children: ReactNode;
+    icon: IconButtonIcon;
     onClick: () => void;
     size?: IconButtonSize;
 }
@@ -266,6 +292,9 @@ export interface PlatformEntry {
 export type PlatformTier = "demo" | "full" | "free" | "dlc";
 
 // @public
+export function PlayIcon(): react_jsx_runtime.JSX.Element;
+
+// @public
 export function ScanlineOverlay(): react_jsx_runtime.JSX.Element;
 
 // @public
@@ -302,6 +331,9 @@ export interface SocialFeedProps {
 
 // @public
 export type SocialFeedTab = FeedPlatform | "discord";
+
+// @public
+export function StarIcon(): react_jsx_runtime.JSX.Element;
 
 // @public
 export interface UnifiedPost {

@@ -33,18 +33,24 @@ export const Default: Story = {
     description:
       "Manage an overworked reactor. Keep the city powered. Try not to cause a meltdown. The full Steam release is coming.",
     platforms: [
-      { platform: "itch", tier: "demo", label: "🎮 PLAY IN BROWSER · ITCH.IO", url: "https://teamstep.itch.io/meltdown", available: true },
+      {
+        platform: "itch",
+        tier: "demo",
+        label: "PLAY IN BROWSER · ITCH.IO",
+        url: "https://teamstep.itch.io/meltdown",
+        available: true,
+      },
       {
         platform: "steam",
         tier: "demo",
-        label: "⬡ PLAY STEAM DEMO",
+        label: "PLAY STEAM DEMO",
         url: "https://store.steampowered.com/app/4561950/Meltdown_Demo/",
         available: true,
       },
       {
         platform: "steam",
         tier: "full",
-        label: "⬡ WISHLIST FULL RELEASE · STEAM",
+        label: "WISHLIST FULL RELEASE · STEAM",
         url: "https://store.steampowered.com/app/4561950/Meltdown_Demo/",
         available: false,
       },
@@ -63,7 +69,7 @@ export const FullyReleased: Story = {
       {
         platform: "steam",
         tier: "full",
-        label: "⬡ BUY ON STEAM",
+        label: "BUY ON STEAM",
         url: "https://store.steampowered.com/app/4561950/",
         available: true,
       },
@@ -88,11 +94,17 @@ export const Narrow: Story = {
     description:
       "Manage an overworked reactor. Keep the city powered. Try not to cause a meltdown. The full Steam release is coming.",
     platforms: [
-      { platform: "itch", tier: "demo", label: "🎮 PLAY IN BROWSER · ITCH.IO", url: "https://teamstep.itch.io/meltdown", available: true },
+      {
+        platform: "itch",
+        tier: "demo",
+        label: "PLAY IN BROWSER · ITCH.IO",
+        url: "https://teamstep.itch.io/meltdown",
+        available: true,
+      },
       {
         platform: "steam",
         tier: "full",
-        label: "⬡ WISHLIST FULL RELEASE · STEAM",
+        label: "WISHLIST FULL RELEASE · STEAM",
         url: "https://store.steampowered.com/app/4561950/Meltdown_Demo/",
         available: false,
       },

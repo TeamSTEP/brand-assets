@@ -30,5 +30,17 @@ allowBuilds:
 # Forces every transitive resolution of esbuild to the patched version. `pnpm audit` found
 # GHSA-g7r4-m6w7-qqqr (low severity, Windows dev-server-only file read) via several Storybook/Vite
 # transitive chains that hadn't picked up 0.28.1 yet even though other parts of the tree already had.
+#
+# The remaining overrides are the same pattern for advisories that fail `pnpm audit` on main
+# (dev/build transitive chains — Storybook/Vite postcss+nanoid, api-extractor ajv→fast-uri,
+# eslint/minimatch brace-expansion, js-yaml). Targets use same-major caret ranges — bare
+# `>=x` would let the resolver jump to the next major (e.g. brace-expansion 1 → 5).
 overrides:
   esbuild: ">=0.28.1"
+  nanoid@^3.0.0: "^3.3.17"
+  postcss@^8.0.0: "^8.5.23"
+  fast-uri@^3.0.0: "^3.1.5"
+  "brace-expansion@^1.0.0": "^1.1.18"
+  "brace-expansion@^5.0.0": "^5.0.9"
+  "js-yaml@^3.0.0": "^3.15.1"
+  "js-yaml@^4.0.0": "^4.3.1"

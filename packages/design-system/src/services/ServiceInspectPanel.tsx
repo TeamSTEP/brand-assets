@@ -66,13 +66,11 @@ export function ServiceInspectPanel({
     >
       <div className="ds-service-inspect-panel__sheet">
         <Card size="md">
-          <IconButton size="sm" aria-label="Close inspect panel" onClick={onClose}>
-            ×
-          </IconButton>
+          <IconButton size="sm" icon="close" aria-label="Close inspect panel" onClick={onClose} />
           <h2 className="ds-service-inspect-panel__title">{title}</h2>
           <p className="ds-service-inspect-panel__description">{description}</p>
-          <Cta variant="secondary" href={contactHref}>
-            GET IN TOUCH →
+          <Cta variant="contact" href={contactHref}>
+            GET IN TOUCH
           </Cta>
         </Card>
       </div>

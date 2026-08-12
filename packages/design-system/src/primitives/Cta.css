@@ -15,6 +15,13 @@
   background: transparent;
 }
 
+.ds-cta__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  font-size: 1em;
+  line-height: 1;
+}
+
 .ds-cta--primary {
   border: 1px solid var(--color-game-green);
   background: var(--color-game-green);

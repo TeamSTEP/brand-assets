@@ -21,18 +21,24 @@ type Story = StoryObj<typeof meta>;
 export const BothSections: Story = {
   args: {
     platforms: [
-      { platform: "itch", tier: "demo", label: "🎮 PLAY IN BROWSER · ITCH.IO", url: "https://teamstep.itch.io/meltdown", available: true },
+      {
+        platform: "itch",
+        tier: "demo",
+        label: "PLAY IN BROWSER · ITCH.IO",
+        url: "https://teamstep.itch.io/meltdown",
+        available: true,
+      },
       {
         platform: "steam",
         tier: "demo",
-        label: "⬡ PLAY STEAM DEMO",
+        label: "PLAY STEAM DEMO",
         url: "https://store.steampowered.com/app/4561950/Meltdown_Demo/",
         available: true,
       },
       {
         platform: "steam",
         tier: "full",
-        label: "⬡ WISHLIST FULL RELEASE · STEAM",
+        label: "WISHLIST FULL RELEASE · STEAM",
         url: "https://store.steampowered.com/app/4561950/Meltdown_Demo/",
         available: false,
       },
@@ -43,7 +49,13 @@ export const BothSections: Story = {
 export const AvailableOnly: Story = {
   args: {
     platforms: [
-      { platform: "itch", tier: "free", label: "↓ DOWNLOAD FREE · ITCH.IO", url: "https://teamstep.itch.io/witch-one-crucible", available: true },
+      {
+        platform: "itch",
+        tier: "free",
+        label: "DOWNLOAD FREE · ITCH.IO",
+        url: "https://teamstep.itch.io/witch-one-crucible",
+        available: true,
+      },
     ],
   },
 };
@@ -54,7 +66,7 @@ export const ComingSoonOnly: Story = {
       {
         platform: "steam",
         tier: "full",
-        label: "⬡ WISHLIST · STEAM",
+        label: "WISHLIST · STEAM",
         url: "https://store.steampowered.com/app/0000000/",
         available: false,
       },

@@ -17,7 +17,7 @@ export interface HeroProps {
   tagline: string;
   /** Destination for the ghost CTA. */
   ctaHref: string;
-  /** Defaults to "▶ ENTER THE GUILD" — the studio ambient CTA, not a game CTA. */
+  /** Defaults to "ENTER THE GUILD" — the studio ambient CTA, not a game CTA. */
   ctaLabel?: string;
   /** Logo mark image URL for the desktop ring. */
   logoMarkSrc: string;
@@ -39,7 +39,7 @@ export function Hero({
   eyebrow,
   tagline,
   ctaHref,
-  ctaLabel = "▶ ENTER THE GUILD",
+  ctaLabel = "ENTER THE GUILD",
   logoMarkSrc,
   logoMarkAlt,
   logoAnimated = true,
@@ -57,7 +57,7 @@ export function Hero({
             <BrandLogo variant="brand-filled" />
           </h1>
           <p className="ds-hero__tagline">{tagline}</p>
-          <Cta variant="ghost" href={ctaHref}>
+          <Cta variant="ambient" href={ctaHref}>
             {ctaLabel}
           </Cta>
           <div className="ds-hero__scroll ds-hero__scroll--desktop" aria-hidden="true">

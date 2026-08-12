@@ -6,9 +6,19 @@ export { VignetteOverlay } from "./effects/VignetteOverlay.js";
 export { Card } from "./primitives/Card.js";
 export type { CardAccent, CardProps, CardSize } from "./primitives/Card.js";
 export { Cta } from "./primitives/Cta.js";
-export type { CtaProps, CtaVariant } from "./primitives/Cta.js";
+export type { CtaIcon, CtaProps, CtaVariant } from "./primitives/Cta.js";
 export { IconButton } from "./primitives/IconButton.js";
-export type { IconButtonProps, IconButtonSize } from "./primitives/IconButton.js";
+export type { IconButtonIcon, IconButtonProps, IconButtonSize } from "./primitives/IconButton.js";
+export {
+  ArrowDownIcon,
+  ArrowRightIcon,
+  ArrowUpRightIcon,
+  CloseIcon,
+  GamepadIcon,
+  HexagonIcon,
+  PlayIcon,
+  StarIcon,
+} from "./primitives/icons/icons.js";
 export { Badge } from "./quest-log/Badge.js";
 export type { BadgeProps, BadgeVariant } from "./quest-log/Badge.js";
 export { GameCardArchive } from "./quest-log/GameCardArchive.js";

@@ -16,10 +16,19 @@
 }
 
 .ds-platform-access__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
   margin-bottom: var(--spacing-xs);
   font-family: var(--font-family-body);
   font-size: clamp(11px, 3cqi, 12px);
   letter-spacing: 0.05em;
+}
+
+.ds-platform-access__label-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  line-height: 1;
 }
 
 .ds-platform-access__label--now {

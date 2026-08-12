@@ -11,28 +11,16 @@ const meta: Meta<typeof IconButton> = {
       </div>
     ),
   ],
-  argTypes: {
-    size: { control: "select", options: ["sm", "lg"] },
-  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Small: Story = {
-  args: { size: "sm", "aria-label": "Close", onClick: () => {}, children: "×" },
+export const Close: Story = {
+  args: { size: "sm", icon: "close", "aria-label": "Close", onClick: () => {} },
 };
 
-export const Large: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ position: "relative", width: 320, height: 180, background: "var(--color-background-recessed)" }}>
-        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-          <Story />
-        </div>
-      </div>
-    ),
-  ],
-  args: { size: "lg", "aria-label": "Play trailer", onClick: () => {}, children: "▶" },
+export const Play: Story = {
+  args: { size: "lg", icon: "play", "aria-label": "Play trailer", onClick: () => {} },
 };
