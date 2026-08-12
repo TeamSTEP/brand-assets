@@ -1,6 +1,6 @@
 {
   "name": "@teamstep/design-system",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Team STEP React design system — tokens, effects, and Storybook-documented components.",
   "license": "UNLICENSED",
   "repository": {
