@@ -34,7 +34,7 @@ export const Legacy: Story = {
     description: "A magic assassin adventure. Shelved while Meltdown ships — but not forgotten.",
     status: "legacy",
     posterAlt: "Witch One: Crucible key art",
-    cta: { label: "↓ DOWNLOAD FREE · ITCH.IO", url: "https://teamstep.itch.io/witch-one-crucible" },
+    cta: { icon: "download", label: "DOWNLOAD FREE · ITCH.IO", url: "https://teamstep.itch.io/witch-one-crucible" },
   },
 };
 
@@ -44,7 +44,7 @@ export const SideQuest: Story = {
     description: "A short, free side-project built between Meltdown milestones.",
     status: "side-quest",
     posterAlt: "Signal Lost key art",
-    cta: { label: "↓ DOWNLOAD FREE · ITCH.IO", url: "https://teamstep.itch.io/signal-lost" },
+    cta: { icon: "download", label: "DOWNLOAD FREE · ITCH.IO", url: "https://teamstep.itch.io/signal-lost" },
   },
 };
 
@@ -65,6 +65,6 @@ export const Narrow: Story = {
     description: "A magic assassin adventure. Shelved while Meltdown ships — but not forgotten.",
     status: "legacy",
     posterAlt: "Witch One: Crucible key art",
-    cta: { label: "↓ DOWNLOAD FREE · ITCH.IO", url: "https://teamstep.itch.io/witch-one-crucible" },
+    cta: { icon: "download", label: "DOWNLOAD FREE · ITCH.IO", url: "https://teamstep.itch.io/witch-one-crucible" },
   },
 };

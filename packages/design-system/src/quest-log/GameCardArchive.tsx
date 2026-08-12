@@ -1,3 +1,4 @@
+import type { CtaIcon } from "../primitives/Cta.js";
 import type { BadgeVariant } from "./Badge.js";
 import { Badge } from "./Badge.js";
 import { Card } from "../primitives/Card.js";
@@ -18,7 +19,12 @@ export type GameCardArchiveStatus = Extract<BadgeVariant, "legacy" | "side-quest
  * @public
  */
 export interface GameCardArchiveCta {
-  /** Button label text. */
+  /**
+   * Leading content mark — required because archive rows don't carry `platform`/`tier`.
+   * Label text must not include glyphs.
+   */
+  icon: CtaIcon;
+  /** Button label text — text only, no Unicode glyphs. */
   label: string;
   /** Destination URL. */
   url: string;
@@ -68,7 +74,7 @@ export function GameCardArchive({
           <Badge variant={status} />
           <h3 className="ds-game-card-archive__title">{title}</h3>
           <p className="ds-game-card-archive__description">{description}</p>
-          <Cta variant="ghost" href={cta.url}>
+          <Cta variant="ghost" icon={cta.icon} href={cta.url}>
             {cta.label}
           </Cta>
         </div>

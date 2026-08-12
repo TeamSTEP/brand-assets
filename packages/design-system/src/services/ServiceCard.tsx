@@ -21,7 +21,7 @@ export interface ServiceCardProps {
 
 /**
  * Inventory card for the Services section. This is
- * the static shell only — clicking "INSPECT ITEM ↗" calls `onInspect`, but the slide-up
+ * the static shell only — clicking "INSPECT ITEM" calls `onInspect`, but the slide-up
  * modal / bottom-sheet it's meant to open is a separate component this card doesn't know
  * about, keeping the card decoupled from any one interaction implementation.
  *
@@ -36,8 +36,8 @@ export function ServiceCard({ icon, title, description, onInspect }: ServiceCard
         </div>
         <h3 className="ds-service-card__title">{title}</h3>
         <p className="ds-service-card__description">{description}</p>
-        <Cta variant="ghost" onClick={onInspect}>
-          INSPECT ITEM ↗
+        <Cta variant="inspect" onClick={onInspect}>
+          INSPECT ITEM
         </Cta>
       </div>
     </Card>

@@ -30,3 +30,8 @@
   border-color: var(--color-accent-primary);
   color: var(--color-accent-primary);
 }
+
+.ds-icon-button__icon {
+  display: inline-flex;
+  line-height: 1;
+}

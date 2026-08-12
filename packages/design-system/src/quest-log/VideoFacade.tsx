@@ -63,9 +63,7 @@ export function VideoFacade({ posterSrc, posterAlt, loopSrc, trailerUrl }: Video
       )}
 
       {embedUrl && !showTrailer ? (
-        <IconButton size="lg" aria-label="Play trailer" onClick={() => setShowTrailer(true)}>
-          ▶
-        </IconButton>
+        <IconButton size="lg" icon="play" aria-label="Play trailer" onClick={() => setShowTrailer(true)} />
       ) : null}
 
       {embedUrl && showTrailer ? (

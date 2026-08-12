@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { CloseIcon, PlayIcon } from "./icons/icons.js";
 import "./IconButton.css";
 
 /**
@@ -10,13 +10,20 @@ import "./IconButton.css";
 export type IconButtonSize = "sm" | "lg";
 
 /**
+ * Closed icon set for {@link IconButton}. Callers never pass Unicode glyphs.
+ *
+ * @public
+ */
+export type IconButtonIcon = "close" | "play";
+
+/**
  * Props for {@link IconButton}.
  *
  * @public
  */
 export interface IconButtonProps {
-  /** Single-glyph icon content (caller-supplied character or element). */
-  children: ReactNode;
+  /** Built-in icon — `close` (×) or `play` (▶). */
+  icon: IconButtonIcon;
   /** Required accessible name — icon buttons have no visible label. */
   "aria-label": string;
   /** Click handler. */
@@ -31,7 +38,7 @@ export interface IconButtonProps {
  *
  * @public
  */
-export function IconButton({ children, "aria-label": ariaLabel, onClick, size = "sm" }: IconButtonProps) {
+export function IconButton({ icon, "aria-label": ariaLabel, onClick, size = "sm" }: IconButtonProps) {
   return (
     <button
       type="button"
@@ -39,7 +46,9 @@ export function IconButton({ children, "aria-label": ariaLabel, onClick, size = 
       aria-label={ariaLabel}
       onClick={onClick}
     >
-      {children}
+      <span className="ds-icon-button__icon" aria-hidden="true">
+        {icon === "close" ? <CloseIcon /> : <PlayIcon />}
+      </span>
     </button>
   );
 }
