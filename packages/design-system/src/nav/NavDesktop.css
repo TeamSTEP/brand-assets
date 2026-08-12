@@ -1,5 +1,6 @@
 .ds-nav-desktop {
-  display: none;
+  container-type: inline-size;
+  display: block;
   position: sticky;
   top: 0;
   z-index: 20;
@@ -10,12 +11,6 @@
     background-color 0.2s ease,
     border-color 0.2s ease,
     backdrop-filter 0.2s ease;
-}
-
-@media (width >= 768px) {
-  .ds-nav-desktop {
-    display: block;
-  }
 }
 
 .ds-nav-desktop--scrolled {
@@ -50,6 +45,13 @@
   flex: 1;
   justify-content: center;
   gap: var(--spacing-lg);
+}
+
+/* Mobile: logo + CONTACT only — section links live in NavHUD */
+@container (max-width: 767px) {
+  .ds-nav-desktop__links {
+    display: none;
+  }
 }
 
 .ds-nav-desktop__link {
