@@ -1,0 +1,18 @@
+.ds-logo {
+  container-type: inline-size;
+  display: block;
+  width: 100%;
+  max-width: 392px;
+}
+
+.ds-logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@container (max-width: 389px) {
+  .ds-logo {
+    max-width: 280px;
+  }
+}

@@ -60,6 +60,28 @@ export interface BBSTerminalProps {
 }
 
 // @public
+export function BrandIcon(input: BrandIconProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export interface BrandIconProps {
+    variant?: LogoVariant;
+}
+
+// @public
+export function BrandLogo(input: BrandLogoProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export interface BrandLogoProps {
+    variant?: LogoVariant;
+}
+
+// @public
+export function BrandTitle(_props?: BrandTitleProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export type BrandTitleProps = Record<string, never>;
+
+// @public
 export function Card(input: CardProps): react_jsx_runtime.JSX.Element;
 
 // @public
@@ -108,8 +130,6 @@ export function Footer(input: FooterProps): react_jsx_runtime.JSX.Element;
 
 // @public
 export interface FooterProps {
-    logoAlt: string;
-    logoSrc: string;
     socials: FooterSocialLink[];
     studioName: string;
     tagline: string;
@@ -171,7 +191,6 @@ export interface HeroProps {
     logoMarkAlt: string;
     logoMarkSrc: string;
     tagline: string;
-    title: string;
 }
 
 // @public
@@ -189,6 +208,9 @@ export interface IconButtonProps {
 export type IconButtonSize = "sm" | "lg";
 
 // @public
+export type LogoVariant = "brand-filled" | "brand-hollow";
+
+// @public
 export function NavDesktop(input: NavDesktopProps): react_jsx_runtime.JSX.Element;
 
 // @public
@@ -201,8 +223,6 @@ export interface NavDesktopLink {
 export interface NavDesktopProps {
     contactHref: string;
     links: NavDesktopLink[];
-    logoAlt: string;
-    logoSrc: string;
 }
 
 // @public

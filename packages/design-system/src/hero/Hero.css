@@ -44,15 +44,13 @@
   letter-spacing: 0.04em;
 }
 
-.ds-hero__title {
+.ds-hero__brand {
   margin: 0;
-  color: var(--color-text-primary);
-  font-family: var(--font-family-heading);
-  font-size: clamp(40px, 10cqi, 72px);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  line-height: 1;
-  text-transform: uppercase;
+  width: min(100%, 392px);
+}
+
+.ds-hero__brand .ds-logo {
+  max-width: 100%;
 }
 
 .ds-hero__tagline {

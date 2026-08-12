@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BrandIcon } from "../logo/BrandIcon.js";
 import { Cta } from "../primitives/Cta.js";
 import "./NavDesktop.css";
 
@@ -20,10 +21,6 @@ export interface NavDesktopLink {
  * @public
  */
 export interface NavDesktopProps {
-  /** Logo image URL. */
-  logoSrc: string;
-  /** Accessible alt text for the logo. */
-  logoAlt: string;
   /** Centre navigation links. */
   links: NavDesktopLink[];
   /** Destination for the CONTACT ghost CTA. */
@@ -35,7 +32,7 @@ export interface NavDesktopProps {
  *
  * @public
  */
-export function NavDesktop({ logoSrc, logoAlt, links, contactHref }: NavDesktopProps) {
+export function NavDesktop({ links, contactHref }: NavDesktopProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -51,8 +48,10 @@ export function NavDesktop({ logoSrc, logoAlt, links, contactHref }: NavDesktopP
   return (
     <header className={`ds-nav-desktop${scrolled ? " ds-nav-desktop--scrolled" : ""}`}>
       <div className="ds-nav-desktop__inner">
-        <a className="ds-nav-desktop__logo" href="#hero">
-          <img src={logoSrc} alt={logoAlt} />
+        <a className="ds-nav-desktop__logo" href="#hero" aria-label="Team STEP home">
+          <span aria-hidden="true">
+            <BrandIcon variant="brand-hollow" />
+          </span>
         </a>
         <nav className="ds-nav-desktop__links" aria-label="Primary">
           {links.map((link) => (

@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import { BrandIcon } from "../logo/BrandIcon.js";
 import "./Footer.css";
 
 /**
@@ -28,11 +29,7 @@ export interface FooterSocialLink {
  * @public
  */
 export interface FooterProps {
-  /** Studio logo image URL. */
-  logoSrc: string;
-  /** Accessible alt text for the logo. */
-  logoAlt: string;
-  /** Studio name shown below the logo. */
+  /** Studio name shown below the hollow brand icon (Carbon / Rajdhani wordmark). */
   studioName: string;
   /** Tagline shown under the studio name. */
   tagline: string;
@@ -79,15 +76,17 @@ function SocialIcon({ platform }: { platform: FooterSocialPlatform }): ReactElem
 }
 
 /**
- * End-credits footer (wireframe §06): centered logo, studio name, tagline, and social links.
+ * End-credits footer (wireframe §06): hollow brand icon, studio wordmark, tagline, and social links.
  *
  * @public
  */
-export function Footer({ logoSrc, logoAlt, studioName, tagline, socials }: FooterProps) {
+export function Footer({ studioName, tagline, socials }: FooterProps) {
   return (
     <footer className="ds-footer">
       <div className="ds-footer__inner">
-        <img className="ds-footer__logo" src={logoSrc} alt={logoAlt} />
+        <div className="ds-footer__logo" aria-hidden="true">
+          <BrandIcon variant="brand-hollow" />
+        </div>
         <h2 className="ds-footer__studio">{studioName}</h2>
         <p className="ds-footer__tagline">{tagline}</p>
         <ul className="ds-footer__socials">

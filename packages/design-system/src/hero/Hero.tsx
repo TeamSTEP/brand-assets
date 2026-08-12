@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { PixelGrid } from "../effects/PixelGrid.js";
 import { useIdleFloat } from "../hooks/useIdleFloat.js";
+import { BrandLogo } from "../logo/BrandLogo.js";
 import { Cta } from "../primitives/Cta.js";
 import "./Hero.css";
 
@@ -10,11 +11,9 @@ import "./Hero.css";
  * @public
  */
 export interface HeroProps {
-  /** Italic eyebrow line above the title. */
+  /** Italic eyebrow line above the brand lockup. */
   eyebrow: string;
-  /** Main H1 wordmark text. */
-  title: string;
-  /** Supporting tagline below the title. */
+  /** Supporting tagline below the brand lockup. */
   tagline: string;
   /** Destination for the ghost CTA. */
   ctaHref: string;
@@ -30,14 +29,14 @@ export interface HeroProps {
 
 /**
  * Landing-page hero section (wireframe §01): 80vh, pixel-grid background, 60/40 split with
- * logo mark on desktop. Logo ring uses `useIdleFloat` unless reduced motion is preferred.
- * Mobile hides the logo mark and swaps the scroll cue copy.
+ * logo mark on desktop. Brand lockup replaces the former text wordmark. Logo ring uses
+ * `useIdleFloat` unless reduced motion is preferred. Mobile hides the logo mark and swaps
+ * the scroll cue copy.
  *
  * @public
  */
 export function Hero({
   eyebrow,
-  title,
   tagline,
   ctaHref,
   ctaLabel = "▶ ENTER THE GUILD",
@@ -54,7 +53,9 @@ export function Hero({
       <div className="ds-hero__inner">
         <div className="ds-hero__content">
           <p className="ds-hero__eyebrow">{eyebrow}</p>
-          <h1 className="ds-hero__title">{title}</h1>
+          <h1 className="ds-hero__brand">
+            <BrandLogo variant="brand-filled" />
+          </h1>
           <p className="ds-hero__tagline">{tagline}</p>
           <Cta variant="ghost" href={ctaHref}>
             {ctaLabel}
