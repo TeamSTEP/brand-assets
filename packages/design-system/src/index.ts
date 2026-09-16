@@ -27,8 +27,18 @@ export type {
   GameCardArchiveProps,
   GameCardArchiveStatus,
 } from "./quest-log/GameCardArchive.js";
+export { QuestLog } from "./quest-log/QuestLog.js";
+export type { QuestLogGroup, QuestLogProps } from "./quest-log/QuestLog.js";
+export { FeaturedStage } from "./quest-log/FeaturedStage.js";
+export type { FeaturedStageCta, FeaturedStageProps } from "./quest-log/FeaturedStage.js";
+/** @deprecated Prefer {@link FeaturedStage}. */
+export { MeltdownStage } from "./quest-log/MeltdownStage.js";
+/** @deprecated Prefer {@link FeaturedStageProps}. */
+export type { MeltdownStageCta, MeltdownStageProps } from "./quest-log/MeltdownStage.js";
 export { ServiceCard } from "./services/ServiceCard.js";
 export type { ServiceCardProps } from "./services/ServiceCard.js";
+export { PortfolioCard } from "./services/PortfolioCard.js";
+export type { PortfolioCardProps } from "./services/PortfolioCard.js";
 export { ServiceInspectPanel } from "./services/ServiceInspectPanel.js";
 export type { ServiceInspectPanelProps } from "./services/ServiceInspectPanel.js";
 export { DialogueBox } from "./manifesto/DialogueBox.js";
@@ -40,11 +50,17 @@ export type {
   PlatformEntry,
   PlatformTier,
 } from "./quest-log/PlatformAccess.js";
+/** @deprecated Prefer {@link FeaturedStage}. */
 export { GameCardFeatured } from "./quest-log/GameCardFeatured.js";
+/** @deprecated Prefer {@link FeaturedStageProps}. */
 export type { GameCardFeaturedProps } from "./quest-log/GameCardFeatured.js";
 export { VideoFacade } from "./quest-log/VideoFacade.js";
 export type { VideoFacadeProps } from "./quest-log/VideoFacade.js";
+export { Boot } from "./boot/Boot.js";
+export type { BootProps } from "./boot/Boot.js";
+/** @deprecated Prefer {@link Boot}. */
 export { Hero } from "./hero/Hero.js";
+/** @deprecated Prefer {@link BootProps}. */
 export type { HeroProps } from "./hero/Hero.js";
 export { BrandIcon } from "./logo/BrandIcon.js";
 export type { BrandIconProps } from "./logo/BrandIcon.js";

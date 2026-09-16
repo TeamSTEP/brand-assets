@@ -88,6 +88,13 @@
     "3xl": { "$value": "{spacing.1200}", "$type": "dimension" },
     "section": { "$value": "{spacing.1600}", "$type": "dimension" }
   },
+  "layout": {
+    "content-max": {
+      "$value": "1200px",
+      "$type": "dimension",
+      "$description": "Shared landing content rail — Boot, FeaturedStage, QuestLog, nav, and site sections align to this."
+    }
+  },
   "radius": {
     "chip-sm": {
       "$value": "{radius.hairline} {radius.100} {radius.hairline} {radius.100}",

@@ -1,0 +1,94 @@
+.ds-featured-stage {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+  padding-block: var(--spacing-3xl) var(--spacing-section);
+  padding-inline: max(var(--spacing-xl), calc((100% - var(--layout-content-max)) / 2));
+  border-top: 2px solid var(--color-game-green);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-game-green) 18%, var(--color-background)) 0%,
+    var(--color-background) 100%
+  );
+}
+
+.ds-featured-stage__badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.ds-featured-stage__media {
+  overflow: hidden;
+  width: 100%;
+  height: min(52vh, 480px);
+  background: var(--color-background-recessed);
+  border: 1px solid color-mix(in srgb, var(--color-game-green) 45%, transparent);
+  border-radius: var(--radius-card-lg);
+}
+
+.ds-featured-stage__media > * {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ds-featured-stage__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.ds-featured-stage__subtitle {
+  margin: 0;
+  color: var(--color-game-green-active);
+  font-family: var(--font-family-body);
+  font-size: clamp(14px, 2.4cqi, 17px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ds-featured-stage__title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-heading);
+  font-size: clamp(52px, 7.5cqi, 88px);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.ds-featured-stage__description {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-body);
+  font-size: clamp(20px, 3.2cqi, 26px);
+  line-height: 1.45;
+}
+
+.ds-featured-stage__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-xs);
+  width: 100%;
+}
+
+@container (max-width: 479px) {
+  .ds-featured-stage__ctas {
+    flex-direction: column;
+  }
+
+  .ds-featured-stage__ctas .ds-cta {
+    width: 100%;
+    justify-content: center;
+  }
+}

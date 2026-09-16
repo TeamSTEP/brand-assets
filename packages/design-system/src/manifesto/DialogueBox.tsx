@@ -37,11 +37,13 @@ export function DialogueBox({
   const displayedText = useTypewriter(text, { enabled: animated && isInView });
 
   return (
-    <Card size="md">
-      <div ref={boxRef} className="ds-dialogue-box__layout">
-        <img className="ds-dialogue-box__avatar" src={avatarSrc} alt={avatarAlt} />
-        <p className="ds-dialogue-box__text">{displayedText}</p>
-      </div>
-    </Card>
+    <div className="ds-dialogue-box">
+      <Card size="md">
+        <div ref={boxRef} className="ds-dialogue-box__layout">
+          <img className="ds-dialogue-box__avatar" src={avatarSrc} alt={avatarAlt} />
+          <p className="ds-dialogue-box__text">{displayedText}</p>
+        </div>
+      </Card>
+    </div>
   );
 }

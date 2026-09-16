@@ -8,7 +8,7 @@
 
   /* Same reasoning as Badge: Cta is sized to content and used in too many different
      contexts to own a meaningful container, so it scales off the viewport instead. */
-  font-size: clamp(11px, 1.6vw, 12px);
+  font-size: clamp(15px, 1.8vw, 17px);
   letter-spacing: 0.05em;
   text-decoration: none;
   cursor: pointer;

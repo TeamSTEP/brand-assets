@@ -1,77 +1,13 @@
-import { useRef } from "react";
-import { PixelGrid } from "../effects/PixelGrid.js";
-import { useIdleFloat } from "../hooks/useIdleFloat.js";
-import { BrandLogo } from "../logo/BrandLogo.js";
-import { Cta } from "../primitives/Cta.js";
-import "./Hero.css";
-
 /**
- * Props for {@link Hero}.
+ * @deprecated Prefer {@link Boot}. Hero is a deprecated alias kept for back-compat with
+ * hybrid-boot v2 consumers.
  *
  * @public
  */
-export interface HeroProps {
-  /** Italic eyebrow line above the brand lockup. */
-  eyebrow: string;
-  /** Supporting tagline below the brand lockup. */
-  tagline: string;
-  /** Destination for the ghost CTA. */
-  ctaHref: string;
-  /** Defaults to "ENTER THE GUILD" — the studio ambient CTA, not a game CTA. */
-  ctaLabel?: string;
-  /** Logo mark image URL for the desktop ring. */
-  logoMarkSrc: string;
-  /** Accessible alt text for the logo mark. */
-  logoMarkAlt: string;
-  /** Idle-float on the logo ring. Defaults to `true`; disabled when reduced motion is preferred. */
-  logoAnimated?: boolean;
-}
-
+export { Boot as Hero } from "../boot/Boot.js";
 /**
- * Landing-page hero section (wireframe §01): 80vh, pixel-grid background, 60/40 split with
- * logo mark on desktop. Brand lockup replaces the former text wordmark. Logo ring uses
- * `useIdleFloat` unless reduced motion is preferred. Mobile hides the logo mark and swaps
- * the scroll cue copy.
+ * @deprecated Prefer {@link BootProps}.
  *
  * @public
  */
-export function Hero({
-  eyebrow,
-  tagline,
-  ctaHref,
-  ctaLabel = "ENTER THE GUILD",
-  logoMarkSrc,
-  logoMarkAlt,
-  logoAnimated = true,
-}: HeroProps) {
-  const logoRingRef = useRef<HTMLDivElement>(null);
-  useIdleFloat(logoRingRef, logoAnimated);
-
-  return (
-    <section className="ds-hero">
-      <PixelGrid />
-      <div className="ds-hero__inner">
-        <div className="ds-hero__content">
-          <p className="ds-hero__eyebrow">{eyebrow}</p>
-          <h1 className="ds-hero__brand">
-            <BrandLogo variant="brand-filled" />
-          </h1>
-          <p className="ds-hero__tagline">{tagline}</p>
-          <Cta variant="ambient" href={ctaHref}>
-            {ctaLabel}
-          </Cta>
-          <div className="ds-hero__scroll ds-hero__scroll--desktop" aria-hidden="true">
-            <span className="ds-hero__scroll-line" />
-            <span className="ds-hero__scroll-label">scroll</span>
-          </div>
-          <p className="ds-hero__scroll ds-hero__scroll--mobile">Tap anywhere to explore</p>
-        </div>
-        <div className="ds-hero__logo">
-          <div ref={logoRingRef} className="ds-hero__logo-ring">
-            <img className="ds-hero__logo-mark" src={logoMarkSrc} alt={logoMarkAlt} />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+export type { BootProps as HeroProps } from "../boot/Boot.js";

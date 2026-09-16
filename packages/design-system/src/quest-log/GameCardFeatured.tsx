@@ -31,6 +31,9 @@ export interface GameCardFeaturedProps {
  * yet available), so it can't drift out of sync with the platform data driving
  * PlatformAccess right below it.
  *
+ * @deprecated Prefer {@link FeaturedStage} for the hybrid-boot v3 conversion stage (flat
+ * CTA row, no PlatformAccess). Kept for back-compat.
+ *
  * @public
  */
 export function GameCardFeatured({ title, subtitle, description, media, platforms }: GameCardFeaturedProps) {

@@ -38,13 +38,23 @@ export const Legacy: Story = {
   },
 };
 
-export const SideQuest: Story = {
+export const Released: Story = {
   args: {
-    title: "Signal Lost",
-    description: "A short, free side-project built between Meltdown milestones.",
-    status: "side-quest",
-    posterAlt: "Signal Lost key art",
-    cta: { icon: "download", label: "DOWNLOAD FREE · ITCH.IO", url: "https://teamstep.itch.io/signal-lost" },
+    title: "Signal Drift",
+    description: "Placeholder released title — playable on storefronts.",
+    status: "released",
+    posterAlt: "Signal Drift key art",
+    cta: { icon: "gamepad", label: "PLAY ON STEAM", url: "https://store.steampowered.com/" },
+  },
+};
+
+export const Prototype: Story = {
+  args: {
+    title: "Project Helix",
+    description: "Active experiment — follow or play the latest build.",
+    status: "prototype",
+    posterAlt: "Project Helix key art",
+    cta: { icon: "hexagon", label: "PLAY BUILD", url: "https://teamstep.itch.io/" },
   },
 };
 

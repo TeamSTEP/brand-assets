@@ -26,30 +26,10 @@ export interface SocialFeedProps {
 }
 
 const TABS: BBSTab[] = [
-  {
-    id: "bluesky",
-    desktopLabel: "[F1] BLUESKY",
-    mobileLabel: "BSKY",
-    badge: "api",
-  },
-  {
-    id: "substack",
-    desktopLabel: "[F2] SUBSTACK",
-    mobileLabel: "SUB",
-    badge: "api",
-  },
-  {
-    id: "youtube",
-    desktopLabel: "[F3] YOUTUBE",
-    mobileLabel: "YT",
-    badge: "api",
-  },
-  {
-    id: "discord",
-    desktopLabel: "[F4] DISCORD",
-    mobileLabel: "DC",
-    badge: "widget",
-  },
+  { id: "bluesky", desktopLabel: "Bluesky", mobileLabel: "BSKY" },
+  { id: "substack", desktopLabel: "Substack", mobileLabel: "SUB" },
+  { id: "youtube", desktopLabel: "YouTube", mobileLabel: "YT" },
+  { id: "discord", desktopLabel: "Discord", mobileLabel: "DC" },
 ];
 
 /**

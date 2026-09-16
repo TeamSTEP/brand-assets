@@ -53,7 +53,7 @@
 .ds-game-card-featured__subtitle {
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
-  font-size: clamp(11px, 3cqi, 12px);
+  font-size: clamp(13px, 3cqi, 14px);
   letter-spacing: 0.15em;
 }
 
@@ -61,7 +61,7 @@
   margin: 0;
   color: var(--color-text-primary);
   font-family: var(--font-family-heading);
-  font-size: clamp(20px, 6cqi, 28px);
+  font-size: clamp(24px, 6cqi, 34px);
   text-transform: uppercase;
 }
 
@@ -69,5 +69,5 @@
   margin: 0;
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
-  font-size: clamp(13px, 3.5cqi, 15px);
+  font-size: clamp(16px, 3.5cqi, 18px);
 }

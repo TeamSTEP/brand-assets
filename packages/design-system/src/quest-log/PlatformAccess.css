@@ -10,7 +10,7 @@
      bug as Badge's text-secondary fix earlier. */
   color: var(--color-game-green-active);
   font-family: var(--font-family-body);
-  font-size: clamp(11px, 3cqi, 12px);
+  font-size: clamp(13px, 3cqi, 14px);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -21,7 +21,7 @@
   gap: var(--spacing-xs);
   margin-bottom: var(--spacing-xs);
   font-family: var(--font-family-body);
-  font-size: clamp(11px, 3cqi, 12px);
+  font-size: clamp(13px, 3cqi, 14px);
   letter-spacing: 0.05em;
 }
 
