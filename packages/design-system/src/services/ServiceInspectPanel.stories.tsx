@@ -25,7 +25,7 @@ function InspectDemo() {
         onClose={() => setOpen(false)}
         title="Game Development"
         description="From prototype to polish — we build games with small teams, fast iteration, and a player-first mindset."
-        contactHref="mailto:hello@teamstep.gg"
+        contactHref="mailto:hello@teamstep.io"
       />
     </div>
   );
