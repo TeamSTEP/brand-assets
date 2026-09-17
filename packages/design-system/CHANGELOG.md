@@ -1,5 +1,34 @@
 # @teamstep/design-system
 
+## 1.0.0
+
+### Major Changes
+
+- a0cb891: Hybrid-boot v3 alignment: `Boot` replaces `Hero` as the primary studio entrance (~60vh +
+  peek strip); `FeaturedStage` is the game-agnostic featured conversion stage (flat CTAs, no
+  PlatformAccess; `MeltdownStage` remains a deprecated alias); `QuestLog` groups compact
+  originals by phase; `PortfolioCard` adds teal portfolio chrome. Badge gains `released` /
+  `prototype` / `portfolio`. `GameCardArchiveStatus` breaks from `legacy | side-quest` to
+  `legacy | released | prototype`. BBSTerminal quiet mode makes `badge` optional and drops
+  API/WIDGET tab chrome. Shared `--layout-content-max` rail aligns Boot / FeaturedStage /
+  nav / QuestLog. `Hero`, `GameCardFeatured`, and `PlatformAccess` remain exported but
+  deprecated where noted. `--color-text-tertiary` remaps to `{color.muted}` so QuestLog
+  group labels meet WCAG AA (mid stays the border primitive).
+
+### Minor Changes
+
+- a0cb891: Raise the wide-desktop content ceiling: components stopped growing past a ~1280px
+  container, so a 1920px+ monitor rendered pixel-identical to a 1280px laptop screen with
+  large empty gutters and small type. Hero/Footer/NavDesktop's `max-width` moves from
+  1280px to 1600px, DialogueBox's from 380px to 640px, and every `font-size: clamp()`
+  ceiling across Hero, Footer, NavDesktop, Quest Log (GameCardFeatured/GameCardArchive/
+  PlatformAccess/Badge), Services (ServiceCard/ServiceInspectPanel), BBS Board
+  (BBSTerminal/SocialFeed/BBSPanelAPI), Cta, and IconButton is raised roughly 20-25%,
+  along with the icon/avatar/logo dimensions that sit next to that text. No prop or
+  component API changes — visual only. Visual-regression baselines will need
+  regenerating via `design-system-ci.yml`'s `workflow_dispatch` (never locally, per this
+  repo's own CI comments) before merge.
+
 ## 0.5.1
 
 ### Patch Changes
