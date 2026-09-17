@@ -17,9 +17,7 @@
   padding: var(--spacing-md);
 }
 
-/* Stacks vertically (media above content) below this width, matching the spec's mobile
-   layout note; splits into the wireframe's two-column layout above it. Responds to the
-   card's own rendered width via container-type on the root, not the page viewport. */
+/* Stack below 480px; two columns above (card-width CQ). */
 @container (min-width: 480px) {
   .ds-game-card-featured__body {
     grid-template-columns: 1fr 1fr;
@@ -43,9 +41,7 @@
   display: flex;
   flex-direction: column;
 
-  /* No align-items: flex-start here (unlike GameCardArchive/ServiceCard) — PlatformAccess
-     needs to stretch to the column's full width for its own container-query pill layout to
-     compute correctly; text children are unaffected by stretching since they're block-level. */
+  /* Stretch for PlatformAccess CQ width (no flex-start unlike Archive/ServiceCard). */
   gap: var(--spacing-xs);
   min-width: 0;
 }

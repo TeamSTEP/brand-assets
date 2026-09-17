@@ -2,10 +2,7 @@ import "./BrandLogo.css";
 import { brandLogoSvgs } from "./svgs.js";
 
 /**
- * Logo visual treatment.
- *
- * "brand-filled" — filled circle with stroked border, multicolor brand gradient
- * "brand-hollow" — transparent circle, multicolor brand gradient
+ * Filled vs hollow logo mark treatment.
  *
  * @public
  */
@@ -22,7 +19,7 @@ export interface BrandLogoProps {
 }
 
 /**
- * Full Team STEP brand lockup (circle mark + wordmark).
+ * Combined circle mark + wordmark lockup.
  *
  * @public
  */

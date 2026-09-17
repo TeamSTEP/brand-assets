@@ -1,14 +1,5 @@
 #!/usr/bin/env node
-// Standalone regression test for no-style-passthrough.js, run via `pnpm run test` in this
-// package (wired into CI). Uses ESLint's Linter class directly rather than RuleTester/Mocha —
-// no extra test-framework dependency, just assert + process.exit like the other governance
-// scripts in this repo (see design-system/scripts/check-token-contrast.mjs).
-//
-// These cases exist because the rule was originally AST-shallow: it only checked properties
-// declared directly on an exported interface/type body, so `className`/`style` reachable via
-// `extends` or an intersection type (`&`) passed lint with zero warnings. Cases 4-6 guard
-// against the false positives that came up while fixing that (generic utility types, plain
-// aliases, unions).
+// Regression tests for no-style-passthrough (ESLint Linter + assert; covers extends/intersection + FP guards).
 
 import { Linter } from "eslint";
 import tseslint from "typescript-eslint";

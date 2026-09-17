@@ -1,16 +1,14 @@
 import { defineConfig, devices } from "@playwright/test";
 import process from "node:process";
 
-// Runs against the *built* Storybook (storybook-static/), not the dev server — the same
-// artifact CI produces via build-storybook, so a green run here means a green run in CI.
+// Against built storybook-static/ (same artifact as CI).
 export default defineConfig({
   testDir: "./tests",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1,
   workers: 1,
-  // json reporter feeds the PR sticky-comment summary (.github/scripts/build-pr-summary.mjs) —
-  // don't remove without updating that script.
+  // json reporter feeds .github/scripts/build-pr-summary.mjs
   reporter: [
     ["list"],
     ["html", { open: "never", outputFolder: "playwright-report" }],
@@ -22,13 +20,7 @@ export default defineConfig({
   },
   expect: {
     toHaveScreenshot: {
-      // Absorbs OS-level font-hinting/anti-aliasing drift between whatever environment
-      // generated a baseline and whatever environment is verifying it (e.g. GitHub's hosted
-      // ubuntu-latest runner picking up a fontconfig/freetype point release the baseline wasn't
-      // generated against) — observed consistently around a 1% pixel ratio for genuinely
-      // unchanged stories, never higher. A real visual regression (broken layout, wrong color,
-      // missing element) moves far more than 2% of pixels, so this doesn't hide real breakage;
-      // it only stops re-litigating rendering noise. See AGENTS.md Testing gotchas.
+      // Font-hinting drift across runners; real layout/color regressions exceed this.
       maxDiffPixelRatio: 0.02,
     },
   },

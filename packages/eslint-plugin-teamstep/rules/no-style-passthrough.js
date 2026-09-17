@@ -1,12 +1,5 @@
 /**
- * Ban className/style on exported prop interfaces — enforces the closed API rule (see AGENTS.md).
- *
- * Follows `extends` heritage clauses and intersection/union types so a prop shape that
- * reaches className/style only indirectly (`interface FooProps extends WithClassName {}`,
- * `type FooProps = WithClassName & { id: string }`) is still caught, not just a className
- * declared directly on the exported type's own body. A type reference this rule can't
- * resolve locally (e.g. imported from another module) is reported as `unresolvedBase`
- * rather than silently passed — an unverifiable base is a gap, not a pass.
+ * Ban className/style on exported prop types (including via extends/intersection).
  *
  * @type {import('eslint').Rule.RuleModule}
  */
@@ -62,13 +55,7 @@ export const noStylePassthroughRule = {
       context.report({ node, messageId: "unresolvedBase", data: { name } });
     }
 
-    // Only `extends` (interface heritage) and `&` (intersection) actually *merge in* another
-    // shape's members — that's the composition pattern this rule exists to see through. A
-    // plain alias (`type Foo = Bar`), a union (`type Foo = Bar | "literal"`), or a generic
-    // utility-type instantiation (`Extract<Bar, "x">`, `Pick<Bar, "x">`) doesn't merge an
-    // unknown shape into the exported prop type, so those are intentionally not resolved —
-    // resolving them produced false positives on both patterns (e.g. `Extract<BadgeVariant,
-    // ...>` and a plain re-exported union type) when tried against this codebase.
+    // Only extends / intersection merge shapes; aliases, unions, and generics are skipped.
     function checkComposedTypeNode(typeNode, seen) {
       switch (typeNode.type) {
         case "TSTypeLiteral":
@@ -84,10 +71,7 @@ export const noStylePassthroughRule = {
           checkComposedTypeNode(typeNode.typeAnnotation, seen);
           return;
         case "TSTypeReference": {
-          // A bare reference with no type arguments — `Foo`, not `Foo<Bar>` — is the only
-          // TSTypeReference shape treated as shape composition; a generic instantiation is
-          // assumed to be a utility type (Extract/Pick/Omit/...) that narrows rather than
-          // merges, and isn't followed.
+          // Bare refs only — generics (Extract/Pick/…) are treated as narrowers, not merges.
           const hasTypeArgs = Boolean(typeNode.typeArguments ?? typeNode.typeParameters);
           const refName =
             !hasTypeArgs && typeNode.typeName.type === "Identifier"
@@ -129,8 +113,6 @@ export const noStylePassthroughRule = {
         ) {
           checkComposedTypeNode(typeAnnotation, seen);
         }
-        // Plain aliases, unions, and generic instantiations are intentionally not
-        // recursed into — see the comment on checkComposedTypeNode.
       }
     }
 

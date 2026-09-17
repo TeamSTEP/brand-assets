@@ -1,10 +1,7 @@
 import "./Badge.css";
 
 /**
- * Closed set of badge meanings used across the Quest Log and portfolio chrome.
- * "main-quest" and "in-development" pulse; all other variants are static. Label text
- * and color are derived entirely from the variant — there is no separate label/color prop,
- * so a caller can't introduce an off-brand combination.
+ * Closed badge meanings — label, color, and pulse derive from the variant alone.
  *
  * @public
  */

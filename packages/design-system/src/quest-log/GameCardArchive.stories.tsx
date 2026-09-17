@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { GameCardArchive } from "./GameCardArchive.js";
 
-// 96x72 solid-fill placeholder — stories don't ship real game art; consumers pass a real
-// poster URL from their own asset pipeline.
+// Placeholder art — consumers pass a real poster URL.
 const PLACEHOLDER_POSTER =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='72'%3E%3Crect width='96' height='72' fill='%234f476d'/%3E%3C/svg%3E";
 
@@ -10,9 +9,7 @@ const meta: Meta<typeof GameCardArchive> = {
   title: "Quest Log/GameCardArchive",
   component: GameCardArchive,
   decorators: [
-    // Width tracks the page viewport (capped at a realistic single-column max) instead of a
-    // fixed size, so the mobile/tablet/desktop Playwright viewports actually exercise the
-    // component's container-query fluid sizing instead of all rendering identically.
+    // Fluid width so Playwright viewports exercise CQ sizing.
     (Story) => (
       <div style={{ padding: 16, background: "var(--color-background)", width: "100%", maxWidth: 560 }}>
         <Story />
@@ -58,11 +55,7 @@ export const Prototype: Story = {
   },
 };
 
-// Container queries respond to the card's own rendered width, not the page viewport — a
-// single isolated card is wide enough to hit the side-by-side layout (≥480px) at every
-// Playwright viewport (390–1280px) tested on the default stories. This story forces a
-// sub-480px container so the stacked thumb-above-body layout (and fluid type/thumb sizing)
-// stays covered independent of that viewport/container mismatch.
+// Sub-480px container to cover stacked CQ layout.
 export const Narrow: Story = {
   decorators: [
     (Story) => (

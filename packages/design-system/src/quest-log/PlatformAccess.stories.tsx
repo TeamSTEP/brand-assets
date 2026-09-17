@@ -17,7 +17,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-// Meltdown's real platform data (teamstep-landing-spec.md §5.2): both sections present.
+// Both Playable Now and Coming Soon sections.
 export const BothSections: Story = {
   args: {
     platforms: [
@@ -74,8 +74,7 @@ export const ComingSoonOnly: Story = {
   },
 };
 
-// Proves the "no empty states" rule (teamstep-landing-spec.md §5.3): an empty platforms[]
-// renders nothing at all, not a placeholder.
+// Empty platforms[] renders nothing (no placeholder).
 export const Empty: Story = {
   args: {
     platforms: [],

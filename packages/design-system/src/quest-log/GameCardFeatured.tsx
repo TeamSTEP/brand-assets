@@ -24,15 +24,9 @@ export interface GameCardFeaturedProps {
 }
 
 /**
- * The single main-quest featured card (teamstep-landing-spec.md §3 Section 02 Quest Log;
- * §5.4 status → visual mapping) — always "MAIN QUEST", never a status prop, since this
- * component only ever renders the one main-quest game. The "IN DEVELOPMENT" badge isn't a
- * separate prop either: it's derived from `platforms` (true when a "full" tier entry isn't
- * yet available), so it can't drift out of sync with the platform data driving
- * PlatformAccess right below it.
+ * Main-quest featured card; IN DEVELOPMENT badge derives from pending `full` platforms.
  *
- * @deprecated Prefer {@link FeaturedStage} for the hybrid-boot v3 conversion stage (flat
- * CTA row, no PlatformAccess). Kept for back-compat.
+ * @deprecated Prefer {@link FeaturedStage} for the hybrid-boot v3 conversion stage.
  *
  * @public
  */

@@ -23,8 +23,7 @@ export interface ServiceInspectPanelProps {
 }
 
 /**
- * Branded inspect overlay for the Services section — slide-up panel on desktop, bottom sheet
- * on mobile. `ServiceCard` calls `onInspect`; the consumer owns `open` / `onClose` state.
+ * Inspect overlay; consumer owns `open` / `onClose`.
  *
  * @public
  */

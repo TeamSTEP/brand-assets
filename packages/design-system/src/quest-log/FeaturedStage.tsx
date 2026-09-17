@@ -45,9 +45,7 @@ export interface FeaturedStageProps {
 }
 
 /**
- * Full-viewport featured conversion stage for the current main-quest original (hybrid-boot v3).
- * Game-agnostic — content comes from props. Always badges as main-quest; optionally
- * in-development. Flat CTA row — no PlatformAccess.
+ * Main-quest stage with a flat CTA row (no PlatformAccess).
  *
  * @public
  */

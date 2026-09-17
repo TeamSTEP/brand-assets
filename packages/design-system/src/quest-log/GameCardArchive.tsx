@@ -50,8 +50,7 @@ export interface GameCardArchiveProps {
 }
 
 /**
- * Compact Quest Log card for non-featured originals. Opacity and border accent derive from
- * `status` — legacy is dimmed; released/prototype stay full opacity.
+ * Compact Quest Log card; opacity and border follow `status`.
  *
  * @public
  */

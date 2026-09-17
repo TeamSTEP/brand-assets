@@ -21,8 +21,7 @@ export interface DialogueBoxProps {
 }
 
 /**
- * NPC-style dialogue box for the Manifesto section. Typewriter reveal triggers on first
- * scroll into view when `animated` is true (the default).
+ * Manifesto dialogue; typewriter runs on first in-view when `animated`.
  *
  * @public
  */

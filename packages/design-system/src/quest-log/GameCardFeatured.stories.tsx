@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { GameCardFeatured } from "./GameCardFeatured.js";
 
-// Stories don't ship real game art; consumers pass a real poster/VideoFacade.
+// Placeholder art — consumers pass a real poster/VideoFacade.
 const PLACEHOLDER_POSTER =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180'%3E%3Crect width='320' height='180' fill='%234f476d'/%3E%3C/svg%3E";
 
@@ -24,8 +24,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-// Meltdown's real data (teamstep-landing-spec.md §5.2): a "full" tier entry exists and
-// isn't available yet, so the "IN DEVELOPMENT" badge shows alongside "MAIN QUEST".
+// Pending full tier → IN DEVELOPMENT badge with MAIN QUEST.
 export const Default: Story = {
   args: {
     title: "Meltdown",
@@ -58,8 +57,7 @@ export const Default: Story = {
   },
 };
 
-// No "full" tier entry pending release, so no "IN DEVELOPMENT" badge — a fully-shipped
-// main-quest game would look like this.
+// Available full tier → no IN DEVELOPMENT badge.
 export const FullyReleased: Story = {
   args: {
     title: "Meltdown",
@@ -77,9 +75,7 @@ export const FullyReleased: Story = {
   },
 };
 
-// Container queries respond to the card's own rendered width, not the page viewport — see
-// the same note on the other components' Narrow stories. Below the 480px container
-// breakpoint the body stacks vertically per the spec's mobile layout note.
+// Sub-480px container to cover stacked CQ layout.
 export const Narrow: Story = {
   decorators: [
     (Story) => (

@@ -1,7 +1,5 @@
 export default {
-  // Explicit order, not a glob: enforces primitive -> semantic -> component merge
-  // order deterministically (alphabetical glob order would put component.json first,
-  // which breaks style-dictionary's merge when that file has no tokens yet).
+  // Explicit order (not glob): primitive → semantic → component merge.
   source: ["tokens/primitive.json", "tokens/semantic.json", "tokens/component.json"],
   platforms: {
     css: {

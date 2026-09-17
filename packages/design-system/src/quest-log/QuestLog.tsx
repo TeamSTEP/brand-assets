@@ -31,7 +31,7 @@ export interface QuestLogProps {
 }
 
 /**
- * Quest Log board for non-featured originals — grouped compact cards. Empty groups are omitted.
+ * Quest Log board of compact cards; empty groups are omitted.
  *
  * @public
  */

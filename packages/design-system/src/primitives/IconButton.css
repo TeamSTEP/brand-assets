@@ -1,5 +1,4 @@
-/* Shared unstyled-button reset — BBSTerminal tabs mirror these values at the CSS level
-   (transparent background, pointer cursor, body font) without importing this component. */
+/* Unstyled reset; BBSTerminal tabs mirror these values. */
 .ds-icon-button {
   border: 0;
   background: transparent;

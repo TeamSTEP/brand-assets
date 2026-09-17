@@ -7,7 +7,7 @@ import type { FeedPlatform, UnifiedPost } from "./types.js";
 import "./SocialFeed.css";
 
 /**
- * Tab identifiers for {@link SocialFeed} (API feeds plus Discord iframe).
+ * Social feed tab id — a {@link FeedPlatform} or Discord.
  *
  * @public
  */
@@ -33,8 +33,7 @@ const TABS: BBSTab[] = [
 ];
 
 /**
- * BBS Board social feed with tab switching and per-platform response caching. Fetches via a
- * plain `fetch()` — it does not know whether `fetchEndpoint` is an Astro route.
+ * Tabbed BBS feed with cached `fetch()` responses.
  *
  * @public
  */

@@ -2,15 +2,14 @@ import { CloseIcon, PlayIcon } from "./icons/icons.js";
 import "./IconButton.css";
 
 /**
- * Icon-only button sizing. `sm` is a plain glyph control (close buttons); `lg` is a
- * circular chrome control with a minimum 44px touch target (play overlays).
+ * `sm` plain glyph; `lg` circular chrome with a 44px touch target.
  *
  * @public
  */
 export type IconButtonSize = "sm" | "lg";
 
 /**
- * Closed icon set for {@link IconButton}. Callers never pass Unicode glyphs.
+ * Built-in glyph for {@link IconButton}.
  *
  * @public
  */
@@ -33,8 +32,7 @@ export interface IconButtonProps {
 }
 
 /**
- * Icon-only action button with a shared unstyled reset. No `href` variant — these are
- * always actions, never navigation.
+ * Icon-only button with a required accessible name.
  *
  * @public
  */

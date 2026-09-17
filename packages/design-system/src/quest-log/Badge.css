@@ -7,15 +7,11 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border-default);
 
-  /* text-primary, not text-secondary: at 12px, muted (~3.5:1 on --color-surface) fails
-     WCAG AA's 4.5:1 for normal text. "legacy" de-emphasis is a card-level opacity,
-     not something the badge itself should encode. */
+  /* text-primary: muted fails AA at this size on --color-surface. */
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
 
-  /* Badge nests arbitrarily deep (card inside grid inside section) and is sized to its own
-     content, so it can't establish a meaningful container of its own — viewport-relative
-     clamp() is used here instead of a container query, unlike the card-level components. */
+  /* Viewport clamp: content-sized and nests too deep for a useful CQ. */
   font-size: clamp(14px, 1.7vw, 16px);
   letter-spacing: 0.05em;
   white-space: nowrap;

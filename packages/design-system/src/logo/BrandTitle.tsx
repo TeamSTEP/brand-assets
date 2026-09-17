@@ -2,14 +2,14 @@ import "./BrandTitle.css";
 import { brandTitleSvg } from "./svgs.js";
 
 /**
- * Props for {@link BrandTitle}. Closed — no variants (filled wordmark only).
+ * Empty props bag for {@link BrandTitle} (no configurable inputs).
  *
  * @public
  */
 export type BrandTitleProps = Record<string, never>;
 
 /**
- * Team STEP wordmark only (no circle mark). Single filled treatment — no hollow variant.
+ * Team STEP wordmark only (no circle mark).
  *
  * @public
  */

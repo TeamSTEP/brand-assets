@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ServiceCard } from "./ServiceCard.js";
 
-// Stand-in icon — consumers pass their own icon per service; the design system
-// doesn't ship a fixed icon set.
+// Placeholder icon — consumers pass their own.
 const PlaceholderIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5" />
@@ -13,9 +12,7 @@ const meta: Meta<typeof ServiceCard> = {
   title: "Services/ServiceCard",
   component: ServiceCard,
   decorators: [
-    // Width tracks the page viewport (capped at a realistic single grid-cell max) instead of
-    // a fixed size, so the mobile/tablet/desktop Playwright viewports actually exercise the
-    // component's container-query fluid sizing instead of all rendering identically.
+    // Fluid width so Playwright viewports exercise CQ sizing.
     (Story) => (
       <div style={{ padding: 16, background: "var(--color-background)", width: "100%", maxWidth: 280 }}>
         <Story />
@@ -55,10 +52,7 @@ export const VisualArt: Story = {
   },
 };
 
-// Container queries respond to the card's own rendered width, not the page viewport — a
-// single isolated card is wide enough to hit the fluid sizing's max at every Playwright
-// viewport (390–1280px) tested here. This story proves the compact end of the range (icon/
-// title/description all shrink) independent of that viewport/container mismatch.
+// Narrow container to cover compact CQ sizing.
 export const Narrow: Story = {
   decorators: [
     (Story) => (

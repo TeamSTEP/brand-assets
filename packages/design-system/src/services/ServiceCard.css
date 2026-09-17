@@ -12,7 +12,6 @@
   align-items: center;
   justify-content: center;
 
-  /* Container-query based, same reasoning as GameCardArchive's thumbnail. */
   width: clamp(32px, 18cqi, 46px);
   height: clamp(32px, 18cqi, 46px);
   margin-bottom: var(--spacing-xs);

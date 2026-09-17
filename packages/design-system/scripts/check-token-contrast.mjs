@@ -1,17 +1,5 @@
 #!/usr/bin/env node
-// Second, DOM-independent contrast gate: axe (see stories.visual.spec.ts) reports
-// `incomplete` instead of `violations` when layered backgrounds/overlays keep it from
-// resolving a color, which silently passes DOM-based a11y tooling. This computes WCAG
-// ratios directly from resolved token hex values instead of rendering anything.
-//
-// Both inputs are auto-discovered, not hand-maintained:
-//   - text tokens: every `--color-*` token actually used via a `color:` declaration
-//     anywhere in src/**/*.css (excludes border-color/background-color/outline-color/etc.
-//     via the anchored regex below).
-//   - background tokens: the fixed set of tokens AGENTS.md's brand rule sanctions as page
-//     backgrounds ("Background is always --color-void or darker"). Semantic text tokens are
-//     meant to be safe design-system-wide, so every discovered text token is checked against
-//     every sanctioned background, not just the specific pairing seen in each component.
+// Token-hex WCAG AA gate (complements axe, which reports incomplete on gradients/overlays).
 
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
@@ -23,11 +11,7 @@ const pkgRoot = path.resolve(__dirname, "..");
 
 const SANCTIONED_BACKGROUND_TOKENS = ["background", "background-recessed", "surface"];
 
-// { "<textToken>|<backgroundToken>": "reason this pair is allowed to fail AA" }
-// Empty today — every discovered pairing currently passes 4.5:1. A component that
-// deliberately needs large-text (>=18.66px bold / 24px) sub-AA text should add an entry
-// here with a comment justifying it, the same pattern used for the axe rule exclusions in
-// stories.visual.spec.ts, rather than silently accepting a fail.
+// "<textToken>|<backgroundToken>" → reason. Empty unless a large-text AA exception is justified.
 const ALLOWLIST = {};
 
 const MIN_CONTRAST_NORMAL_TEXT = 4.5;
@@ -68,8 +52,6 @@ function discoverTextColorTokens() {
     (f) => !f.includes(`${path.sep}tokens${path.sep}`),
   );
   const found = new Set();
-  // Anchored to the "color:" property specifically — deliberately excludes
-  // border-color/background-color/outline-color/text-decoration-color, which aren't text.
   const re = /^\s*color:\s*var\(--color-([a-z0-9-]+)\)/;
   for (const file of cssFiles) {
     const content = readFileSync(file, "utf8");

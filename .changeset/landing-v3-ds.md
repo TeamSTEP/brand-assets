@@ -10,4 +10,5 @@ originals by phase; `PortfolioCard` adds teal portfolio chrome. Badge gains `rel
 `legacy | released | prototype`. BBSTerminal quiet mode makes `badge` optional and drops
 API/WIDGET tab chrome. Shared `--layout-content-max` rail aligns Boot / FeaturedStage /
 nav / QuestLog. `Hero`, `GameCardFeatured`, and `PlatformAccess` remain exported but
-deprecated where noted.
+deprecated where noted. `--color-text-tertiary` remaps to `{color.muted}` so QuestLog
+group labels meet WCAG AA (mid stays the border primitive).

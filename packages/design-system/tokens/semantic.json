@@ -36,8 +36,9 @@
       "$type": "color"
     },
     "text-tertiary": {
-      "$value": "{color.mid}",
-      "$type": "color"
+      "$value": "{color.muted}",
+      "$type": "color",
+      "$description": "Remapped from mid to muted for WCAG AA; hierarchy vs secondary is letter-spacing/case, not fill."
     },
     "game-green": {
       "$value": "{color.green}",

@@ -20,10 +20,7 @@ export interface ServiceCardProps {
 }
 
 /**
- * Inventory card for the Services section. This is
- * the static shell only — clicking "INSPECT ITEM" calls `onInspect`, but the slide-up
- * modal / bottom-sheet it's meant to open is a separate component this card doesn't know
- * about, keeping the card decoupled from any one interaction implementation.
+ * Static services shell; `onInspect` opens a separate panel.
  *
  * @public
  */

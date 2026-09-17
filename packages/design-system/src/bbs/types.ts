@@ -6,8 +6,7 @@
 export type FeedPlatform = "bluesky" | "substack" | "youtube";
 
 /**
- * Shared post shape for API-backed BBS panels. Discord is iframe-only and does not use this
- * type.
+ * Post shape for API-backed BBS panels (not Discord iframe).
  *
  * @public
  */

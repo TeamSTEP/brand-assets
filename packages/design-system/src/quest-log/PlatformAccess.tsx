@@ -19,9 +19,7 @@ export type Platform = "steam" | "itch" | "gog" | "epic" | "browser";
 export type PlatformTier = "demo" | "full" | "free" | "dlc";
 
 /**
- * Mirrors the shape of the Content Collection's `platforms` field as a plain type (no Zod
- * dependency in the library) — a mapper in the consuming app converts the real
- * `CollectionEntry<'games'>` platform entries into this shape.
+ * Plain platform entry shape for consumers mapping a games collection (no Zod here).
  *
  * @public
  */
@@ -30,10 +28,7 @@ export interface PlatformEntry {
   platform: Platform;
   /** Release tier (demo, full, free, dlc). */
   tier: PlatformTier;
-  /**
-   * CTA label shown on the pill — text only, no Unicode glyphs. Leading icons are derived
-   * from `platform` + `tier`.
-   */
+  /** CTA label — text only; icons derive from `platform` + `tier`. */
   label: string;
   /** Destination URL for the CTA. */
   url: string;
@@ -58,15 +53,11 @@ function platformLeadingIcon(platform: Platform, tier: PlatformTier): CtaIcon {
   if (platform === "browser") {
     return "gamepad";
   }
-  // itch
   return tier === "free" ? "download" : "gamepad";
 }
 
 /**
- * Splits `platforms` into "Playable Now" (green, primary CTA) and "Coming Soon" (amber,
- * secondary CTA) — each section hides entirely when its side of the split is empty, and the
- * whole panel renders nothing when both are empty. No empty-state placeholder is shown; an
- * empty panel communicates nothing a caller couldn't already tell from not rendering it.
+ * Splits platforms into Playable Now / Coming Soon; empty sides (or both) render nothing.
  *
  * @public
  */

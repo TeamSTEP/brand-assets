@@ -4,7 +4,7 @@ import { VignetteOverlay } from "../effects/VignetteOverlay.js";
 import "./BBSTerminal.css";
 
 /**
- * Tab badge shown in the BBS terminal chrome when quiet mode is off.
+ * Live-data badge shown on a BBS tab (`api` or Discord `widget`).
  *
  * @public
  */
@@ -47,8 +47,7 @@ export interface BBSTerminalProps {
 }
 
 /**
- * Terminal chrome for the BBS Board section — title bar, tabs, scanline + vignette overlays.
- * Quiet by default when tabs omit `badge` (no API/WIDGET chrome).
+ * BBS terminal chrome; quiet when tabs omit `badge`.
  *
  * @public
  */

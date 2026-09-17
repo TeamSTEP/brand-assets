@@ -32,10 +32,7 @@ export interface BootProps {
 }
 
 /**
- * Landing-page boot section (hybrid-boot v3): ~60vh, pixel-grid background, 60/40 split with
- * logo mark on desktop, and a bottom peek strip into the featured conversion stage. Brand
- * lockup replaces the former text wordmark. Logo ring uses `useIdleFloat` unless reduced
- * motion is preferred. Mobile hides the logo mark and swaps the scroll cue copy.
+ * Landing boot section (~60vh, pixel grid, brand lockup, peek strip into FeaturedStage).
  *
  * @public
  */
