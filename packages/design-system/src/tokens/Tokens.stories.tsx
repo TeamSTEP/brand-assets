@@ -1,10 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as tokens from "./tokens.js";
 
-// Renders every export in the generated tokens.ts as a category-appropriate preview, so
-// token drift (a value changing, a token disappearing) is visible here without editing
-// this file. Category is inferred from the export name prefix (Color/Spacing/Radius/Font),
-// which mirrors the top-level grouping in tokens/*.json.
+// Auto-previews every export in tokens.ts; category from export-name prefix.
 type Category = "color" | "spacing" | "radius" | "font" | "other";
 
 function categoryOf(name: string): Category {

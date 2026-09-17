@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { DialogueBox } from "./DialogueBox.js";
 
-// Stand-in for the studio logo mark — stories don't ship real brand assets (brand/ in the
-// repo root, not part of the published package); consumers pass their own logo URL.
+// Placeholder mark — consumers pass their own logo URL.
 const PLACEHOLDER_AVATAR =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Ccircle cx='18' cy='18' r='18' fill='%234f476d'/%3E%3C/svg%3E";
 
@@ -33,8 +32,7 @@ export const Default: Story = {
   },
 };
 
-// Container queries respond to the box's own rendered width, not the page viewport — see
-// the same note on GameCardArchive/ServiceCard's Narrow stories.
+// Narrow container to cover compact CQ layout.
 export const Narrow: Story = {
   decorators: [
     (Story) => (

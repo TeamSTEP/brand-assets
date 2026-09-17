@@ -17,6 +17,7 @@ const meta: Meta<typeof Hero> = {
     logoMarkSrc: PLACEHOLDER_LOGO,
     logoMarkAlt: "Team STEP logo mark",
     logoAnimated: false,
+    peekLabel: "Meltdown key art peeks here",
   },
 };
 

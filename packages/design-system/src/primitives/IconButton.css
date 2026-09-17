@@ -1,5 +1,4 @@
-/* Shared unstyled-button reset — BBSTerminal tabs mirror these values at the CSS level
-   (transparent background, pointer cursor, body font) without importing this component. */
+/* Unstyled reset; BBSTerminal tabs mirror these values. */
 .ds-icon-button {
   border: 0;
   background: transparent;
@@ -10,19 +9,19 @@
 }
 
 .ds-icon-button--sm {
-  font-size: 24px;
+  font-size: 28px;
 }
 
 .ds-icon-button--lg {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(44px, 12cqi, 56px);
-  height: clamp(44px, 12cqi, 56px);
+  width: clamp(50px, 12cqi, 64px);
+  height: clamp(50px, 12cqi, 64px);
   border: 1px solid var(--color-border-emphasis);
   border-radius: 50%;
   background: var(--color-surface);
-  font-size: clamp(16px, 4cqi, 20px);
+  font-size: clamp(19px, 4cqi, 24px);
 }
 
 .ds-icon-button--lg:hover,

@@ -36,8 +36,7 @@ function toYouTubeEmbedUrl(url: string): string | null {
 }
 
 /**
- * Poster + optional muted WebM loop with a click-to-load YouTube trailer. Keeps the initial
- * page weight low — the iframe mounts only after interaction.
+ * Poster with click-to-load YouTube iframe.
  *
  * @public
  */

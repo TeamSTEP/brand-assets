@@ -24,7 +24,7 @@ export interface NavHUDProps {
 }
 
 /**
- * Mobile bottom HUD with active-section highlighting via `IntersectionObserver`.
+ * Mobile bottom HUD with IntersectionObserver active-section state.
  *
  * @public
  */

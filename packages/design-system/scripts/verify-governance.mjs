@@ -1,14 +1,6 @@
 #!/usr/bin/env node
-// Runs adversarial governance probes on every CI run: injects a real violation into a real
-// component file, asserts the relevant gate fails, then restores the file byte-for-byte no
-// matter what (even if the probe itself throws).
-//
-// Both probes target components chosen only because they already contain the exact patterns
-// needed (a `color:` declaration to corrupt, an `@public` tag to strip) — not because Badge is
-// special. If Badge.tsx/Badge.css are restructured such that these markers no longer exist,
-// this script fails loudly (via the "didn't change anything" guard) rather than silently
-// no-op-ing, which is itself useful: it means the probe needs to move to wherever the pattern
-// now lives.
+// Adversarial governance probes: inject a real violation, assert the gate fails, restore the file.
+// Targets are pattern hosts only — if markers move, the "didn't change anything" guard fails loudly.
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { execSync } from "node:child_process";
@@ -47,7 +39,6 @@ function withTemporaryEdit(filePath, transform, probe) {
 
 let failed = false;
 
-// Probe 1: a hardcoded color must fail stylelint's `scale-unlimited/declaration-strict-value` gate.
 {
   const cssPath = path.join(pkgRoot, "src/quest-log/Badge.css");
   const result = withTemporaryEdit(
@@ -66,8 +57,6 @@ let failed = false;
   }
 }
 
-// Probe 2: an exported type missing its `@public` TSDoc tag must fail check-api's
-// `ae-missing-release-tag` gate (requires a fresh build for the .d.ts to reflect the missing tag).
 {
   const tsxPath = path.join(pkgRoot, "src/quest-log/Badge.tsx");
   const result = withTemporaryEdit(
@@ -90,7 +79,6 @@ let failed = false;
   }
 }
 
-// Probe 3: IconButton.css must also be covered by declaration-strict-value.
 {
   const cssPath = path.join(pkgRoot, "src/primitives/IconButton.css");
   const result = withTemporaryEdit(
@@ -109,7 +97,6 @@ let failed = false;
   }
 }
 
-// Probe 4: Card.css must also be covered by declaration-strict-value.
 {
   const cssPath = path.join(pkgRoot, "src/primitives/Card.css");
   const result = withTemporaryEdit(
@@ -128,7 +115,6 @@ let failed = false;
   }
 }
 
-// Probe 5: IconButton exported type missing @public must fail check-api.
 {
   const tsxPath = path.join(pkgRoot, "src/primitives/IconButton.tsx");
   const result = withTemporaryEdit(
@@ -151,7 +137,6 @@ let failed = false;
   }
 }
 
-// Probe 6: Card exported type missing @public must fail check-api.
 {
   const tsxPath = path.join(pkgRoot, "src/primitives/Card.tsx");
   const result = withTemporaryEdit(
@@ -174,7 +159,6 @@ let failed = false;
   }
 }
 
-// Probe 7: LogoVariant (BrandLogo) missing @public must fail check-api.
 {
   const tsxPath = path.join(pkgRoot, "src/logo/BrandLogo.tsx");
   const result = withTemporaryEdit(
@@ -197,9 +181,7 @@ let failed = false;
   }
 }
 
-// Rebuild once more so a subsequent `check-api` step in the same CI run (or a local re-run)
-// sees dist/ reflecting the real, unmutated source rather than whatever the last probe left
-// mid-build.
+// Rebuild so a later check-api / local re-run sees unmutated dist/, not the last probe's mid-build.
 run("pnpm run build");
 
 if (failed) {

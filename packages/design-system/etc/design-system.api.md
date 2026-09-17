@@ -26,7 +26,7 @@ export interface BadgeProps {
 }
 
 // @public
-export type BadgeVariant = "main-quest" | "side-quest" | "legacy" | "in-development";
+export type BadgeVariant = "main-quest" | "side-quest" | "legacy" | "in-development" | "released" | "prototype" | "portfolio";
 
 // @public
 export function BBSPanelAPI(input: BBSPanelAPIProps): react_jsx_runtime.JSX.Element;
@@ -47,7 +47,7 @@ export interface BBSPanelIframeProps {
 
 // @public
 export interface BBSTab {
-    badge: BBSTabBadge;
+    badge?: BBSTabBadge;
     desktopLabel: string;
     id: string;
     mobileLabel: string;
@@ -67,6 +67,26 @@ export interface BBSTerminalProps {
     tabs: BBSTab[];
     title: string;
 }
+
+// @public
+function Boot(input: BootProps): react_jsx_runtime.JSX.Element;
+export { Boot }
+export { Boot as Hero }
+
+// @public
+interface BootProps {
+    ctaHref: string;
+    ctaLabel?: string;
+    eyebrow: string;
+    logoAnimated?: boolean;
+    logoMarkAlt: string;
+    logoMarkSrc: string;
+    peekLabel: string;
+    peekSrc?: string;
+    tagline: string;
+}
+export { BootProps }
+export { BootProps as HeroProps }
 
 // @public
 export function BrandIcon(input: BrandIconProps): react_jsx_runtime.JSX.Element;
@@ -139,6 +159,33 @@ export interface DialogueBoxProps {
 }
 
 // @public
+function FeaturedStage(input: FeaturedStageProps): react_jsx_runtime.JSX.Element;
+export { FeaturedStage }
+export { FeaturedStage as MeltdownStage }
+
+// @public
+interface FeaturedStageCta {
+    href: string;
+    icon?: CtaIcon;
+    label: string;
+    variant: "primary" | "secondary";
+}
+export { FeaturedStageCta }
+export { FeaturedStageCta as MeltdownStageCta }
+
+// @public
+interface FeaturedStageProps {
+    ctas: FeaturedStageCta[];
+    description: string;
+    inDevelopment?: boolean;
+    media: ReactNode;
+    subtitle: string;
+    title: string;
+}
+export { FeaturedStageProps }
+export { FeaturedStageProps as MeltdownStageProps }
+
+// @public
 export type FeedPlatform = "bluesky" | "substack" | "youtube";
 
 // @public
@@ -182,9 +229,9 @@ export interface GameCardArchiveProps {
 }
 
 // @public
-export type GameCardArchiveStatus = Extract<BadgeVariant, "legacy" | "side-quest">;
+export type GameCardArchiveStatus = Extract<BadgeVariant, "legacy" | "released" | "prototype">;
 
-// @public
+// @public @deprecated
 export function GameCardFeatured(input: GameCardFeaturedProps): react_jsx_runtime.JSX.Element;
 
 // @public
@@ -198,20 +245,6 @@ export interface GameCardFeaturedProps {
 
 // @public
 export function GamepadIcon(): react_jsx_runtime.JSX.Element;
-
-// @public
-export function Hero(input: HeroProps): react_jsx_runtime.JSX.Element;
-
-// @public
-export interface HeroProps {
-    ctaHref: string;
-    ctaLabel?: string;
-    eyebrow: string;
-    logoAnimated?: boolean;
-    logoMarkAlt: string;
-    logoMarkSrc: string;
-    tagline: string;
-}
 
 // @public
 export function HexagonIcon(): react_jsx_runtime.JSX.Element;
@@ -293,6 +326,37 @@ export type PlatformTier = "demo" | "full" | "free" | "dlc";
 
 // @public
 export function PlayIcon(): react_jsx_runtime.JSX.Element;
+
+// @public
+export function PortfolioCard(input: PortfolioCardProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export interface PortfolioCardProps {
+    caseHref: string;
+    client: string;
+    description: string;
+    posterAlt: string;
+    posterSrc: string;
+    title: string;
+    year: number;
+}
+
+// @public
+export function QuestLog(input: QuestLogProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export interface QuestLogGroup {
+    items: GameCardArchiveProps[];
+    label: string;
+    phase: "released" | "prototype" | "legacy";
+}
+
+// @public
+export interface QuestLogProps {
+    groups: QuestLogGroup[];
+    heading: string;
+    lede?: string;
+}
 
 // @public
 export function ScanlineOverlay(): react_jsx_runtime.JSX.Element;

@@ -33,14 +33,22 @@
   align-items: center;
   justify-content: center;
   gap: var(--spacing-xs);
-  min-width: 44px;
-  min-height: 44px;
+  min-width: 52px;
+  min-height: 52px;
+  padding: var(--spacing-xs);
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+@media (width >= 480px) and (width < 768px) {
+  .ds-nav-hud__link {
+    min-height: 56px;
+    font-size: 12px;
+  }
 }
 
 .ds-nav-hud__link--active {

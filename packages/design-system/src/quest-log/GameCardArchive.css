@@ -3,15 +3,24 @@
   flex-direction: column;
   gap: var(--spacing-sm);
   padding: var(--spacing-sm);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-card-sm);
 }
 
 .ds-game-card-archive__layout--legacy {
-  opacity: 0.6;
+  opacity: 0.72;
+  border-color: var(--color-game-blood);
+}
+
+.ds-game-card-archive__layout--released {
+  border-color: var(--color-game-green);
+}
+
+.ds-game-card-archive__layout--prototype {
+  border-color: var(--color-status-pending);
 }
 
 .ds-game-card-archive__thumb {
-  /* Full-width when stacked; row sizing is applied in the min-width: 480px container
-     query below. aspect-ratio stays fixed so the poster doesn't stretch. */
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
@@ -19,18 +28,13 @@
   border-radius: var(--radius-card-sm);
 }
 
-/* Stacks vertically (thumb above body) below this width; side-by-side above it.
-   Responds to the card's own rendered width via Card's container-type, not the viewport. */
 @container (min-width: 480px) {
   .ds-game-card-archive__layout {
     flex-direction: row;
   }
 
   .ds-game-card-archive__thumb {
-    /* Scales off the card's own rendered width (container query), not the viewport — correct
-       regardless of where the card ends up embedded (full-width mobile column, narrow
-       sidebar, etc.), unlike a vw-based clamp. */
-    width: clamp(64px, 24cqi, 96px);
+    width: clamp(76px, 24cqi, 116px);
     flex-shrink: 0;
   }
 }
@@ -47,7 +51,7 @@
   margin: 0;
   color: var(--color-text-primary);
   font-family: var(--font-family-heading);
-  font-size: clamp(14px, 4.5cqi, 16px);
+  font-size: clamp(17px, 4.5cqi, 20px);
   text-transform: uppercase;
 }
 
@@ -55,5 +59,5 @@
   margin: 0;
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
-  font-size: clamp(12px, 3.5cqi, 13px);
+  font-size: clamp(14px, 3.5cqi, 16px);
 }

@@ -15,8 +15,7 @@ export interface BBSPanelIframeProps {
 }
 
 /**
- * Discord widget panel with brand filter + overlays. Verify Safari rendering manually before
- * release (§4 B3).
+ * Discord widget panel; verify Safari rendering before release (§4 B3).
  *
  * @public
  */

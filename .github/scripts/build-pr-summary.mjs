@@ -1,15 +1,5 @@
 #!/usr/bin/env node
-// Builds the markdown body for the sticky PR comment posted by the pr-summary job in
-// design-system-ci.yml. Reads only the small "ci-summary" artifact the `ci` job uploads
-// (gate-results.json, changed-components.txt, changed-snapshots.txt, story-index.json, and a
-// copy of the Playwright JSON reporter output) — never the full playwright-report artifact,
-// which stays a download-only link so this script (and the comment) stay fast regardless of
-// how many stories/viewports exist.
-//
-// Deliberately tolerant of missing/malformed inputs: this comment is a convenience summary,
-// not a gate. A parse failure here must never fail the job — see the try/catch around visual
-// results below. The actual pass/fail gate is the `ci` job itself (see workflow's "evaluate
-// gate results" step).
+// Sticky PR comment from ci-summary; missing inputs are OK — not a gate.
 
 import { createHash } from "node:crypto";
 import { readFileSync, existsSync } from "node:fs";
@@ -45,8 +35,7 @@ const OUTCOME_ICON = {
 
 const VIEWPORTS = ["mobile", "tablet", "desktop"];
 
-// Matches playwright.config.ts's snapshotPathTemplate: "{id}-{viewport}-{projectName}-linux.png".
-// Project is always "chromium" (see playwright.config.ts's single `projects` entry).
+// Matches playwright.config.ts snapshotPathTemplate; project is always "chromium".
 const SNAPSHOT_FILENAME_RE = /^(.+)-(mobile|tablet|desktop)-chromium-linux\.png$/;
 
 function readJson(filePath) {
@@ -121,11 +110,7 @@ function buildVisualOverview(specs) {
   return `${passed} passed, ${failed} failed, ${skipped} skipped`;
 }
 
-// GitHub's "Files changed" tab anchors each file's diff as #diff-<sha256 hex of the file's
-// repo-relative path>. Undocumented but stable — verify against a real PR if GitHub ever
-// changes this; a wrong hash just produces a dead anchor (lands on the top of the Files
-// changed tab), never a broken page, so this is safe to keep even if it silently stops
-// matching in the future.
+// GitHub Files-changed anchors: #diff-<sha256 of repo-relative path> (undocumented but stable).
 function diffAnchor(repoRelativePath) {
   return createHash("sha256").update(repoRelativePath).digest("hex");
 }
@@ -143,7 +128,7 @@ function buildSnapshotTable(specs) {
   const storyIndex = readJson(path.join(summaryDir, "story-index.json"));
   const entries = storyIndex?.entries ?? null;
 
-  // storyId -> { title, name, viewports: { mobile: filePath, tablet: filePath, desktop: filePath } }
+  // storyId -> { title, name, viewports: { mobile|tablet|desktop: filePath } }
   const byStory = new Map();
   const unparsed = [];
 

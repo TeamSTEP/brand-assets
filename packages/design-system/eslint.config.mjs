@@ -15,9 +15,7 @@ export default [
     },
   },
   {
-    // storybook-static is Storybook's own build output (minified, not authored) —
-    // src/tokens/{tokens.css,tokens.ts} are Style Dictionary-generated, not authored either.
-    // test-results/playwright-report are Playwright's own scratch output, same category.
+    // Generated / tool output — not authored source.
     ignores: [
       "storybook-static/**",
       "src/tokens/tokens.css",

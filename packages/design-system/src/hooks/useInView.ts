@@ -16,8 +16,7 @@ export interface UseInViewOptions {
 }
 
 /**
- * `IntersectionObserver` hook for scroll-triggered effects. When reduced motion is preferred,
- * returns `true` immediately so content is never withheld.
+ * Scroll-triggered visibility; returns `true` immediately under reduced motion.
  *
  * @public
  */

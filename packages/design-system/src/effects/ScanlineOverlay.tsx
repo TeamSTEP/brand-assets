@@ -1,10 +1,7 @@
 import "./ScanlineOverlay.css";
 
 /**
- * Decorative CRT scanline overlay. Renders as an
- * absolutely-positioned, non-interactive overlay — place inside a `position: relative`
- * container (e.g. a BBS panel) so it fills that container. Commonly paired with
- * {@link VignetteOverlay} on the same wrapper.
+ * Absolute CRT scanline overlay; pair with {@link VignetteOverlay} in a relative container.
  *
  * @public
  */

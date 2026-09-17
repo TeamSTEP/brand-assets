@@ -76,7 +76,7 @@ function SocialIcon({ platform }: { platform: FooterSocialPlatform }): ReactElem
 }
 
 /**
- * End-credits footer (wireframe §06): hollow brand icon, studio wordmark, tagline, and social links.
+ * Site footer with wordmark, tagline, and social links.
  *
  * @public
  */

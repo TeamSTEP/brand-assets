@@ -10,24 +10,14 @@ import {
 import "./Cta.css";
 
 /**
- * CTA hierarchy and purpose. "primary" is scoped to game-card demo-play contexts (it
- * reuses the game-green token, which the brand rules restrict to game-card scope) — don't
- * reach for "primary" outside a game card just because it's the boldest option.
- * "secondary" is for wishlist/coming-soon-style actions. "contact" shares secondary chrome
- * with a trailing forward arrow. "ghost" is the default for plain links (nav, archive).
- * "inspect" shares ghost chrome with a trailing external arrow. "ambient" shares ghost
- * chrome with a leading play mark (studio enter CTAs — not game-green).
- *
- * Purpose icons are owned by the variant. Leading platform/store marks use the `icon`
- * hatch — never embed glyphs in `children`.
+ * `primary` is game-card-scoped (game-green); do not use it outside a game card.
  *
  * @public
  */
 export type CtaVariant = "primary" | "secondary" | "contact" | "ghost" | "inspect" | "ambient";
 
 /**
- * Leading content mark for platform/store/download CTAs. Purpose arrows come from
- * {@link CtaVariant}, not this hatch.
+ * Leading platform/store mark; purpose arrows come from {@link CtaVariant}.
  *
  * @hatch
  *
@@ -95,8 +85,7 @@ function chromeModifier(variant: CtaVariant): string {
 }
 
 /**
- * Branded call-to-action control. Renders `<a>` when `href` is set, otherwise `<button>`.
- * Purpose icons follow `variant`; optional leading platform marks use the `icon` hatch.
+ * Branded CTA; renders `<a>` when `href` is set, otherwise `<button>`.
  *
  * @public
  */

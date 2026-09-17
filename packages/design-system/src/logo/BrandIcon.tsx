@@ -13,7 +13,7 @@ export interface BrandIconProps {
 }
 
 /**
- * Team STEP circle mark only (no wordmark).
+ * Circle mark only (no wordmark).
  *
  * @public
  */

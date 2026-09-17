@@ -6,9 +6,8 @@
   border-radius: var(--radius-chip-lg);
   font-family: var(--font-family-body);
 
-  /* Same reasoning as Badge: Cta is sized to content and used in too many different
-     contexts to own a meaningful container, so it scales off the viewport instead. */
-  font-size: clamp(11px, 1.6vw, 12px);
+  /* Viewport clamp: content-sized, used in too many contexts for a useful CQ. */
+  font-size: clamp(15px, 1.8vw, 17px);
   letter-spacing: 0.05em;
   text-decoration: none;
   cursor: pointer;

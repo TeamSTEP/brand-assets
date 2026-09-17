@@ -2,16 +2,14 @@ import type { ReactNode } from "react";
 import "./Card.css";
 
 /**
- * Card surface size — maps to `--radius-card-sm`, `--radius-card-md`, and
- * `--radius-card-lg` respectively.
+ * Card radius scale.
  *
  * @public
  */
 export type CardSize = "sm" | "md" | "lg";
 
 /**
- * Border accent geometry for card surfaces. Encodes both color and border shape — not
- * just a color override.
+ * Accent hatch: color plus border geometry, not a color-only override.
  *
  * @hatch
  *
@@ -38,9 +36,7 @@ export interface CardProps {
 }
 
 /**
- * Branded card surface primitive. Renders a single `div` with token-driven background,
- * border, and asymmetric radius. No `as` prop in v1 — every current consumer uses `div`;
- * revisit if a semantic element need arises.
+ * Token-driven card surface with optional game accent hatch.
  *
  * @public
  */

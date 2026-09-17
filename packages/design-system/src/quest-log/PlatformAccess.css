@@ -5,12 +5,10 @@
 .ds-platform-access__header {
   margin-bottom: var(--spacing-xs);
 
-  /* game-green-active, not game-green: the base green is a border color (~3:1 on
-     --color-surface), not text-legible — fails WCAG AA at this font size. Same class of
-     bug as Badge's text-secondary fix earlier. */
+  /* game-green-active: base green fails AA as text on --color-surface. */
   color: var(--color-game-green-active);
   font-family: var(--font-family-body);
-  font-size: clamp(11px, 3cqi, 12px);
+  font-size: clamp(13px, 3cqi, 14px);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -21,7 +19,7 @@
   gap: var(--spacing-xs);
   margin-bottom: var(--spacing-xs);
   font-family: var(--font-family-body);
-  font-size: clamp(11px, 3cqi, 12px);
+  font-size: clamp(13px, 3cqi, 14px);
   letter-spacing: 0.05em;
 }
 

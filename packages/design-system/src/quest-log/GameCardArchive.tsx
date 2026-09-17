@@ -6,21 +6,20 @@ import { Cta } from "../primitives/Cta.js";
 import "./GameCardArchive.css";
 
 /**
- * Archive-row games only use two of Badge's four variants — reusing the literal subset
- * (instead of a separate union) keeps this type from drifting out of sync with Badge.
+ * Quest Log compact-card phases. Subset of {@link BadgeVariant}.
  *
  * @public
  */
-export type GameCardArchiveStatus = Extract<BadgeVariant, "legacy" | "side-quest">;
+export type GameCardArchiveStatus = Extract<BadgeVariant, "legacy" | "released" | "prototype">;
 
 /**
- * CTA link on an archive game card.
+ * CTA link on a Quest Log compact game card.
  *
  * @public
  */
 export interface GameCardArchiveCta {
   /**
-   * Leading content mark — required because archive rows don't carry `platform`/`tier`.
+   * Leading content mark — required because compact rows don't carry `platform`/`tier`.
    * Label text must not include glyphs.
    */
   icon: CtaIcon;
@@ -40,21 +39,18 @@ export interface GameCardArchiveProps {
   title: string;
   /** Short description. */
   description: string;
-  /** Archive-row badge variant (`legacy` or `side-quest`). */
+  /** Phase badge (`released`, `prototype`, or `legacy`). */
   status: GameCardArchiveStatus;
   /** Poster thumbnail URL. */
   posterSrc: string;
   /** Accessible alt text for the poster. */
   posterAlt: string;
-  /** Single ghost CTA for the archive row. */
+  /** Single CTA for the row (ghost for legacy; primary/secondary via caller choice of icon + ghost). */
   cta: GameCardArchiveCta;
 }
 
 /**
- * Archive-row game card. Used for "legacy" and "side-quest" games — "main-quest" uses
- * GameCardFeatured instead. Opacity (60% for legacy, 100% for side-quest) is derived from
- * `status`, matching the spec's mapping table; there's no separate opacity prop to
- * override it into an off-brand combination.
+ * Compact Quest Log card; opacity and border follow `status`.
  *
  * @public
  */
@@ -66,6 +62,8 @@ export function GameCardArchive({
   posterAlt,
   cta,
 }: GameCardArchiveProps) {
+  const ctaVariant = status === "prototype" ? "secondary" : status === "released" ? "primary" : "ghost";
+
   return (
     <Card size="sm">
       <div className={`ds-game-card-archive__layout ds-game-card-archive__layout--${status}`}>
@@ -74,7 +72,7 @@ export function GameCardArchive({
           <Badge variant={status} />
           <h3 className="ds-game-card-archive__title">{title}</h3>
           <p className="ds-game-card-archive__description">{description}</p>
-          <Cta variant="ghost" icon={cta.icon} href={cta.url}>
+          <Cta variant={ctaVariant} icon={cta.icon} href={cta.url}>
             {cta.label}
           </Cta>
         </div>

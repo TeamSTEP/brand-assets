@@ -14,7 +14,15 @@ const meta: Meta<typeof Badge> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["main-quest", "side-quest", "legacy", "in-development"],
+      options: [
+        "main-quest",
+        "side-quest",
+        "legacy",
+        "in-development",
+        "released",
+        "prototype",
+        "portfolio",
+      ],
     },
   },
 };
@@ -27,3 +35,6 @@ export const MainQuest: Story = { args: { variant: "main-quest" } };
 export const SideQuest: Story = { args: { variant: "side-quest" } };
 export const Legacy: Story = { args: { variant: "legacy" } };
 export const InDevelopment: Story = { args: { variant: "in-development" } };
+export const Released: Story = { args: { variant: "released" } };
+export const Prototype: Story = { args: { variant: "prototype" } };
+export const Portfolio: Story = { args: { variant: "portfolio" } };

@@ -5,8 +5,8 @@ import { BBSPanelAPI } from "./BBSPanelAPI.js";
 import type { UnifiedPost } from "./types.js";
 
 const TABS = [
-  { id: "bluesky", desktopLabel: "[F1] BLUESKY", mobileLabel: "BSKY", badge: "api" as const },
-  { id: "discord", desktopLabel: "[F4] DISCORD", mobileLabel: "DC", badge: "widget" as const },
+  { id: "bluesky", desktopLabel: "Bluesky", mobileLabel: "BSKY" },
+  { id: "discord", desktopLabel: "Discord", mobileLabel: "DC" },
 ];
 
 const MOCK_POSTS: UnifiedPost[] = [

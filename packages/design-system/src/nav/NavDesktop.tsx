@@ -28,7 +28,7 @@ export interface NavDesktopProps {
 }
 
 /**
- * Sticky desktop top bar. Frosted background after scroll is owned internally.
+ * Sticky desktop top bar; frosted scroll state is internal.
  *
  * @public
  */

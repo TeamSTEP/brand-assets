@@ -27,7 +27,7 @@
   margin: 0 0 0 var(--spacing-xs);
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
-  font-size: clamp(10px, 2cqi, 11px);
+  font-size: clamp(12px, 2cqi, 13px);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -41,14 +41,13 @@
 }
 
 .ds-bbs-terminal__tab {
-  /* Reset values mirror IconButton's unstyled-button reset (transparent bg, pointer cursor,
-     body font) — tabs keep their own bordered chrome. */
+  /* Mirrors IconButton unstyled reset; tabs keep bordered chrome. */
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-chip-sm);
   background: transparent;
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
-  font-size: clamp(10px, 2cqi, 11px);
+  font-size: clamp(12px, 2cqi, 13px);
   letter-spacing: 0.06em;
   cursor: pointer;
 }
@@ -56,23 +55,6 @@
 .ds-bbs-terminal__tab--active {
   border-color: var(--color-border-emphasis);
   color: var(--color-accent-primary);
-}
-
-.ds-bbs-terminal__tab--api::after,
-.ds-bbs-terminal__tab--widget::after {
-  margin-left: var(--spacing-xs);
-  font-size: 9px;
-  letter-spacing: 0.08em;
-}
-
-.ds-bbs-terminal__tab--api::after {
-  color: var(--color-chrome-accent-active);
-  content: "API";
-}
-
-.ds-bbs-terminal__tab--widget::after {
-  color: var(--color-status-pending-active);
-  content: "WGT";
 }
 
 .ds-bbs-terminal__tab-mobile {

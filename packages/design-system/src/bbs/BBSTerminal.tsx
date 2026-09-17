@@ -4,7 +4,7 @@ import { VignetteOverlay } from "../effects/VignetteOverlay.js";
 import "./BBSTerminal.css";
 
 /**
- * Tab badge shown in the BBS terminal chrome.
+ * Live-data badge shown on a BBS tab (`api` or Discord `widget`).
  *
  * @public
  */
@@ -18,12 +18,14 @@ export type BBSTabBadge = "api" | "widget";
 export interface BBSTab {
   /** Unique tab id passed to `onTabChange`. */
   id: string;
-  /** Desktop label (e.g. `[F1] BLUESKY`). */
+  /** Desktop label (e.g. `Bluesky`). */
   desktopLabel: string;
   /** Short mobile label (e.g. `BSKY`). */
   mobileLabel: string;
-  /** Whether this tab loads API content or a widget iframe. */
-  badge: BBSTabBadge;
+  /**
+   * Optional API/WIDGET chrome badge. Omit for quiet terminal tabs (hybrid-boot v3).
+   */
+  badge?: BBSTabBadge;
 }
 
 /**
@@ -34,7 +36,7 @@ export interface BBSTab {
 export interface BBSTerminalProps {
   /** Title bar text. */
   title: string;
-  /** Tab definitions (labels + badge type). */
+  /** Tab definitions (labels + optional badge type). */
   tabs: BBSTab[];
   /** Id of the currently selected tab. */
   activeTabId: string;
@@ -45,7 +47,7 @@ export interface BBSTerminalProps {
 }
 
 /**
- * Terminal chrome for the BBS Board section — title bar, tabs, scanline + vignette overlays.
+ * BBS terminal chrome; quiet when tabs omit `badge`.
  *
  * @public
  */
@@ -67,13 +69,14 @@ export function BBSTerminal({
       <div className="ds-bbs-terminal__tabs" role="tablist" aria-label="Social feed platforms">
         {tabs.map((tab) => {
           const selected = tab.id === activeTabId;
+          const badgeModifier = tab.badge ? ` ds-bbs-terminal__tab--${tab.badge}` : "";
           return (
             <button
               key={tab.id}
               type="button"
               role="tab"
               aria-selected={selected}
-              className={`ds-bbs-terminal__tab ds-bbs-terminal__tab--${tab.badge}${
+              className={`ds-bbs-terminal__tab${badgeModifier}${
                 selected ? " ds-bbs-terminal__tab--active" : ""
               }`}
               onClick={() => onTabChange(tab.id)}

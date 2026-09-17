@@ -1,15 +1,6 @@
-/**
- * Self-hosted @font-face declarations for the three brand fonts referenced by
- * tokens/primitive.json's --font-family-* values (Rajdhani, Nunito, Barlow Condensed).
- * Without this, those font-family names resolve to nothing and every consumer/browser
- * silently falls back to whatever generic sans-serif the host OS happens to have —
- * different per machine, which made the Playwright visual-regression baselines
- * impossible to reproduce deterministically across environments (see incident log in
- * AGENTS.md Testing gotchas). Importing this file is what actually loads the
- * fonts; only the weights/styles used by component CSS are pulled in, not full families.
- */
-@import url("@fontsource/rajdhani/400.css"); /* heading default weight */
-@import url("@fontsource/rajdhani/700.css"); /* heading bold — Footer wordmark, Hero H1, ServiceInspectPanel title */
-@import url("@fontsource/nunito/400.css"); /* subtitle default weight */
-@import url("@fontsource/nunito/400-italic.css"); /* subtitle italic — Footer tagline, Hero subtitle */
-@import url("@fontsource/barlow-condensed/400.css"); /* body default weight */
+/* Self-hosted brand fonts for --font-family-* — without this, visual baselines drift across hosts. */
+@import url("@fontsource/rajdhani/400.css");
+@import url("@fontsource/rajdhani/700.css");
+@import url("@fontsource/nunito/400.css");
+@import url("@fontsource/nunito/400-italic.css");
+@import url("@fontsource/barlow-condensed/400.css");

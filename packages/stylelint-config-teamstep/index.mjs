@@ -3,9 +3,7 @@ export default {
   extends: ["stylelint-config-standard"],
   plugins: ["stylelint-declaration-strict-value"],
   rules: {
-    // Any color/spacing/radius declaration must reference a token (var(--...)), never
-    // a literal value. Font-family isn't included yet — only role tokens exist and
-    // shorthand `font` declarations can't cleanly be forced through strict-value.
+    // Token vars only for color/spacing/radius (font-family not gated yet).
     "scale-unlimited/declaration-strict-value": [
       [
         "/color$/",
