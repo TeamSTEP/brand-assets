@@ -20,7 +20,9 @@ const meta: Meta<typeof Boot> = {
     logoMarkSrc: PLACEHOLDER_LOGO,
     logoMarkAlt: "Team STEP logo mark",
     logoAnimated: false,
-    peekLabel: "Meltdown key art peeks here",
+    peekLabel: "Current project",
+    peekTitle: "Meltdown",
+    peekMeta: "Main quest · in development",
     peekSrc: PLACEHOLDER_PEEK,
   },
 };
@@ -33,6 +35,14 @@ export const Default: Story = {};
 
 export const WithoutPeekImage: Story = {
   args: {
+    peekSrc: undefined,
+  },
+};
+
+export const LabelOnlyPeek: Story = {
+  args: {
+    peekTitle: undefined,
+    peekMeta: undefined,
     peekSrc: undefined,
   },
 };
