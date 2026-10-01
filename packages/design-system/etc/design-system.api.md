@@ -82,7 +82,9 @@ interface BootProps {
     logoMarkAlt: string;
     logoMarkSrc: string;
     peekLabel: string;
+    peekMeta?: string;
     peekSrc?: string;
+    peekTitle?: string;
     tagline: string;
 }
 export { BootProps }
@@ -168,7 +170,7 @@ interface FeaturedStageCta {
     href: string;
     icon?: CtaIcon;
     label: string;
-    variant: "primary" | "secondary";
+    variant: "primary" | "secondary" | "ghost";
 }
 export { FeaturedStageCta }
 export { FeaturedStageCta as MeltdownStageCta }
