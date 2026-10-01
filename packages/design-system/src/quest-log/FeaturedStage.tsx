@@ -10,8 +10,11 @@ import "./FeaturedStage.css";
  * @public
  */
 export interface FeaturedStageCta {
-  /** Visual hierarchy — `primary` for play, `secondary` for wishlist / coming-soon. */
-  variant: "primary" | "secondary";
+  /**
+   * Visual hierarchy — `primary` for the lead play CTA, `ghost` for additional
+   * play platforms, `secondary` for wishlist / coming-soon.
+   */
+  variant: "primary" | "secondary" | "ghost";
   /** Text-only label — no Unicode glyphs; icons come from `icon`. */
   label: string;
   /** Destination URL. */

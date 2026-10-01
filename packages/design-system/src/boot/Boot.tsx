@@ -15,7 +15,7 @@ export interface BootProps {
   eyebrow: string;
   /** Supporting tagline below the brand lockup. */
   tagline: string;
-  /** Destination for the ghost CTA. */
+  /** Destination for the ghost CTA and peek teaser. */
   ctaHref: string;
   /** Defaults to "ENTER" — the studio ambient CTA, not a game CTA. */
   ctaLabel?: string;
@@ -25,14 +25,18 @@ export interface BootProps {
   logoMarkAlt: string;
   /** Idle-float on the logo ring. Defaults to `true`; disabled when reduced motion is preferred. */
   logoAnimated?: boolean;
-  /** Label shown in the bottom peek strip (e.g. Meltdown continuity cue). */
+  /** Kicker shown in the bottom peek strip (e.g. "Current project"). */
   peekLabel: string;
-  /** Optional background image for the peek strip. */
+  /** Featured game title shown in the peek teaser. */
+  peekTitle?: string;
+  /** Short status line under the peek title (e.g. "Main quest · in development"). */
+  peekMeta?: string;
+  /** Optional framed thumbnail for the peek strip. */
   peekSrc?: string;
 }
 
 /**
- * Landing boot section (~60vh, pixel grid, brand lockup, peek strip into FeaturedStage).
+ * Landing boot section (~60vh, pixel grid, brand lockup, peek teaser into FeaturedStage).
  *
  * @public
  */
@@ -45,10 +49,27 @@ export function Boot({
   logoMarkAlt,
   logoAnimated = true,
   peekLabel,
+  peekTitle,
+  peekMeta,
   peekSrc,
 }: BootProps) {
   const logoRingRef = useRef<HTMLDivElement>(null);
   useIdleFloat(logoRingRef, logoAnimated);
+
+  const peekBody = (
+    <>
+      <div className="ds-boot__peek-copy">
+        <span className="ds-boot__peek-label">{peekLabel}</span>
+        {peekTitle ? <span className="ds-boot__peek-title">{peekTitle}</span> : null}
+        {peekMeta ? <span className="ds-boot__peek-meta">{peekMeta}</span> : null}
+      </div>
+      {peekSrc ? (
+        <div className="ds-boot__peek-thumb" aria-hidden="true">
+          <img className="ds-boot__peek-thumb-image" src={peekSrc} alt="" />
+        </div>
+      ) : null}
+    </>
+  );
 
   return (
     <section className="ds-boot">
@@ -75,10 +96,15 @@ export function Boot({
           </div>
         </div>
       </div>
-      <div className="ds-boot__peek" aria-hidden="true">
-        {peekSrc ? <img className="ds-boot__peek-image" src={peekSrc} alt="" /> : null}
-        <span className="ds-boot__peek-label">{peekLabel}</span>
-      </div>
+      {peekTitle ? (
+        <a className="ds-boot__peek" href={ctaHref}>
+          {peekBody}
+        </a>
+      ) : (
+        <div className="ds-boot__peek" aria-hidden="true">
+          {peekBody}
+        </div>
+      )}
     </section>
   );
 }
