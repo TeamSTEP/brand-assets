@@ -1,5 +1,11 @@
 # @teamstep/design-system
 
+## 1.1.0
+
+### Minor Changes
+
+- c1cacd2: Boot peek redesign: optional `peekTitle` / `peekMeta` with framed 16:9 thumbnail (stacked below 480px). FeaturedStage media locks to 16:9. FeaturedStageCta gains `ghost` for secondary play platforms.
+
 ## 1.0.0
 
 ### Major Changes
