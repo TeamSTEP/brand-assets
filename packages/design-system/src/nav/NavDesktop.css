@@ -4,7 +4,7 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  height: 72px;
+  height: var(--nav-top-height, 4.5rem);
   background: transparent;
   border-bottom: 1px solid transparent;
   transition:
