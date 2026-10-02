@@ -66,47 +66,6 @@
   line-height: 1.45;
 }
 
-.ds-boot__scroll--desktop {
-  display: none;
-  align-items: center;
-  gap: var(--spacing-xs);
-  margin-top: var(--spacing-md);
-}
-
-.ds-boot__scroll--mobile {
-  display: block;
-  margin: var(--spacing-sm) 0 0;
-  color: var(--color-text-primary);
-  font-family: var(--font-family-body);
-  font-size: clamp(14px, 2.2cqi, 16px);
-  letter-spacing: 0.08em;
-  text-transform: lowercase;
-}
-
-@container (min-width: 640px) {
-  .ds-boot__scroll--desktop {
-    display: flex;
-  }
-
-  .ds-boot__scroll--mobile {
-    display: none;
-  }
-}
-
-.ds-boot__scroll-line {
-  width: 1px;
-  height: clamp(32px, 6cqi, 44px);
-  background: var(--color-border-default);
-}
-
-.ds-boot__scroll-label {
-  color: var(--color-text-primary);
-  font-family: var(--font-family-body);
-  font-size: clamp(13px, 2cqi, 15px);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
 .ds-boot__logo {
   display: none;
   justify-content: center;
