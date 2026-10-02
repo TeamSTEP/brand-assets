@@ -79,8 +79,7 @@
   position: relative;
   box-sizing: border-box;
   height: 28rem;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden auto;
   padding: var(--spacing-sm);
 }
 
