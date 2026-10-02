@@ -1,5 +1,11 @@
 # @teamstep/design-system
 
+## 1.1.1
+
+### Patch Changes
+
+- 707caab: BBSPanelAPI renders optional `UnifiedPost.thumb` as a framed 16:9 image (YouTube feed rows).
+
 ## 1.1.0
 
 ### Minor Changes
