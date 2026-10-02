@@ -1,5 +1,11 @@
 # @teamstep/design-system
 
+## 1.1.2
+
+### Patch Changes
+
+- da4aeee: Remove the `.ds-boot__scroll` style and text content from the `Boot` component.
+
 ## 1.1.1
 
 ### Patch Changes
