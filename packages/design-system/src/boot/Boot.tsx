@@ -85,11 +85,6 @@ export function Boot({
           <Cta variant="ambient" href={ctaHref}>
             {ctaLabel}
           </Cta>
-          <div className="ds-boot__scroll ds-boot__scroll--desktop" aria-hidden="true">
-            <span className="ds-boot__scroll-line" />
-            <span className="ds-boot__scroll-label">scroll</span>
-          </div>
-          <p className="ds-boot__scroll ds-boot__scroll--mobile">Tap anywhere to explore</p>
         </div>
         <div className="ds-boot__logo">
           <div ref={logoRingRef} className="ds-boot__logo-ring">
