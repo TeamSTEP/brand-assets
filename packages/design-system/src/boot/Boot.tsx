@@ -36,7 +36,8 @@ export interface BootProps {
 }
 
 /**
- * Landing boot section (~60vh, pixel grid, brand lockup, peek teaser into FeaturedStage).
+ * Landing boot section (fills the first viewport under the sticky nav, pixel grid,
+ * brand lockup, peek teaser into FeaturedStage).
  *
  * @public
  */

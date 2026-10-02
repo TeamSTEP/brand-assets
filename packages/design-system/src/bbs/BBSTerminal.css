@@ -77,6 +77,15 @@
 
 .ds-bbs-terminal__body {
   position: relative;
-  min-height: 180px;
+  box-sizing: border-box;
+  height: 28rem;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: var(--spacing-sm);
+}
+
+.ds-bbs-terminal__body:has(> .ds-bbs-panel-iframe) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }

@@ -27,7 +27,6 @@ export interface SocialFeedProps {
 
 const TABS: BBSTab[] = [
   { id: "bluesky", desktopLabel: "Bluesky", mobileLabel: "BSKY" },
-  { id: "substack", desktopLabel: "Substack", mobileLabel: "SUB" },
   { id: "youtube", desktopLabel: "YouTube", mobileLabel: "YT" },
   { id: "discord", desktopLabel: "Discord", mobileLabel: "DC" },
 ];

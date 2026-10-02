@@ -35,6 +35,11 @@ export function BBSPanelAPI({ posts }: BBSPanelAPIProps) {
             <p className="ds-bbs-panel-api__meta">
               @{post.author} · {post.platform.toUpperCase()}
             </p>
+            {post.thumb ? (
+              <div className="ds-bbs-panel-api__thumb">
+                <img className="ds-bbs-panel-api__thumb-image" src={post.thumb} alt="" />
+              </div>
+            ) : null}
             <a className="ds-bbs-panel-api__text" href={post.url}>
               {post.text}
             </a>
