@@ -103,20 +103,3 @@
   margin: 0;
   pointer-events: none;
 }
-
-/* Fill the terminal body when the list is the sole panel child. */
-.ds-bbs-terminal__body:has(> .ds-bbs-list) {
-  display: flex;
-  flex-direction: column;
-}
-
-.ds-bbs-terminal__body > .ds-bbs-list {
-  flex: 1 1 auto;
-  min-height: 0;
-}
-
-.ds-bbs-terminal__body > .ds-bbs-list:has(> .ds-bbs-list__error) {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}

@@ -93,6 +93,67 @@ export const LongBody: Story = {
   },
 };
 
+const EXTREME_BODY = Array.from({ length: 24 }, (_, i) =>
+  `Line block ${i + 1}: more words to force an extreme body length past any clamp so we can check thumbnail scale and vertical centering.`,
+).join(" ");
+
+/** Side-by-side body lengths to smoke-test thumb ~1/3 width + vertical center. */
+export const ThumbnailScaling: Story = {
+  render: () => (
+    <>
+      <BBSListItem
+        item={{
+          ...BASE,
+          id: "short",
+          name: "Short body",
+          body: "One short line.",
+          thumbnail: { src: PLACEHOLDER_THUMB, alt: "" },
+          publishedAt: "2026-10-02T12:00:00.000Z",
+        }}
+      />
+      <BBSListItem
+        item={{
+          ...BASE,
+          id: "medium",
+          name: "Medium body",
+          body: "Two lines of body copy sit beside a third-width thumb and should stay vertically centered with the image.",
+          thumbnail: { src: PLACEHOLDER_THUMB, alt: "" },
+          publishedAt: "2026-09-28T12:00:00.000Z",
+        }}
+      />
+      <BBSListItem
+        item={{
+          ...BASE,
+          id: "long",
+          name: "Clamped long body",
+          body: "Body text starts here and keeps going well past three lines so the clamp is visible. Extra words fill the paragraph until the overflow is cut visually while the full string remains in the DOM for screen readers and copy.",
+          thumbnail: { src: PLACEHOLDER_THUMB, alt: "" },
+          publishedAt: "2026-09-20T12:00:00.000Z",
+        }}
+      />
+      <BBSListItem
+        item={{
+          ...BASE,
+          id: "extreme",
+          name: "Extreme body length",
+          body: EXTREME_BODY,
+          thumbnail: { src: PLACEHOLDER_THUMB, alt: "" },
+          publishedAt: "2026-08-01T12:00:00.000Z",
+        }}
+      />
+      <BBSListItem
+        item={{
+          ...BASE,
+          id: "no-body",
+          name: "No body — title only",
+          thumbnail: { src: PLACEHOLDER_THUMB, alt: "" },
+          publishedAt: "2026-07-15T12:00:00.000Z",
+        }}
+      />
+    </>
+  ),
+};
+
 export const LongName: Story = {
   args: {
     item: {

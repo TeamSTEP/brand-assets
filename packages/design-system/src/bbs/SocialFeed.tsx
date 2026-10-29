@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BBSPanelAPI } from "./BBSPanelAPI.js";
+import { BBSList } from "./BBSList.js";
 import { BBSPanelIframe } from "./BBSPanelIframe.js";
 import { BBSTerminal } from "./BBSTerminal.js";
 import type { BBSTab } from "./BBSTerminal.js";
-import type { FeedPlatform, UnifiedPost } from "./types.js";
+import { toBBSItem } from "./mapUnifiedPost.js";
+import type { BBSListStatus, FeedPlatform, UnifiedPost } from "./types.js";
 import "./SocialFeed.css";
 
 /**
@@ -97,6 +98,15 @@ export function SocialFeed({
 
   const activeTabMeta = TABS.find((tab) => tab.id === activeTab) ?? TABS[0];
 
+  let listStatus: BBSListStatus = "done";
+  if (loading) {
+    listStatus = "loading";
+  } else if (error) {
+    listStatus = "error";
+  } else if (posts.length === 0) {
+    listStatus = "ready";
+  }
+
   return (
     <div className="ds-social-feed">
       <BBSTerminal
@@ -111,12 +121,12 @@ export function SocialFeed({
             src={`https://discord.com/widget?id=${discordServerId}&theme=dark`}
             title="Team STEP Discord server"
           />
-        ) : loading ? (
-          <p className="ds-social-feed__status">{"// ACQUIRING SIGNAL..."}</p>
-        ) : error ? (
-          <p className="ds-social-feed__status">{`// ${error.toUpperCase()}`}</p>
         ) : (
-          <BBSPanelAPI posts={posts} />
+          <BBSList
+            status={listStatus}
+            items={posts.map(toBBSItem)}
+            onRetry={error ? () => void loadPlatform(activeTab) : undefined}
+          />
         )}
       </BBSTerminal>
     </div>

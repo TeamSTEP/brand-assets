@@ -25,13 +25,14 @@
 }
 
 .ds-game-card-featured__media {
+  position: relative;
   overflow: hidden;
   aspect-ratio: 16 / 9;
   background: var(--color-background-recessed);
   border-radius: var(--radius-card-sm);
 }
 
-.ds-game-card-featured__media > * {
+.ds-game-card-featured__media > :not(.ds-scanline-overlay) {
   width: 100%;
   height: 100%;
   object-fit: cover;

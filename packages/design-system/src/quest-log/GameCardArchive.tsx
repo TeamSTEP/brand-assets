@@ -1,8 +1,9 @@
+import { ScanlineOverlay } from "../effects/ScanlineOverlay.js";
 import type { CtaIcon } from "../primitives/Cta.js";
-import type { BadgeVariant } from "./Badge.js";
-import { Badge } from "./Badge.js";
 import { Card } from "../primitives/Card.js";
 import { Cta } from "../primitives/Cta.js";
+import type { BadgeVariant } from "./Badge.js";
+import { Badge } from "./Badge.js";
 import "./GameCardArchive.css";
 
 /**
@@ -67,7 +68,10 @@ export function GameCardArchive({
   return (
     <Card size="sm">
       <div className={`ds-game-card-archive__layout ds-game-card-archive__layout--${status}`}>
-        <img className="ds-game-card-archive__thumb" src={posterSrc} alt={posterAlt} />
+        <div className="ds-game-card-archive__thumb">
+          <img className="ds-game-card-archive__thumb-image" src={posterSrc} alt={posterAlt} />
+          <ScanlineOverlay />
+        </div>
         <div className="ds-game-card-archive__body">
           <Badge variant={status} />
           <h3 className="ds-game-card-archive__title">{title}</h3>

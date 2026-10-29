@@ -1,5 +1,6 @@
+import { BBSList } from "./BBSList.js";
+import { toBBSItem } from "./mapUnifiedPost.js";
 import type { UnifiedPost } from "./types.js";
-import "./BBSPanelAPI.css";
 
 /**
  * Props for {@link BBSPanelAPI}.
@@ -13,41 +14,15 @@ export interface BBSPanelAPIProps {
 }
 
 /**
- * Branded mono feed panel for API-backed social platforms.
+ * Deprecated adapter: maps {@link UnifiedPost} onto {@link BBSList}.
  *
  * @deprecated Prefer {@link BBSList} / {@link BBSListItem} with {@link BBSItem}.
  * @public
  */
 export function BBSPanelAPI({ posts }: BBSPanelAPIProps) {
   if (posts.length === 0) {
-    return <p className="ds-bbs-panel-api__empty">{"// NO SIGNAL"}</p>;
+    return <BBSList status="ready" items={[]} />;
   }
 
-  return (
-    <ul className="ds-bbs-panel-api">
-      {posts.map((post) => (
-        <li key={post.id} className="ds-bbs-panel-api__row">
-          <time className="ds-bbs-panel-api__date" dateTime={post.date}>
-            {new Date(post.date).toLocaleDateString(undefined, {
-              month: "short",
-              day: "numeric",
-            })}
-          </time>
-          <div className="ds-bbs-panel-api__content">
-            <p className="ds-bbs-panel-api__meta">
-              @{post.author} · {post.platform.toUpperCase()}
-            </p>
-            {post.thumb ? (
-              <div className="ds-bbs-panel-api__thumb">
-                <img className="ds-bbs-panel-api__thumb-image" src={post.thumb} alt="" />
-              </div>
-            ) : null}
-            <a className="ds-bbs-panel-api__text" href={post.url}>
-              {post.text}
-            </a>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
+  return <BBSList status="done" items={posts.map(toBBSItem)} />;
 }

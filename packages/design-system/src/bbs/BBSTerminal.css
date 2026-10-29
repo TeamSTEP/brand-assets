@@ -108,6 +108,7 @@
   box-sizing: border-box;
   height: 28rem;
   overflow: hidden auto;
+
   /* Horizontal + bottom only — top gap comes from the panel title so it
      does not scroll away with the list. */
   padding: 0 var(--spacing-sm) var(--spacing-sm);
@@ -117,4 +118,20 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+.ds-bbs-terminal__body:has(> .ds-bbs-list) {
+  display: flex;
+  flex-direction: column;
+}
+
+.ds-bbs-terminal__body > .ds-bbs-list {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.ds-bbs-terminal__body > .ds-bbs-list:has(> .ds-bbs-list__error) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }

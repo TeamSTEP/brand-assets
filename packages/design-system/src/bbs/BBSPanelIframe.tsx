@@ -1,5 +1,3 @@
-import { ScanlineOverlay } from "../effects/ScanlineOverlay.js";
-import { VignetteOverlay } from "../effects/VignetteOverlay.js";
 import "./BBSPanelIframe.css";
 
 /**
@@ -15,7 +13,7 @@ export interface BBSPanelIframeProps {
 }
 
 /**
- * Terminal-styled iframe panel for any embed URL.
+ * Embed shell for any iframe URL. CRT overlays come from {@link BBSTerminal}.
  *
  * @public
  */
@@ -23,8 +21,6 @@ export function BBSPanelIframe({ src, title }: BBSPanelIframeProps) {
   return (
     <div className="ds-bbs-panel-iframe">
       <iframe className="ds-bbs-panel-iframe__frame" src={src} title={title} loading="lazy" />
-      <ScanlineOverlay />
-      <VignetteOverlay />
     </div>
   );
 }
