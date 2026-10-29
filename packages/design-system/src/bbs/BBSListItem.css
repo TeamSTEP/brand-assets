@@ -101,9 +101,12 @@
 
 .ds-bbs-list-item__date {
   flex-shrink: 0;
-  color: var(--color-text-primary);
+  color: var(--color-blood-hi);
   font-family: var(--font-family-body);
-  font-size: clamp(12px, 2cqi, 13px);
+
+  /* ≥14px bold → WCAG “large text” (3:1); token is allowlisted in check-token-contrast. */
+  font-size: clamp(14px, 2.4cqi, 16px);
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
