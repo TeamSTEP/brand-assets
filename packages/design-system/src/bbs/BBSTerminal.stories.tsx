@@ -26,6 +26,7 @@ function TerminalDemo() {
   return (
     <BBSTerminal
       title="BBS·TEAMSTEP·v1.0 ─ SIGNAL ACQUIRED"
+      tabListLabel="Social feed platforms"
       tabs={TABS}
       activeTabId={activeTab}
       onTabChange={setActiveTab}

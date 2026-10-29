@@ -9,6 +9,7 @@ import "./SocialFeed.css";
 /**
  * Social feed tab id — a {@link FeedPlatform} or Discord.
  *
+ * @deprecated Prefer app-owned tabs with {@link BBSTerminal} + {@link BBSList}.
  * @public
  */
 export type SocialFeedTab = FeedPlatform | "discord";
@@ -16,6 +17,7 @@ export type SocialFeedTab = FeedPlatform | "discord";
 /**
  * Props for {@link SocialFeed}.
  *
+ * @deprecated Prefer {@link BBSTerminal} + {@link BBSList} with app-owned fetch.
  * @public
  */
 export interface SocialFeedProps {
@@ -34,6 +36,7 @@ const TABS: BBSTab[] = [
 /**
  * Tabbed BBS feed with cached `fetch()` responses.
  *
+ * @deprecated Prefer {@link BBSTerminal} + {@link BBSList} with app-owned fetch.
  * @public
  */
 export function SocialFeed({
@@ -96,6 +99,7 @@ export function SocialFeed({
     <div className="ds-social-feed">
       <BBSTerminal
         title="BBS·TEAMSTEP·v1.0 ─ SIGNAL ACQUIRED"
+        tabListLabel="Social feed platforms"
         tabs={TABS}
         activeTabId={activeTab}
         onTabChange={onTabChange}

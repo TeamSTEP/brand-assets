@@ -4,6 +4,7 @@ import "./BBSPanelAPI.css";
 /**
  * Props for {@link BBSPanelAPI}.
  *
+ * @deprecated Prefer {@link BBSListProps} with {@link BBSItem}.
  * @public
  */
 export interface BBSPanelAPIProps {
@@ -14,6 +15,7 @@ export interface BBSPanelAPIProps {
 /**
  * Branded mono feed panel for API-backed social platforms.
  *
+ * @deprecated Prefer {@link BBSList} / {@link BBSListItem} with {@link BBSItem}.
  * @public
  */
 export function BBSPanelAPI({ posts }: BBSPanelAPIProps) {

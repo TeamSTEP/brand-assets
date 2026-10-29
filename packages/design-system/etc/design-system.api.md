@@ -6,6 +6,7 @@
 
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import { ReactNode } from 'react';
+import { Ref } from 'react';
 import { RefObject } from 'react';
 
 // @public
@@ -29,9 +30,58 @@ export interface BadgeProps {
 export type BadgeVariant = "main-quest" | "side-quest" | "legacy" | "in-development" | "released" | "prototype" | "portfolio";
 
 // @public
-export function BBSPanelAPI(input: BBSPanelAPIProps): react_jsx_runtime.JSX.Element;
+export interface BBSItem {
+    body?: string;
+    href: string;
+    id: string;
+    name: string;
+    publishedAt?: string;
+    thumbnail?: BBSItemThumbnail;
+}
 
 // @public
+export interface BBSItemThumbnail {
+    alt: string;
+    src: string;
+}
+
+// @public
+export function BBSList(input: BBSListProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export type BBSListDensity = "compact" | "comfortable";
+
+// @public
+export function BBSListItem(input: BBSListItemProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export interface BBSListItemProps {
+    density?: BBSListDensity;
+    item: BBSItem;
+    thumbnailFit?: BBSThumbnailFit;
+    thumbnailPlacement?: BBSThumbnailPlacement;
+}
+
+// @public
+export interface BBSListProps {
+    children?: ReactNode;
+    density?: BBSListDensity;
+    endSentinelRef?: Ref<HTMLDivElement>;
+    items?: BBSItem[];
+    listRef?: Ref<HTMLUListElement>;
+    onRetry?: () => void;
+    status: BBSListStatus;
+    thumbnailFit?: BBSThumbnailFit;
+    thumbnailPlacement?: BBSThumbnailPlacement;
+}
+
+// @public
+export type BBSListStatus = "loading" | "ready" | "error" | "loadingMore" | "errorMore" | "done";
+
+// @public @deprecated
+export function BBSPanelAPI(input: BBSPanelAPIProps): react_jsx_runtime.JSX.Element;
+
+// @public @deprecated
 export interface BBSPanelAPIProps {
     posts: UnifiedPost[];
 }
@@ -64,9 +114,16 @@ export interface BBSTerminalProps {
     activeTabId: string;
     children: ReactNode;
     onTabChange: (tabId: string) => void;
+    tabListLabel: string;
     tabs: BBSTab[];
     title: string;
 }
+
+// @public
+export type BBSThumbnailFit = "contain" | "cover";
+
+// @public
+export type BBSThumbnailPlacement = "leading" | "above";
 
 // @public
 function Boot(input: BootProps): react_jsx_runtime.JSX.Element;
@@ -187,7 +244,7 @@ interface FeaturedStageProps {
 export { FeaturedStageProps }
 export { FeaturedStageProps as MeltdownStageProps }
 
-// @public
+// @public @deprecated
 export type FeedPlatform = "bluesky" | "substack" | "youtube";
 
 // @public
@@ -386,22 +443,22 @@ export interface ServiceInspectPanelProps {
     title: string;
 }
 
-// @public
+// @public @deprecated
 export function SocialFeed(input: SocialFeedProps): react_jsx_runtime.JSX.Element;
 
-// @public
+// @public @deprecated
 export interface SocialFeedProps {
     discordServerId: string;
     fetchEndpoint?: string;
 }
 
-// @public
+// @public @deprecated
 export type SocialFeedTab = FeedPlatform | "discord";
 
 // @public
 export function StarIcon(): react_jsx_runtime.JSX.Element;
 
-// @public
+// @public @deprecated
 export interface UnifiedPost {
     author: string;
     date: string;
