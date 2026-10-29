@@ -36,20 +36,31 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xs);
-  padding: var(--spacing-xs) var(--spacing-sm);
+  padding: var(--spacing-sm);
   border-bottom: 1px solid var(--color-border-default);
 }
 
 .ds-bbs-terminal__tab {
-  /* Mirrors IconButton unstyled reset; tabs keep bordered chrome. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  box-sizing: border-box;
+  min-height: 2.75rem;
+  padding: var(--spacing-sm) var(--spacing-md);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-chip-sm);
   background: transparent;
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
-  font-size: clamp(12px, 2cqi, 13px);
+  font-size: clamp(14px, 2.4cqi, 16px);
   letter-spacing: 0.06em;
   cursor: pointer;
+}
+
+.ds-bbs-terminal__tab .ds-icon {
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .ds-bbs-terminal__tab:focus-visible {
@@ -78,6 +89,17 @@
   .ds-bbs-terminal__tab-desktop {
     display: inline;
   }
+}
+
+.ds-bbs-terminal__panel-title {
+  margin: 0;
+  padding: var(--spacing-sm) var(--spacing-sm) 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: clamp(16px, 3cqi, 18px);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .ds-bbs-terminal__body {

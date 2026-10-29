@@ -1,8 +1,9 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { BBSList } from "./BBSList.js";
 import { BBSListItem } from "./BBSListItem.js";
-import type { BBSItem } from "./types.js";
+import { BBSTerminal } from "./BBSTerminal.js";
+import type { BBSItem, BBSListStatus } from "./types.js";
 
 const PLACEHOLDER_THUMB =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180'%3E%3Crect width='320' height='180' fill='%234f476d'/%3E%3Cpolygon points='130,70 130,110 170,90' fill='%238591c9'/%3E%3C/svg%3E";
@@ -31,6 +32,23 @@ const ITEMS: BBSItem[] = [
     thumbnail: { src: PLACEHOLDER_THUMB, alt: "" },
   },
 ];
+
+const PAGE_SIZE = 30;
+
+const ALL_ITEMS: BBSItem[] = Array.from({ length: 1000 }, (_, index) => {
+  const n = index + 1;
+  return {
+    id: `item-${n}`,
+    name: `Post name ${n}`,
+    href: "https://teamstep.io",
+    body:
+      n % 5 === 0
+        ? undefined
+        : `Body text for item ${n}. Clamped after a few lines so rows stay even while the list grows.`,
+    thumbnail: n % 3 === 0 ? undefined : { src: PLACEHOLDER_THUMB, alt: "" },
+    publishedAt: n % 4 === 0 ? undefined : "2026-10-02T12:00:00.000Z",
+  };
+});
 
 const meta: Meta<typeof BBSList> = {
   title: "BBS/BBSList",
@@ -63,10 +81,18 @@ export const Loading: Story = {
 };
 
 export const ErrorState: Story = {
-  args: {
-    status: "error",
-    items: [],
-    onRetry: () => undefined,
+  render: function ErrorStateStory() {
+    return (
+      <BBSTerminal
+        title="BBS·TEAMSTEP·v1.0 ─ SIGNAL LOST"
+        tabListLabel="Feed"
+        tabs={[{ id: "feed", desktopLabel: "Feed", mobileLabel: "FEED" }]}
+        activeTabId="feed"
+        onTabChange={() => undefined}
+      >
+        <BBSList status="error" items={[]} onRetry={() => undefined} />
+      </BBSTerminal>
+    );
   },
 };
 
@@ -87,22 +113,61 @@ export const Done: Story = {
 };
 
 /**
- * Documents the virtualization contract: consumer owns the list element and
- * observes `endSentinelRef`. No fetch is performed here.
+ * Documents the virtualization contract: consumer owns progressive reveal via
+ * `endSentinelRef` + IntersectionObserver. 1000 source items; pages append on scroll.
  */
 export const VirtualizationContract: Story = {
   render: function VirtualizationContractStory() {
     const listRef = useRef<HTMLUListElement>(null);
     const endSentinelRef = useRef<HTMLDivElement>(null);
+    const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+    const [status, setStatus] = useState<BBSListStatus>("ready");
+
+    useEffect(() => {
+      const sentinel = endSentinelRef.current;
+      if (!sentinel || status === "done") {
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry?.isIntersecting) {
+            return;
+          }
+          setStatus("loadingMore");
+          window.setTimeout(() => {
+            setVisibleCount((current) => {
+              const next = Math.min(current + PAGE_SIZE, ALL_ITEMS.length);
+              setStatus(next >= ALL_ITEMS.length ? "done" : "ready");
+              return next;
+            });
+          }, 200);
+        },
+        { root: sentinel.closest(".ds-bbs-terminal__body"), rootMargin: "80px", threshold: 0 },
+      );
+
+      observer.observe(sentinel);
+      return () => observer.disconnect();
+    }, [status, visibleCount]);
+
+    const visibleItems = ALL_ITEMS.slice(0, visibleCount);
 
     return (
-      <BBSList status="ready" endSentinelRef={endSentinelRef}>
-        <ul className="ds-bbs-list__items" ref={listRef}>
-          {ITEMS.map((item) => (
-            <BBSListItem key={item.id} item={item} />
-          ))}
-        </ul>
-      </BBSList>
+      <BBSTerminal
+        title="BBS·TEAMSTEP·v1.0 ─ VIRTUAL FEED"
+        tabListLabel="Virtual feed"
+        tabs={[{ id: "feed", desktopLabel: "Feed", mobileLabel: "FEED" }]}
+        activeTabId="feed"
+        onTabChange={() => undefined}
+      >
+        <BBSList status={status} endSentinelRef={endSentinelRef}>
+          <ul className="ds-bbs-list__items" ref={listRef}>
+            {visibleItems.map((item) => (
+              <BBSListItem key={item.id} item={item} />
+            ))}
+          </ul>
+        </BBSList>
+      </BBSTerminal>
     );
   },
 };

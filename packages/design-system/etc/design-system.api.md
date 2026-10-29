@@ -91,7 +91,7 @@ export function BBSPanelIframe(input: BBSPanelIframeProps): react_jsx_runtime.JS
 
 // @public
 export interface BBSPanelIframeProps {
-    serverId: string;
+    src: string;
     title: string;
 }
 
@@ -99,12 +99,21 @@ export interface BBSPanelIframeProps {
 export interface BBSTab {
     badge?: BBSTabBadge;
     desktopLabel: string;
+    icon?: BBSTabIconName;
     id: string;
     mobileLabel: string;
 }
 
 // @public
 export type BBSTabBadge = "api" | "widget";
+
+// @public
+export function BBSTabIcon(input: {
+    name: BBSTabIconName;
+}): react_jsx_runtime.JSX.Element;
+
+// @public
+export type BBSTabIconName = "bluesky" | "youtube" | "reddit" | "steam" | "discord";
 
 // @public
 export function BBSTerminal(input: BBSTerminalProps): react_jsx_runtime.JSX.Element;
@@ -124,6 +133,9 @@ export type BBSThumbnailFit = "contain" | "cover";
 
 // @public
 export type BBSThumbnailPlacement = "leading" | "above";
+
+// @public
+export function BlueskyIcon(): react_jsx_runtime.JSX.Element;
 
 // @public
 function Boot(input: BootProps): react_jsx_runtime.JSX.Element;
@@ -216,6 +228,9 @@ export interface DialogueBoxProps {
     avatarSrc: string;
     text: string;
 }
+
+// @public
+export function DiscordIcon(): react_jsx_runtime.JSX.Element;
 
 // @public
 function FeaturedStage(input: FeaturedStageProps): react_jsx_runtime.JSX.Element;
@@ -418,6 +433,9 @@ export interface QuestLogProps {
 }
 
 // @public
+export function RedditIcon(): react_jsx_runtime.JSX.Element;
+
+// @public
 export function ScanlineOverlay(): react_jsx_runtime.JSX.Element;
 
 // @public
@@ -457,6 +475,12 @@ export type SocialFeedTab = FeedPlatform | "discord";
 
 // @public
 export function StarIcon(): react_jsx_runtime.JSX.Element;
+
+// @public
+export function StaticNoiseOverlay(): react_jsx_runtime.JSX.Element;
+
+// @public
+export function SteamIcon(): react_jsx_runtime.JSX.Element;
 
 // @public @deprecated
 export interface UnifiedPost {
@@ -504,6 +528,9 @@ export interface VideoFacadeProps {
 
 // @public
 export function VignetteOverlay(): react_jsx_runtime.JSX.Element;
+
+// @public
+export function YoutubeIcon(): react_jsx_runtime.JSX.Element;
 
 // (No @packageDocumentation comment for this package)
 

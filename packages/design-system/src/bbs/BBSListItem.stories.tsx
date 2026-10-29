@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { BBSListItem } from "./BBSListItem.js";
 import type { BBSItem } from "./types.js";
+import "./BBSList.css";
 
 const PLACEHOLDER_THUMB =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180'%3E%3Crect width='320' height='180' fill='%234f476d'/%3E%3Cpolygon points='130,70 130,110 170,90' fill='%238591c9'/%3E%3C/svg%3E";
@@ -15,19 +16,23 @@ const meta: Meta<typeof BBSListItem> = {
   title: "BBS/BBSListItem",
   component: BBSListItem,
   decorators: [
-    (Story) => (
-      <ul
-        style={{
-          margin: 0,
-          padding: 16,
-          listStyle: "none",
-          background: "var(--color-background-recessed)",
-          maxWidth: 640,
-        }}
-      >
-        <Story />
-      </ul>
-    ),
+    (Story, context) => {
+      const maxWidth = (context.parameters.bbsListMaxWidth as number | undefined) ?? 640;
+      return (
+        <div
+          className="ds-bbs-list"
+          style={{
+            padding: 16,
+            background: "var(--color-background-recessed)",
+            maxWidth,
+          }}
+        >
+          <ul className="ds-bbs-list__items">
+            <Story />
+          </ul>
+        </div>
+      );
+    },
   ],
   args: {
     item: {
@@ -146,21 +151,7 @@ export const ThumbnailAbove: Story = {
 };
 
 export const NarrowContainer: Story = {
-  decorators: [
-    (Story) => (
-      <ul
-        style={{
-          margin: 0,
-          padding: 16,
-          listStyle: "none",
-          background: "var(--color-background-recessed)",
-          maxWidth: 320,
-        }}
-      >
-        <Story />
-      </ul>
-    ),
-  ],
+  parameters: { bbsListMaxWidth: 320 },
   args: {
     item: {
       ...BASE,

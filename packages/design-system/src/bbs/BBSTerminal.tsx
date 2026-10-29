@@ -9,7 +9,10 @@ import {
 } from "react";
 import { ScanlineOverlay } from "../effects/ScanlineOverlay.js";
 import { VignetteOverlay } from "../effects/VignetteOverlay.js";
+import { BBSTabIcon, type BBSTabIconName } from "../primitives/icons/icons.js";
 import "./BBSTerminal.css";
+
+export type { BBSTabIconName } from "../primitives/icons/icons.js";
 
 /**
  * Live-data badge shown on a BBS tab (`api` or Discord `widget`).
@@ -31,6 +34,10 @@ export interface BBSTab {
   /** Short mobile label (e.g. `BSKY`). */
   mobileLabel: string;
   /**
+   * Optional leading glyph from the closed icon set.
+   */
+  icon?: BBSTabIconName;
+  /**
    * Optional API/WIDGET chrome badge. Omit for quiet terminal tabs (hybrid-boot v3).
    */
   badge?: BBSTabBadge;
@@ -44,7 +51,10 @@ export interface BBSTab {
 export interface BBSTerminalProps {
   /** Title bar text. */
   title: string;
-  /** Accessible name for the tab list. */
+  /**
+   * Visible active-tab title (and accessible name for the tab list / panel).
+   * Update this when the active tab changes (typically the active tab's desktop label).
+   */
   tabListLabel: string;
   /** Tab definitions (labels + optional badge type). */
   tabs: BBSTab[];
@@ -83,11 +93,14 @@ export function BBSTerminal({
     }
   }, [activeTabId, tabs]);
 
-  const focusTabAt = useCallback((index: number) => {
-    const next = ((index % tabs.length) + tabs.length) % tabs.length;
-    setFocusedIndex(next);
-    tabRefs.current[next]?.focus();
-  }, [tabs.length]);
+  const focusTabAt = useCallback(
+    (index: number) => {
+      const next = ((index % tabs.length) + tabs.length) % tabs.length;
+      setFocusedIndex(next);
+      tabRefs.current[next]?.focus();
+    },
+    [tabs.length],
+  );
 
   const onTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
     switch (event.key) {
@@ -118,6 +131,7 @@ export function BBSTerminal({
   };
 
   const panelId = `${reactId}-panel`;
+  const headingId = `${reactId}-heading`;
   const activeTab = tabs.find((tab) => tab.id === activeTabId) ?? tabs[0];
   const activeTabDomId = activeTab ? `${reactId}-tab-${activeTab.id}` : undefined;
 
@@ -129,7 +143,7 @@ export function BBSTerminal({
         <span className="ds-bbs-terminal__dot" aria-hidden="true" />
         <p className="ds-bbs-terminal__title">{title}</p>
       </div>
-      <div className="ds-bbs-terminal__tabs" role="tablist" aria-label={tabListLabel}>
+      <div className="ds-bbs-terminal__tabs" role="tablist" aria-labelledby={headingId}>
         {tabs.map((tab, index) => {
           const selected = tab.id === activeTabId;
           const tabDomId = `${reactId}-tab-${tab.id}`;
@@ -153,17 +167,21 @@ export function BBSTerminal({
               onKeyDown={(event) => onTabKeyDown(event, index)}
               onFocus={() => setFocusedIndex(index)}
             >
+              {tab.icon ? <BBSTabIcon name={tab.icon} /> : null}
               <span className="ds-bbs-terminal__tab-desktop">{tab.desktopLabel}</span>
               <span className="ds-bbs-terminal__tab-mobile">{tab.mobileLabel}</span>
             </button>
           );
         })}
       </div>
+      <h2 className="ds-bbs-terminal__panel-title" id={headingId}>
+        {tabListLabel}
+      </h2>
       <div
         className="ds-bbs-terminal__body"
         role="tabpanel"
         id={panelId}
-        aria-labelledby={activeTabDomId}
+        aria-labelledby={`${headingId}${activeTabDomId ? ` ${activeTabDomId}` : ""}`}
       >
         {children}
         <ScanlineOverlay />

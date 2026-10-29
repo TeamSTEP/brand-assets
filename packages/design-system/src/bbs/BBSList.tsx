@@ -1,4 +1,5 @@
 import type { ReactNode, Ref } from "react";
+import { StaticNoiseOverlay } from "../effects/StaticNoiseOverlay.js";
 import { BBSListItem } from "./BBSListItem.js";
 import type {
   BBSItem,
@@ -72,24 +73,37 @@ export function BBSList({
   const showSentinel = shouldShowSentinel(status, hasRows);
 
   if (status === "loading") {
-    return <p className="ds-bbs-list__status">{"// ACQUIRING SIGNAL..."}</p>;
+    return (
+      <div className="ds-bbs-list">
+        <p className="ds-bbs-list__status">{"// ACQUIRING SIGNAL..."}</p>
+      </div>
+    );
   }
 
   if (status === "error" && !hasRows) {
     return (
-      <div className="ds-bbs-list__status-block">
-        <p className="ds-bbs-list__status">{"// SIGNAL LOST"}</p>
-        {onRetry ? (
-          <button type="button" className="ds-bbs-list__retry" onClick={onRetry}>
-            Retry
-          </button>
-        ) : null}
+      <div className="ds-bbs-list">
+        <div className="ds-bbs-list__error">
+          <StaticNoiseOverlay />
+          <div className="ds-bbs-list__error-chrome">
+            <p className="ds-bbs-list__status">{"// SIGNAL LOST"}</p>
+            {onRetry ? (
+              <button type="button" className="ds-bbs-list__retry" onClick={onRetry}>
+                Retry
+              </button>
+            ) : null}
+          </div>
+        </div>
       </div>
     );
   }
 
   if (status === "ready" && !hasRows) {
-    return <p className="ds-bbs-list__status">{"// NO SIGNAL"}</p>;
+    return (
+      <div className="ds-bbs-list">
+        <p className="ds-bbs-list__status">{"// NO SIGNAL"}</p>
+      </div>
+    );
   }
 
   const listBody = usingChildren ? (

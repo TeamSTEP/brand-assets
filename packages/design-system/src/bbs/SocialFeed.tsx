@@ -28,9 +28,9 @@ export interface SocialFeedProps {
 }
 
 const TABS: BBSTab[] = [
-  { id: "bluesky", desktopLabel: "Bluesky", mobileLabel: "BSKY" },
-  { id: "youtube", desktopLabel: "YouTube", mobileLabel: "YT" },
-  { id: "discord", desktopLabel: "Discord", mobileLabel: "DC" },
+  { id: "bluesky", desktopLabel: "Bluesky", mobileLabel: "BSKY", icon: "bluesky" },
+  { id: "youtube", desktopLabel: "YouTube", mobileLabel: "YT", icon: "youtube" },
+  { id: "discord", desktopLabel: "Discord", mobileLabel: "DC", icon: "discord" },
 ];
 
 /**
@@ -95,17 +95,22 @@ export function SocialFeed({
     void loadPlatform(activeTab);
   }, [activeTab, loadPlatform]);
 
+  const activeTabMeta = TABS.find((tab) => tab.id === activeTab) ?? TABS[0];
+
   return (
     <div className="ds-social-feed">
       <BBSTerminal
         title="BBS·TEAMSTEP·v1.0 ─ SIGNAL ACQUIRED"
-        tabListLabel="Social feed platforms"
+        tabListLabel={activeTabMeta?.desktopLabel ?? "Feed"}
         tabs={TABS}
         activeTabId={activeTab}
         onTabChange={onTabChange}
       >
         {activeTab === "discord" ? (
-          <BBSPanelIframe serverId={discordServerId} title="Team STEP Discord server" />
+          <BBSPanelIframe
+            src={`https://discord.com/widget?id=${discordServerId}&theme=dark`}
+            title="Team STEP Discord server"
+          />
         ) : loading ? (
           <p className="ds-social-feed__status">{"// ACQUIRING SIGNAL..."}</p>
         ) : error ? (

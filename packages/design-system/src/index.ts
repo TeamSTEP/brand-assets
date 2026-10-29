@@ -2,6 +2,7 @@ import "./fonts.css";
 
 export { PixelGrid } from "./effects/PixelGrid.js";
 export { ScanlineOverlay } from "./effects/ScanlineOverlay.js";
+export { StaticNoiseOverlay } from "./effects/StaticNoiseOverlay.js";
 export { VignetteOverlay } from "./effects/VignetteOverlay.js";
 export { Card } from "./primitives/Card.js";
 export type { CardAccent, CardProps, CardSize } from "./primitives/Card.js";
@@ -13,12 +14,19 @@ export {
   ArrowDownIcon,
   ArrowRightIcon,
   ArrowUpRightIcon,
+  BBSTabIcon,
+  BlueskyIcon,
   CloseIcon,
+  DiscordIcon,
   GamepadIcon,
   HexagonIcon,
   PlayIcon,
+  RedditIcon,
   StarIcon,
+  SteamIcon,
+  YoutubeIcon,
 } from "./primitives/icons/icons.js";
+export type { BBSTabIconName } from "./primitives/icons/icons.js";
 export { Badge } from "./quest-log/Badge.js";
 export type { BadgeProps, BadgeVariant } from "./quest-log/Badge.js";
 export { GameCardArchive } from "./quest-log/GameCardArchive.js";

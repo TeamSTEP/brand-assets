@@ -8,26 +8,21 @@ import "./BBSPanelIframe.css";
  * @public
  */
 export interface BBSPanelIframeProps {
-  /** Discord server ID for the widget embed. */
-  serverId: string;
+  /** Absolute embed URL (e.g. Discord widget, SteamDB). Built by the consumer. */
+  src: string;
   /** Accessible title for the iframe. */
   title: string;
 }
 
 /**
- * Discord widget panel; verify Safari rendering before release (§4 B3).
+ * Terminal-styled iframe panel for any embed URL.
  *
  * @public
  */
-export function BBSPanelIframe({ serverId, title }: BBSPanelIframeProps) {
+export function BBSPanelIframe({ src, title }: BBSPanelIframeProps) {
   return (
     <div className="ds-bbs-panel-iframe">
-      <iframe
-        className="ds-bbs-panel-iframe__frame"
-        src={`https://discord.com/widget?id=${serverId}&theme=dark`}
-        title={title}
-        loading="lazy"
-      />
+      <iframe className="ds-bbs-panel-iframe__frame" src={src} title={title} loading="lazy" />
       <ScanlineOverlay />
       <VignetteOverlay />
     </div>

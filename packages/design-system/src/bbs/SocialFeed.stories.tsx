@@ -96,4 +96,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    discordServerId: "773053159270514728"
+  }
+};

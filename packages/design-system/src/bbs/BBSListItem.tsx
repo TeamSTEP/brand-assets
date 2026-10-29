@@ -27,7 +27,8 @@ function hasBody(body: string | undefined): body is string {
 }
 
 /**
- * Single BBS feed row: linked name, optional clamped body, optional thumb and date.
+ * Single BBS feed row: entire row links out (new tab), optional clamped body,
+ * optional thumb and date.
  *
  * @public
  */
@@ -55,31 +56,36 @@ export function BBSListItem({
 
   return (
     <li className={className}>
-      {item.thumbnail ? (
-        <div className="ds-bbs-list-item__thumb">
-          <img
-            className="ds-bbs-list-item__thumb-image"
-            src={item.thumbnail.src}
-            alt={item.thumbnail.alt}
-          />
+      <a
+        className="ds-bbs-list-item__link"
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {item.thumbnail ? (
+          <div className="ds-bbs-list-item__thumb">
+            <img
+              className="ds-bbs-list-item__thumb-image"
+              src={item.thumbnail.src}
+              alt={item.thumbnail.alt}
+            />
+          </div>
+        ) : null}
+        <div className="ds-bbs-list-item__main">
+          <div className="ds-bbs-list-item__headline">
+            <span className="ds-bbs-list-item__name">{item.name}</span>
+            {item.publishedAt ? (
+              <time className="ds-bbs-list-item__date" dateTime={item.publishedAt}>
+                {new Date(item.publishedAt).toLocaleDateString(undefined, {
+                  month: "short",
+                  day: "numeric",
+                })}
+              </time>
+            ) : null}
+          </div>
+          {showBody ? <p className="ds-bbs-list-item__body">{item.body}</p> : null}
         </div>
-      ) : null}
-      <div className="ds-bbs-list-item__main">
-        <div className="ds-bbs-list-item__headline">
-          <a className="ds-bbs-list-item__name" href={item.href}>
-            {item.name}
-          </a>
-          {item.publishedAt ? (
-            <time className="ds-bbs-list-item__date" dateTime={item.publishedAt}>
-              {new Date(item.publishedAt).toLocaleDateString(undefined, {
-                month: "short",
-                day: "numeric",
-              })}
-            </time>
-          ) : null}
-        </div>
-        {showBody ? <p className="ds-bbs-list-item__body">{item.body}</p> : null}
-      </div>
+      </a>
     </li>
   );
 }

@@ -49,9 +49,9 @@ export interface BBSItemThumbnail {
 export interface BBSItem {
   /** Stable string, unique within the list. */
   id: string;
-  /** Visible link text; non-empty. */
+  /** Visible title text; non-empty. */
   name: string;
-  /** Destination URL. */
+  /** Destination URL for the whole row (opens in a new tab). */
   href: string;
   /** Plain text body; omit or whitespace-only to center the name beside the thumbnail. */
   body?: string;
