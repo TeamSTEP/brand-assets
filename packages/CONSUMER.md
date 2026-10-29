@@ -23,8 +23,8 @@ In CI, `GITHUB_TOKEN` from `actions/setup-node` works when the consumer repo is 
 Pin a minor range — never `workspace:*` or `latest` outside the brand-assets monorepo:
 
 ```bash
-pnpm add @teamstep/design-system@^0.1.0
-pnpm add motion@^12.0.0   # peer dependency (Hero logo float, DialogueBox animations)
+pnpm add @teamstep/design-system@^1.1.0
+pnpm add motion@^12.0.0   # peer dependency (Boot logo float, DialogueBox animations)
 ```
 
 `react` and `react-dom` should already be present if you use `astro add react`.
@@ -32,7 +32,7 @@ pnpm add motion@^12.0.0   # peer dependency (Hero logo float, DialogueBox animat
 Optional companion governance packages (recommended):
 
 ```bash
-pnpm add -D @teamstep/eslint-plugin@^0.1.0 @teamstep/stylelint-config@^0.1.0
+pnpm add -D @teamstep/eslint-plugin@^0.2.0 @teamstep/stylelint-config@^0.2.0
 ```
 
 ---
@@ -64,22 +64,82 @@ import { GameCardArchive } from "@teamstep/design-system";
 <GameCardArchive client:load={false} {...props} />
 ```
 
-Interactive components need hydration directives per the architecture proposal:
+Interactive components need hydration directives:
 
 | Component | Suggested directive |
 |---|---|
 | `NavHUD` | `client:load` |
-| `SocialFeed` | `client:load` |
+| `BBSTerminal` (+ `BBSList` / `BBSPanelIframe` children) | `client:load` |
 | `VideoFacade` | `client:visible` |
 | `DialogueBox` (typewriter) | `client:visible` |
-| `Hero`, `Footer`, `GameCardArchive`, `ServiceCard` | none (SSR) |
+| `Boot`, `FeaturedStage`, `Footer`, `GameCardArchive`, `PortfolioCard`, `ServiceCard` | none (SSR) |
+
+Deprecated but still exported: `SocialFeed`, `BBSPanelAPI`, `Hero`, `GameCardFeatured`,
+`MeltdownStage`, `PlatformAccess`. Prefer the replacements above; removals land in a future major.
 
 Pass plain props — no `className`/`style` overrides. Extend via typed variants in the design
 system repo if a new look is needed.
 
 ---
 
-## 5. ESLint (closed APIs)
+## 5. BBS feeds (app-owned)
+
+The design system owns presentation only. Fetching, paging, and Discord/Steam embed URL
+construction stay in the app.
+
+Compose chrome + panel:
+
+```tsx
+import {
+  BBSList,
+  BBSPanelIframe,
+  BBSTerminal,
+  type BBSItem,
+  type BBSTab,
+} from "@teamstep/design-system";
+
+const tabs: BBSTab[] = [
+  { id: "bluesky", desktopLabel: "Bluesky", mobileLabel: "BSKY", icon: "bluesky" },
+  { id: "discord", desktopLabel: "Discord", mobileLabel: "DC", icon: "discord" },
+];
+
+// Controlled tabs: update `activeTabId` + `tabListLabel` together.
+<BBSTerminal
+  title="BBS·TEAMSTEP·V1.0 — SIGNAL ACQUIRED"
+  tabListLabel={activeTab.desktopLabel}
+  tabs={tabs}
+  activeTabId={activeTabId}
+  onTabChange={setActiveTabId}
+>
+  {activeTabId === "discord" ? (
+    <BBSPanelIframe
+      src={`https://discord.com/widget?id=${discordServerId}&theme=dark`}
+      title="Discord"
+    />
+  ) : (
+    <BBSList
+      status={status} /* loading | ready | error | loadingMore | errorMore | done */
+      items={items} /* BBSItem[] — platform-free rows */
+      onRetry={reload}
+      endSentinelRef={endSentinelRef} /* observe for infinite scroll; DS does not fetch */
+    />
+  )}
+</BBSTerminal>
+```
+
+Map API payloads onto `BBSItem` in the app (`id`, `name`, `href`, optional `body` /
+`publishedAt` / `thumbnail`). Infinite scroll: observe `endSentinelRef` (and optionally
+`listRef` / `children` for virtualization); do not pass an `onLoadMore` — that stays app-side.
+
+CRT scanline/vignette overlays are owned by `BBSTerminal` (and game-card media slots). Do not
+stack a second overlay on `BBSPanelIframe`.
+
+Deprecated: `SocialFeed` (`fetchEndpoint` + built-in Discord `serverId` wiring) and
+`BBSPanelAPI` (`UnifiedPost[]`). Keep using them only while migrating.
+
+---
+
+## 6. ESLint (closed APIs)
 
 ```js
 // eslint.config.mjs
@@ -96,7 +156,7 @@ export default [
 
 ---
 
-## 6. Stylelint (token-backed CSS)
+## 7. Stylelint (token-backed CSS)
 
 For page-level CSS that uses design tokens:
 
@@ -114,28 +174,33 @@ Use `var(--color-void)`, `var(--color-accent)`, etc. — never raw hex in consum
 
 ---
 
-## 7. Content mapping (Astro collections)
+## 8. Content mapping (Astro collections)
 
 The library does not import `astro:content`. Map collection entries to component props in the
 page layer:
 
 ```ts
 // src/lib/games.ts
-import type { GameCardFeaturedProps } from "@teamstep/design-system";
+import type { FeaturedStageProps } from "@teamstep/design-system";
 
-export function toFeaturedCard(entry: CollectionEntry<"games">): GameCardFeaturedProps {
+export function toFeaturedStage(entry: CollectionEntry<"games">): FeaturedStageProps {
   return {
     title: entry.data.title,
-    // ...
+    subtitle: entry.data.subtitle,
+    description: entry.data.description,
+    media: /* img or VideoFacade */,
+    ctas: /* FeaturedStageCta[] */,
+    inDevelopment: entry.data.inDevelopment,
   };
 }
 ```
 
-`SocialFeed` accepts `fetchEndpoint` (default `/api/feed`) — keep API routes in the Astro app.
+Feed JSON and Discord/Steam embed URLs also stay in the Astro app — map into `BBSItem` /
+`BBSPanelIframe` `src` as above.
 
 ---
 
-## 8. Consumer-side layout (not in the package)
+## 9. Consumer-side layout (not in the package)
 
 These stay in the landing page per Phase 0 decisions:
 
@@ -146,8 +211,8 @@ These stay in the landing page per Phase 0 decisions:
 
 ---
 
-## 9. Version pinning policy
+## 10. Version pinning policy
 
-- Pin `@teamstep/design-system` to `^0.1.x` (exact minor, floating patch).
+- Pin `@teamstep/design-system` to `^1.1.x` (exact minor, floating patch).
 - Run `pnpm update @teamstep/design-system` deliberately after reviewing the changelog.
 - API changes require a Changesets bump in brand-assets; `check-api` guards the public surface.
