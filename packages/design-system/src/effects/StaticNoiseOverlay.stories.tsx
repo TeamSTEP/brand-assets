@@ -9,8 +9,7 @@ const meta: Meta<typeof StaticNoiseOverlay> = {
       <div
         style={{
           position: "relative",
-          width: 320,
-          height: 180,
+          height: 240,
           background: "var(--color-background-recessed)",
           overflow: "hidden",
         }}
