@@ -12,15 +12,7 @@ const pkgRoot = path.resolve(__dirname, "..");
 const SANCTIONED_BACKGROUND_TOKENS = ["background", "background-recessed", "surface"];
 
 // "<textToken>|<backgroundToken>" → reason. Empty unless a large-text AA exception is justified.
-const ALLOWLIST = {
-  // BBSListItem title: ≥14px bold (WCAG large text). Ratios ≥3.1:1 on all sanctioned bgs.
-  "blood-hi|background":
-    "BBS feed item title — large text (14px+/700); AA large 3:1 met (3.49:1).",
-  "blood-hi|background-recessed":
-    "BBS feed item title — large text (14px+/700); AA large 3:1 met (4.12:1).",
-  "blood-hi|surface":
-    "BBS feed item title — large text (14px+/700); AA large 3:1 met (3.14:1).",
-};
+const ALLOWLIST = {};
 
 const MIN_CONTRAST_NORMAL_TEXT = 4.5;
 

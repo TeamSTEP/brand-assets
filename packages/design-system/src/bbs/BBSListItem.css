@@ -80,10 +80,8 @@
 .ds-bbs-list-item__name {
   min-width: 0;
   overflow-wrap: anywhere;
-  color: var(--color-blood-hi);
+  color: var(--color-chrome-accent-active);
   font-family: var(--font-family-body);
-
-  /* ≥14px bold → WCAG “large text” (3:1); token is allowlisted in check-token-contrast. */
   font-size: clamp(14px, 2.4cqi, 16px);
   font-weight: 700;
   line-height: 1.35;
@@ -91,7 +89,7 @@
 
 .ds-bbs-list-item__link:hover .ds-bbs-list-item__name,
 .ds-bbs-list-item__link:focus-visible .ds-bbs-list-item__name {
-  color: var(--color-chrome-accent-active);
+  color: var(--color-text-primary);
 }
 
 .ds-bbs-list-item__link:focus-visible {
