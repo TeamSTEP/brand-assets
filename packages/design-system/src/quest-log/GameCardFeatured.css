@@ -24,6 +24,22 @@
   }
 }
 
+/* Desktop-width cards: richer spacing than tablet-at-480 two-col. */
+@container (min-width: 720px) {
+  .ds-game-card-featured__header {
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+
+  .ds-game-card-featured__body {
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+  }
+
+  .ds-game-card-featured__content {
+    gap: var(--spacing-sm);
+  }
+}
+
 .ds-game-card-featured__media {
   position: relative;
   overflow: hidden;

@@ -10,16 +10,15 @@ const meta: Meta<typeof DialogueBox> = {
   component: DialogueBox,
   decorators: [
     (Story, context) => {
-      // Narrow passes 390 (mobile viewport); Default uses a rem soft rail, not a hard px cap.
-      const maxWidth =
-        (context.parameters.dialogueBoxMaxWidth as number | string | undefined) ?? "min(100%, 40rem)";
+      const maxWidth = context.parameters.dialogueBoxMaxWidth as number | undefined;
       return (
         <div
           style={{
+            boxSizing: "border-box",
+            width: "100%",
             padding: "var(--spacing-md)",
             background: "var(--color-background)",
-            width: "100%",
-            maxWidth,
+            ...(maxWidth !== undefined ? { maxWidth } : null),
           }}
         >
           <Story />

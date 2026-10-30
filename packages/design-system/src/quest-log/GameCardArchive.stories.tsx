@@ -10,18 +10,22 @@ const meta: Meta<typeof GameCardArchive> = {
   component: GameCardArchive,
   decorators: [
     // Fluid width so Playwright viewports exercise CQ sizing.
-    (Story) => (
-      <div
-        style={{
-          padding: "var(--spacing-md)",
-          background: "var(--color-background)",
-          width: "100%",
-          maxWidth: "min(100%, 35rem)",
-        }}
-      >
-        <Story />
-      </div>
-    ),
+    (Story, context) => {
+      const maxWidth = context.parameters.gameCardMaxWidth as number | undefined;
+      return (
+        <div
+          style={{
+            boxSizing: "border-box",
+            width: "100%",
+            padding: "var(--spacing-md)",
+            background: "var(--color-background)",
+            ...(maxWidth !== undefined ? { maxWidth } : null),
+          }}
+        >
+          <Story />
+        </div>
+      );
+    },
   ],
   args: {
     posterSrc: PLACEHOLDER_POSTER,
@@ -64,20 +68,9 @@ export const Prototype: Story = {
 
 /** Mobile viewport width (390) — stacked CQ under 480. */
 export const Narrow: Story = {
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          padding: "var(--spacing-md)",
-          background: "var(--color-background)",
-          width: "100%",
-          maxWidth: 390,
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
+  parameters: {
+    gameCardMaxWidth: 390,
+  },
   args: {
     title: "Witch One: Crucible",
     description: "A magic assassin adventure. Shelved while Meltdown ships — but not forgotten.",
