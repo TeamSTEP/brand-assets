@@ -9,11 +9,23 @@ const meta: Meta<typeof DialogueBox> = {
   title: "Manifesto/DialogueBox",
   component: DialogueBox,
   decorators: [
-    (Story) => (
-      <div style={{ padding: 16, background: "var(--color-background)", width: "100%" }}>
-        <Story />
-      </div>
-    ),
+    (Story, context) => {
+      // Narrow passes 390 (mobile viewport); Default uses a rem soft rail, not a hard px cap.
+      const maxWidth =
+        (context.parameters.dialogueBoxMaxWidth as number | string | undefined) ?? "min(100%, 40rem)";
+      return (
+        <div
+          style={{
+            padding: "var(--spacing-md)",
+            background: "var(--color-background)",
+            width: "100%",
+            maxWidth,
+          }}
+        >
+          <Story />
+        </div>
+      );
+    },
   ],
   args: {
     avatarSrc: PLACEHOLDER_AVATAR,
@@ -32,15 +44,11 @@ export const Default: Story = {
   },
 };
 
-// Narrow container to cover compact CQ layout.
+/** Mobile viewport width (390) — exercises CQ-tightened padding under 480. */
 export const Narrow: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ padding: 16, background: "var(--color-background)", width: 200 }}>
-        <Story />
-      </div>
-    ),
-  ],
+  parameters: {
+    dialogueBoxMaxWidth: 390,
+  },
   args: {
     text: "Creativity is a human right. One step at a time. We're building the home for the indie game world.",
     animated: false,

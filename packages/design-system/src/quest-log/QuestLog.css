@@ -61,9 +61,3 @@
   grid-template-columns: 1fr;
   gap: var(--spacing-md);
 }
-
-@container (min-width: 720px) {
-  .ds-quest-log__grid:not(.ds-quest-log__grid--stack) {
-    grid-template-columns: 1fr 1fr;
-  }
-}

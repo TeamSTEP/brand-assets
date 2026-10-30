@@ -10,7 +10,13 @@ const meta: Meta<typeof GameCardFeatured> = {
   component: GameCardFeatured,
   decorators: [
     (Story) => (
-      <div style={{ padding: 16, background: "var(--color-background)", width: "100%" }}>
+      <div
+        style={{
+          padding: "var(--spacing-md)",
+          background: "var(--color-background)",
+          width: "100%",
+        }}
+      >
         <Story />
       </div>
     ),
@@ -75,11 +81,18 @@ export const FullyReleased: Story = {
   },
 };
 
-// Sub-480px container to cover stacked CQ layout.
+/** Mobile viewport width (390) — stacked CQ under 480. */
 export const Narrow: Story = {
   decorators: [
     (Story) => (
-      <div style={{ padding: 16, background: "var(--color-background)", width: 320 }}>
+      <div
+        style={{
+          padding: "var(--spacing-md)",
+          background: "var(--color-background)",
+          width: "100%",
+          maxWidth: 390,
+        }}
+      >
         <Story />
       </div>
     ),

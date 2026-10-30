@@ -11,7 +11,14 @@ const meta: Meta<typeof GameCardArchive> = {
   decorators: [
     // Fluid width so Playwright viewports exercise CQ sizing.
     (Story) => (
-      <div style={{ padding: 16, background: "var(--color-background)", width: "100%", maxWidth: 560 }}>
+      <div
+        style={{
+          padding: "var(--spacing-md)",
+          background: "var(--color-background)",
+          width: "100%",
+          maxWidth: "min(100%, 35rem)",
+        }}
+      >
         <Story />
       </div>
     ),
@@ -55,11 +62,18 @@ export const Prototype: Story = {
   },
 };
 
-// Sub-480px container to cover stacked CQ layout.
+/** Mobile viewport width (390) — stacked CQ under 480. */
 export const Narrow: Story = {
   decorators: [
     (Story) => (
-      <div style={{ padding: 16, background: "var(--color-background)", width: 200 }}>
+      <div
+        style={{
+          padding: "var(--spacing-md)",
+          background: "var(--color-background)",
+          width: "100%",
+          maxWidth: 390,
+        }}
+      >
         <Story />
       </div>
     ),
