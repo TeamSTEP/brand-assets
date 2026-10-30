@@ -33,6 +33,7 @@ const UNRESOLVABLE_CONTRAST_MESSAGE_KEYS = new Set([
   "bgGradient",
   "imgNode",
   "elmPartiallyObscured",
+  "bgOverlap", // CRT/noise sibling overlays over BBS terminal body text
 ]);
 
 function isUnresolvableBackgroundIncomplete(result: {
