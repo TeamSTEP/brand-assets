@@ -1,5 +1,15 @@
 # @teamstep/design-system
 
+## 1.2.0
+
+### Minor Changes
+
+- 10bb50c: Add platform-free BBS list primitives (`BBSItem`, `BBSList`, `BBSListItem`) and require `tabListLabel` on `BBSTerminal` with keyboard/manual tab activation. `BBSPanelIframe` now takes a consumer-built `src` (replaces Discord-only `serverId`). Deprecate `SocialFeed`, `BBSPanelAPI`, `UnifiedPost`, and `FeedPlatform` in favor of app-owned feeds; removals deferred to a future major. Deprecated `BBSPanelAPI` / `SocialFeed` now adapt onto `BBSList`; CRT overlays and panel child layout are owned solely by `BBSTerminal`. Animated CRT scanlines also cover game-card / FeaturedStage media thumbs. BBS list item titles use chrome teal (WCAG AA) instead of game blood.
+
+### Patch Changes
+
+- 10bb50c: QuestLog keeps singles full-width and densifies multi-card groups at ≥720 CQ; Archive/Featured gain a desktop spacing band. DialogueBox stays fluid with CQ padding/wrap. Story decorators use border-box shells; Narrow is a 390 param fixture (no nested wrappers).
+
 ## 1.1.2
 
 ### Patch Changes
