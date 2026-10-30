@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
-import { Badge } from "./Badge.js";
+import { ScanlineOverlay } from "../effects/ScanlineOverlay.js";
 import { Card } from "../primitives/Card.js";
+import { Badge } from "./Badge.js";
 import { PlatformAccess } from "./PlatformAccess.js";
 import type { PlatformEntry } from "./PlatformAccess.js";
 import "./GameCardFeatured.css";
@@ -41,7 +42,10 @@ export function GameCardFeatured({ title, subtitle, description, media, platform
           {inDevelopment && <Badge variant="in-development" />}
         </div>
         <div className="ds-game-card-featured__body">
-          <div className="ds-game-card-featured__media">{media}</div>
+          <div className="ds-game-card-featured__media">
+            {media}
+            <ScanlineOverlay />
+          </div>
           <div className="ds-game-card-featured__content">
             <div className="ds-game-card-featured__subtitle">{subtitle}</div>
             <h2 className="ds-game-card-featured__title">{title}</h2>

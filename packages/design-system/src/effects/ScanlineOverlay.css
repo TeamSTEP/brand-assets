@@ -1,12 +1,63 @@
 .ds-scanline-overlay {
   position: absolute;
   inset: 0;
+  z-index: 2;
   pointer-events: none;
+  overflow: hidden;
   background: repeating-linear-gradient(
     0deg,
     transparent,
     transparent 2px,
-    rgb(10 8 24 / 10%) 2px,
-    rgb(10 8 24 / 10%) 4px
+    rgb(10 8 24 / 12%) 2px,
+    rgb(10 8 24 / 12%) 4px
   );
+  background-size: 100% 4px;
+  animation: ds-scanline-scroll 0.45s linear infinite;
+}
+
+.ds-scanline-overlay::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 28%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(133 145 201 / 8%) 45%,
+    rgb(10 8 24 / 14%) 55%,
+    transparent 100%
+  );
+  animation: ds-scanline-sweep 5.5s ease-in-out infinite;
+}
+
+@keyframes ds-scanline-scroll {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 0 4px;
+  }
+}
+
+@keyframes ds-scanline-sweep {
+  0% {
+    top: -30%;
+  }
+
+  100% {
+    top: 105%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-scanline-overlay,
+  .ds-scanline-overlay::after {
+    animation: none;
+  }
+
+  .ds-scanline-overlay::after {
+    display: none;
+  }
 }

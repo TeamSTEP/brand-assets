@@ -6,6 +6,12 @@ minimumReleaseAge: 1440 # minutes (1 day)
 trustPolicy: no-downgrade
 engineStrict: true
 
+# deepmerge ≤4.3.1 via style-dictionary — GHSA-gcqx-w48m-w2h4 has no published
+# patch yet (advisory claims ≥4.3.2; npm latest is still 4.3.1). Drop when fixed.
+auditConfig:
+  ignoreGhsas:
+    - GHSA-gcqx-w48m-w2h4
+
 # Exact-version provenance-gap exclusions (not package-wide bypasses).
 trustPolicyExclude:
   - "undici-types@6.21.0"
@@ -21,12 +27,15 @@ overrides:
   esbuild: ">=0.28.1"
   nanoid@^3.0.0: "^3.3.17"
   postcss@^8.0.0: "^8.5.23"
-  fast-uri@^3.0.0: "^3.1.6"
+  fast-uri@^3.0.0: "^3.1.9"
   "brace-expansion@^1.0.0": "^1.1.20"
   "brace-expansion@^5.0.0": "^5.0.12"
   "js-yaml@^3.0.0": "^3.15.2"
   "js-yaml@^4.0.0": "^4.3.2"
   browserslist@^4.0.0: "^4.28.7"
   colord@^2.0.0: "^2.9.4"
-  "qs@^6.0.0": "^6.16.0"
+  "qs@^6.0.0": "^6.16.1"
   "baseline-browser-mapping@^2.0.0": "^2.11.0"
+  "source-map-js@^1.0.0": "^1.2.2"
+  "follow-redirects@^1.0.0": "^1.16.2"
+  "postcss-selector-parser@^7.0.0": "^7.1.6"

@@ -1,4 +1,6 @@
 .ds-card {
+  box-sizing: border-box;
+  min-width: 0;
   container-type: inline-size;
   background: var(--color-surface);
 }

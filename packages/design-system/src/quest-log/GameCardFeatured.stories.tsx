@@ -9,11 +9,22 @@ const meta: Meta<typeof GameCardFeatured> = {
   title: "Quest Log/GameCardFeatured",
   component: GameCardFeatured,
   decorators: [
-    (Story) => (
-      <div style={{ padding: 16, background: "var(--color-background)", width: "100%" }}>
-        <Story />
-      </div>
-    ),
+    (Story, context) => {
+      const maxWidth = context.parameters.gameCardMaxWidth as number | undefined;
+      return (
+        <div
+          style={{
+            boxSizing: "border-box",
+            width: "100%",
+            padding: "var(--spacing-md)",
+            background: "var(--color-background)",
+            ...(maxWidth !== undefined ? { maxWidth } : null),
+          }}
+        >
+          <Story />
+        </div>
+      );
+    },
   ],
   args: {
     media: <img src={PLACEHOLDER_POSTER} alt="Meltdown key art" />,
@@ -75,15 +86,11 @@ export const FullyReleased: Story = {
   },
 };
 
-// Sub-480px container to cover stacked CQ layout.
+/** Mobile viewport width (390) — stacked CQ under 480. */
 export const Narrow: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ padding: 16, background: "var(--color-background)", width: 320 }}>
-        <Story />
-      </div>
-    ),
-  ],
+  parameters: {
+    gameCardMaxWidth: 390,
+  },
   args: {
     title: "Meltdown",
     subtitle: "Nuclear Reactor Simulator",

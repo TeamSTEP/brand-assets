@@ -8,7 +8,7 @@ import "./QuestLog.css";
  * @public
  */
 export interface QuestLogGroup {
-  /** Phase key — used for layout hooks; label is display copy. */
+  /** Phase key — stable group identity; label is display copy. */
   phase: "released" | "prototype" | "legacy";
   /** Group heading (e.g. "Released"). */
   label: string;
@@ -46,13 +46,7 @@ export function QuestLog({ heading, lede, groups }: QuestLogProps) {
         {visible.map((group) => (
           <div key={group.phase} className="ds-quest-log__group">
             <p className="ds-quest-log__group-label">{group.label}</p>
-            <div
-              className={
-                group.phase === "legacy"
-                  ? "ds-quest-log__grid ds-quest-log__grid--stack"
-                  : "ds-quest-log__grid"
-              }
-            >
+            <div className="ds-quest-log__grid">
               {group.items.map((item) => (
                 <GameCardArchive key={`${group.phase}-${item.title}`} {...item} />
               ))}

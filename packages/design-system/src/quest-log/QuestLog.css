@@ -62,8 +62,9 @@
   gap: var(--spacing-md);
 }
 
+/* Singles stay full-width; densify only when a group has ≥2 cards. */
 @container (min-width: 720px) {
-  .ds-quest-log__grid:not(.ds-quest-log__grid--stack) {
+  .ds-quest-log__grid:has(> :nth-child(2)) {
     grid-template-columns: 1fr 1fr;
   }
 }

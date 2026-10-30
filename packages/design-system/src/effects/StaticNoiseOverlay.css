@@ -1,0 +1,76 @@
+.ds-static-noise-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.22;
+  background:
+    repeating-radial-gradient(circle at 17% 32%, rgb(255 255 255 / 8%) 0 1px, transparent 1px 4px),
+    repeating-radial-gradient(circle at 72% 61%, rgb(255 255 255 / 6%) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgb(10 8 24 / 18%) 2px,
+      rgb(10 8 24 / 18%) 3px
+    ),
+    linear-gradient(180deg, rgb(20 16 40 / 18%), rgb(6 6 16 / 35%));
+  animation: ds-static-noise-flicker 0.35s steps(2, end) infinite;
+}
+
+.ds-static-noise-overlay::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  background:
+    repeating-radial-gradient(circle at 40% 20%, rgb(200 200 220 / 10%) 0 1px, transparent 1px 6px),
+    repeating-radial-gradient(circle at 10% 80%, rgb(255 255 255 / 7%) 0 1px, transparent 1px 7px);
+  opacity: 0.35;
+  animation: ds-static-noise-shift 0.55s steps(3, end) infinite;
+}
+
+@keyframes ds-static-noise-flicker {
+  0% {
+    opacity: 0.16;
+    filter: contrast(1.05) brightness(0.95);
+  }
+
+  50% {
+    opacity: 0.26;
+    filter: contrast(1.12) brightness(1.02);
+  }
+
+  100% {
+    opacity: 0.18;
+    filter: contrast(1.05) brightness(0.97);
+  }
+}
+
+@keyframes ds-static-noise-shift {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  33% {
+    transform: translate(-0.6%, 0.4%);
+  }
+
+  66% {
+    transform: translate(0.5%, -0.5%);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-static-noise-overlay,
+  .ds-static-noise-overlay::before {
+    animation: none;
+  }
+
+  .ds-static-noise-overlay {
+    opacity: 0.18;
+  }
+}

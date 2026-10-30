@@ -21,11 +21,20 @@
 }
 
 .ds-game-card-archive__thumb {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
   width: 100%;
   aspect-ratio: 4 / 3;
-  object-fit: cover;
   background: var(--color-background-recessed);
   border-radius: var(--radius-card-sm);
+}
+
+.ds-game-card-archive__thumb-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 @container (min-width: 480px) {
@@ -35,7 +44,18 @@
 
   .ds-game-card-archive__thumb {
     width: clamp(76px, 24cqi, 116px);
-    flex-shrink: 0;
+  }
+}
+
+/* Desktop-width cards: richer spacing than tablet-at-480-row. */
+@container (min-width: 720px) {
+  .ds-game-card-archive__layout {
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+  }
+
+  .ds-game-card-archive__thumb {
+    width: clamp(96px, 22cqi, 140px);
   }
 }
 

@@ -1,5 +1,7 @@
 .ds-dialogue-box {
-  width: min(100%, 640px);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
 }
 
 .ds-dialogue-box .ds-card {
@@ -7,7 +9,9 @@
 }
 
 .ds-dialogue-box__layout {
+  box-sizing: border-box;
   width: 100%;
+  min-width: 0;
   padding: var(--spacing-md) var(--spacing-lg);
   text-align: left;
 }
@@ -24,8 +28,16 @@
 
 .ds-dialogue-box__text {
   margin: 0;
+  overflow-wrap: anywhere;
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
-  font-size: clamp(18px, 2.8cqi, 20px);
+  font-size: clamp(15px, 4.2cqi, 20px);
   line-height: 1.5;
+}
+
+/* Same ~480px band as game-card CQ stack — tighter padding at mobile rail. */
+@container (max-width: 479px) {
+  .ds-dialogue-box__layout {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
 }

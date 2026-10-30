@@ -6,6 +6,7 @@
 
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import { ReactNode } from 'react';
+import { Ref } from 'react';
 import { RefObject } from 'react';
 
 // @public
@@ -29,9 +30,58 @@ export interface BadgeProps {
 export type BadgeVariant = "main-quest" | "side-quest" | "legacy" | "in-development" | "released" | "prototype" | "portfolio";
 
 // @public
-export function BBSPanelAPI(input: BBSPanelAPIProps): react_jsx_runtime.JSX.Element;
+export interface BBSItem {
+    body?: string;
+    href: string;
+    id: string;
+    name: string;
+    publishedAt?: string;
+    thumbnail?: BBSItemThumbnail;
+}
 
 // @public
+export interface BBSItemThumbnail {
+    alt: string;
+    src: string;
+}
+
+// @public
+export function BBSList(input: BBSListProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export type BBSListDensity = "compact" | "comfortable";
+
+// @public
+export function BBSListItem(input: BBSListItemProps): react_jsx_runtime.JSX.Element;
+
+// @public
+export interface BBSListItemProps {
+    density?: BBSListDensity;
+    item: BBSItem;
+    thumbnailFit?: BBSThumbnailFit;
+    thumbnailPlacement?: BBSThumbnailPlacement;
+}
+
+// @public
+export interface BBSListProps {
+    children?: ReactNode;
+    density?: BBSListDensity;
+    endSentinelRef?: Ref<HTMLDivElement>;
+    items?: BBSItem[];
+    listRef?: Ref<HTMLUListElement>;
+    onRetry?: () => void;
+    status: BBSListStatus;
+    thumbnailFit?: BBSThumbnailFit;
+    thumbnailPlacement?: BBSThumbnailPlacement;
+}
+
+// @public
+export type BBSListStatus = "loading" | "ready" | "error" | "loadingMore" | "errorMore" | "done";
+
+// @public @deprecated
+export function BBSPanelAPI(input: BBSPanelAPIProps): react_jsx_runtime.JSX.Element;
+
+// @public @deprecated
 export interface BBSPanelAPIProps {
     posts: UnifiedPost[];
 }
@@ -41,7 +91,7 @@ export function BBSPanelIframe(input: BBSPanelIframeProps): react_jsx_runtime.JS
 
 // @public
 export interface BBSPanelIframeProps {
-    serverId: string;
+    src: string;
     title: string;
 }
 
@@ -49,12 +99,21 @@ export interface BBSPanelIframeProps {
 export interface BBSTab {
     badge?: BBSTabBadge;
     desktopLabel: string;
+    icon?: BBSTabIconName;
     id: string;
     mobileLabel: string;
 }
 
 // @public
 export type BBSTabBadge = "api" | "widget";
+
+// @public
+export function BBSTabIcon(input: {
+    name: BBSTabIconName;
+}): react_jsx_runtime.JSX.Element;
+
+// @public
+export type BBSTabIconName = "bluesky" | "youtube" | "reddit" | "steam" | "discord";
 
 // @public
 export function BBSTerminal(input: BBSTerminalProps): react_jsx_runtime.JSX.Element;
@@ -64,9 +123,19 @@ export interface BBSTerminalProps {
     activeTabId: string;
     children: ReactNode;
     onTabChange: (tabId: string) => void;
+    tabListLabel: string;
     tabs: BBSTab[];
     title: string;
 }
+
+// @public
+export type BBSThumbnailFit = "contain" | "cover";
+
+// @public
+export type BBSThumbnailPlacement = "leading" | "above";
+
+// @public
+export function BlueskyIcon(): react_jsx_runtime.JSX.Element;
 
 // @public
 function Boot(input: BootProps): react_jsx_runtime.JSX.Element;
@@ -161,6 +230,9 @@ export interface DialogueBoxProps {
 }
 
 // @public
+export function DiscordIcon(): react_jsx_runtime.JSX.Element;
+
+// @public
 function FeaturedStage(input: FeaturedStageProps): react_jsx_runtime.JSX.Element;
 export { FeaturedStage }
 export { FeaturedStage as MeltdownStage }
@@ -187,7 +259,7 @@ interface FeaturedStageProps {
 export { FeaturedStageProps }
 export { FeaturedStageProps as MeltdownStageProps }
 
-// @public
+// @public @deprecated
 export type FeedPlatform = "bluesky" | "substack" | "youtube";
 
 // @public
@@ -361,6 +433,9 @@ export interface QuestLogProps {
 }
 
 // @public
+export function RedditIcon(): react_jsx_runtime.JSX.Element;
+
+// @public
 export function ScanlineOverlay(): react_jsx_runtime.JSX.Element;
 
 // @public
@@ -386,22 +461,28 @@ export interface ServiceInspectPanelProps {
     title: string;
 }
 
-// @public
+// @public @deprecated
 export function SocialFeed(input: SocialFeedProps): react_jsx_runtime.JSX.Element;
 
-// @public
+// @public @deprecated
 export interface SocialFeedProps {
     discordServerId: string;
     fetchEndpoint?: string;
 }
 
-// @public
+// @public @deprecated
 export type SocialFeedTab = FeedPlatform | "discord";
 
 // @public
 export function StarIcon(): react_jsx_runtime.JSX.Element;
 
 // @public
+export function StaticNoiseOverlay(): react_jsx_runtime.JSX.Element;
+
+// @public
+export function SteamIcon(): react_jsx_runtime.JSX.Element;
+
+// @public @deprecated
 export interface UnifiedPost {
     author: string;
     date: string;
@@ -447,6 +528,9 @@ export interface VideoFacadeProps {
 
 // @public
 export function VignetteOverlay(): react_jsx_runtime.JSX.Element;
+
+// @public
+export function YoutubeIcon(): react_jsx_runtime.JSX.Element;
 
 // (No @packageDocumentation comment for this package)
 

@@ -154,3 +154,137 @@ export function GamepadIcon() {
     </svg>
   );
 }
+
+/**
+ * Bluesky butterfly mark.
+ *
+ * @public
+ */
+export function BlueskyIcon() {
+  return (
+    <svg {...iconProps}>
+      <path
+        d="M3.5 4.5c1.8 1.4 3.2 3.4 4.5 5.6 1.3-2.2 2.7-4.2 4.5-5.6-1.2 2.8-2.4 5.1-3.2 7.1H6.7C5.9 9.6 4.7 7.3 3.5 4.5Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+/**
+ * YouTube play-in-screen mark.
+ *
+ * @public
+ */
+export function YoutubeIcon() {
+  return (
+    <svg {...iconProps}>
+      <path
+        d="M2.5 5.2c0-.9.7-1.7 1.6-1.7h7.8c.9 0 1.6.8 1.6 1.7v5.6c0 .9-.7 1.7-1.6 1.7H4.1c-.9 0-1.6-.8-1.6-1.7V5.2Z"
+        stroke="currentColor"
+        strokeWidth="1.25"
+      />
+      <path d="M7 5.8v4.4l3.5-2.2L7 5.8Z" fill="currentColor" />
+    </svg>
+  );
+}
+
+/**
+ * Reddit alien mark.
+ *
+ * @public
+ */
+export function RedditIcon() {
+  return (
+    <svg {...iconProps}>
+      <circle cx="8" cy="9" r="4.25" stroke="currentColor" strokeWidth="1.25" />
+      <circle cx="6.4" cy="8.6" r="0.7" fill="currentColor" />
+      <circle cx="9.6" cy="8.6" r="0.7" fill="currentColor" />
+      <path
+        d="M8 4.2V3M10.8 4.6A1.2 1.2 0 1 0 9.5 3.2"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="square"
+      />
+      <path
+        d="M6.2 10.4c.5.5 1.1.8 1.8.8s1.3-.3 1.8-.8"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="square"
+      />
+    </svg>
+  );
+}
+
+/**
+ * Steam network mark.
+ *
+ * @public
+ */
+export function SteamIcon() {
+  return (
+    <svg {...iconProps}>
+      <circle cx="10.2" cy="5.8" r="2.4" stroke="currentColor" strokeWidth="1.25" />
+      <circle cx="10.2" cy="5.8" r="0.85" fill="currentColor" />
+      <path
+        d="M3.2 11.2 7.4 9.2l1.4-2.4"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="square"
+        strokeLinejoin="miter"
+      />
+      <circle cx="4.2" cy="11.5" r="1.6" stroke="currentColor" strokeWidth="1.25" />
+    </svg>
+  );
+}
+
+/**
+ * Discord mark.
+ *
+ * @public
+ */
+export function DiscordIcon() {
+  return (
+    <svg {...iconProps}>
+      <path
+        d="M5.2 4.2c.7-.3 1.4-.5 2.2-.6h1.2c.8.1 1.5.3 2.2.6l.8 2.4c.5.2 1 .4 1.4.7l-.4 1.4c-.3 1.1-.8 2-1.4 2.8-.6.2-1.3.4-2 .5l-.8-1.1c-.3.1-.6.1-.9.1s-.6 0-.9-.1l-.8 1.1c-.7-.1-1.4-.3-2-.5-.6-.8-1.1-1.7-1.4-2.8L3 7.3c.4-.3.9-.5 1.4-.7l.8-2.4Z"
+        stroke="currentColor"
+        strokeWidth="1.15"
+        strokeLinejoin="round"
+      />
+      <circle cx="6.4" cy="8.2" r="0.7" fill="currentColor" />
+      <circle cx="9.6" cy="8.2" r="0.7" fill="currentColor" />
+    </svg>
+  );
+}
+
+/**
+ * Closed icon set for {@link BBSTab} leading glyphs.
+ *
+ * @public
+ */
+export type BBSTabIconName = "bluesky" | "youtube" | "reddit" | "steam" | "discord";
+
+/**
+ * Closed-set glyph for a {@link BBSTab}.
+ *
+ * @public
+ */
+export function BBSTabIcon({ name }: { name: BBSTabIconName }) {
+  switch (name) {
+    case "bluesky":
+      return <BlueskyIcon />;
+    case "youtube":
+      return <YoutubeIcon />;
+    case "reddit":
+      return <RedditIcon />;
+    case "steam":
+      return <SteamIcon />;
+    case "discord":
+      return <DiscordIcon />;
+    default: {
+      const _exhaustive: never = name;
+      return _exhaustive;
+    }
+  }
+}

@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BBSPanelAPI } from "./BBSPanelAPI.js";
+import { BBSList } from "./BBSList.js";
 import { BBSPanelIframe } from "./BBSPanelIframe.js";
 import { BBSTerminal } from "./BBSTerminal.js";
 import type { BBSTab } from "./BBSTerminal.js";
-import type { FeedPlatform, UnifiedPost } from "./types.js";
+import { toBBSItem } from "./mapUnifiedPost.js";
+import type { BBSListStatus, FeedPlatform, UnifiedPost } from "./types.js";
 import "./SocialFeed.css";
 
 /**
  * Social feed tab id — a {@link FeedPlatform} or Discord.
  *
+ * @deprecated Prefer app-owned tabs with {@link BBSTerminal} + {@link BBSList}.
  * @public
  */
 export type SocialFeedTab = FeedPlatform | "discord";
@@ -16,6 +18,7 @@ export type SocialFeedTab = FeedPlatform | "discord";
 /**
  * Props for {@link SocialFeed}.
  *
+ * @deprecated Prefer {@link BBSTerminal} + {@link BBSList} with app-owned fetch.
  * @public
  */
 export interface SocialFeedProps {
@@ -26,14 +29,15 @@ export interface SocialFeedProps {
 }
 
 const TABS: BBSTab[] = [
-  { id: "bluesky", desktopLabel: "Bluesky", mobileLabel: "BSKY" },
-  { id: "youtube", desktopLabel: "YouTube", mobileLabel: "YT" },
-  { id: "discord", desktopLabel: "Discord", mobileLabel: "DC" },
+  { id: "bluesky", desktopLabel: "Bluesky", mobileLabel: "BSKY", icon: "bluesky" },
+  { id: "youtube", desktopLabel: "YouTube", mobileLabel: "YT", icon: "youtube" },
+  { id: "discord", desktopLabel: "Discord", mobileLabel: "DC", icon: "discord" },
 ];
 
 /**
  * Tabbed BBS feed with cached `fetch()` responses.
  *
+ * @deprecated Prefer {@link BBSTerminal} + {@link BBSList} with app-owned fetch.
  * @public
  */
 export function SocialFeed({
@@ -92,22 +96,37 @@ export function SocialFeed({
     void loadPlatform(activeTab);
   }, [activeTab, loadPlatform]);
 
+  const activeTabMeta = TABS.find((tab) => tab.id === activeTab) ?? TABS[0];
+
+  let listStatus: BBSListStatus = "done";
+  if (loading) {
+    listStatus = "loading";
+  } else if (error) {
+    listStatus = "error";
+  } else if (posts.length === 0) {
+    listStatus = "ready";
+  }
+
   return (
     <div className="ds-social-feed">
       <BBSTerminal
         title="BBS·TEAMSTEP·v1.0 ─ SIGNAL ACQUIRED"
+        tabListLabel={activeTabMeta?.desktopLabel ?? "Feed"}
         tabs={TABS}
         activeTabId={activeTab}
         onTabChange={onTabChange}
       >
         {activeTab === "discord" ? (
-          <BBSPanelIframe serverId={discordServerId} title="Team STEP Discord server" />
-        ) : loading ? (
-          <p className="ds-social-feed__status">{"// ACQUIRING SIGNAL..."}</p>
-        ) : error ? (
-          <p className="ds-social-feed__status">{`// ${error.toUpperCase()}`}</p>
+          <BBSPanelIframe
+            src={`https://discord.com/widget?id=${discordServerId}&theme=dark`}
+            title="Team STEP Discord server"
+          />
         ) : (
-          <BBSPanelAPI posts={posts} />
+          <BBSList
+            status={listStatus}
+            items={posts.map(toBBSItem)}
+            onRetry={error ? () => void loadPlatform(activeTab) : undefined}
+          />
         )}
       </BBSTerminal>
     </div>

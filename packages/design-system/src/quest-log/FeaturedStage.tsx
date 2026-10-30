@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ScanlineOverlay } from "../effects/ScanlineOverlay.js";
 import type { CtaIcon } from "../primitives/Cta.js";
 import { Cta } from "../primitives/Cta.js";
 import { Badge } from "./Badge.js";
@@ -66,7 +67,10 @@ export function FeaturedStage({
         <Badge variant="main-quest" />
         {inDevelopment ? <Badge variant="in-development" /> : null}
       </div>
-      <div className="ds-featured-stage__media">{media}</div>
+      <div className="ds-featured-stage__media">
+        {media}
+        <ScanlineOverlay />
+      </div>
       <div className="ds-featured-stage__meta">
         <p className="ds-featured-stage__subtitle">{subtitle}</p>
         <h2 className="ds-featured-stage__title">{title}</h2>

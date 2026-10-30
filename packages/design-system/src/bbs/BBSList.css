@@ -1,0 +1,105 @@
+.ds-bbs-list {
+  position: relative;
+  z-index: 1;
+  container-type: inline-size;
+  container-name: bbs-list;
+}
+
+.ds-bbs-list__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-bbs-list__status {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: clamp(13px, 2.2cqi, 14px);
+  letter-spacing: 0.08em;
+}
+
+.ds-bbs-list__status--footer {
+  margin-top: var(--spacing-sm);
+  text-align: center;
+}
+
+.ds-bbs-list__status-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.ds-bbs-list__status-block--footer {
+  margin-top: var(--spacing-sm);
+  align-items: center;
+}
+
+.ds-bbs-list__error {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  box-sizing: border-box;
+  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: var(--spacing-md);
+  text-align: center;
+}
+
+.ds-bbs-list__error-chrome {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.ds-bbs-list__error .ds-bbs-list__status {
+  font-size: clamp(18px, 4cqi, 22px);
+  letter-spacing: 0.1em;
+}
+
+.ds-bbs-list__retry {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  min-width: 8rem;
+  min-height: 2.75rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-chip-sm);
+  background: color-mix(in srgb, var(--color-background-recessed) 80%, transparent);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: clamp(12px, 2cqi, 13px);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.ds-bbs-list__error .ds-bbs-list__retry {
+  font-size: clamp(16px, 3.5cqi, 18px);
+  letter-spacing: 0.08em;
+}
+
+.ds-bbs-list__retry:hover,
+.ds-bbs-list__retry:focus-visible {
+  border-color: var(--color-border-emphasis);
+  color: var(--color-accent-primary);
+  outline: 2px solid var(--color-chrome-accent-active);
+  outline-offset: 2px;
+}
+
+.ds-bbs-list__sentinel {
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  pointer-events: none;
+}

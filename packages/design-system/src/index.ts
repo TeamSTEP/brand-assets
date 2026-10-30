@@ -2,6 +2,7 @@ import "./fonts.css";
 
 export { PixelGrid } from "./effects/PixelGrid.js";
 export { ScanlineOverlay } from "./effects/ScanlineOverlay.js";
+export { StaticNoiseOverlay } from "./effects/StaticNoiseOverlay.js";
 export { VignetteOverlay } from "./effects/VignetteOverlay.js";
 export { Card } from "./primitives/Card.js";
 export type { CardAccent, CardProps, CardSize } from "./primitives/Card.js";
@@ -13,12 +14,19 @@ export {
   ArrowDownIcon,
   ArrowRightIcon,
   ArrowUpRightIcon,
+  BBSTabIcon,
+  BlueskyIcon,
   CloseIcon,
+  DiscordIcon,
   GamepadIcon,
   HexagonIcon,
   PlayIcon,
+  RedditIcon,
   StarIcon,
+  SteamIcon,
+  YoutubeIcon,
 } from "./primitives/icons/icons.js";
+export type { BBSTabIconName } from "./primitives/icons/icons.js";
 export { Badge } from "./quest-log/Badge.js";
 export type { BadgeProps, BadgeVariant } from "./quest-log/Badge.js";
 export { GameCardArchive } from "./quest-log/GameCardArchive.js";
@@ -80,12 +88,29 @@ export { NavHUD } from "./nav/NavHUD.js";
 export type { NavHUDItem, NavHUDProps } from "./nav/NavHUD.js";
 export { BBSTerminal } from "./bbs/BBSTerminal.js";
 export type { BBSTab, BBSTabBadge, BBSTerminalProps } from "./bbs/BBSTerminal.js";
+export { BBSList } from "./bbs/BBSList.js";
+export type { BBSListProps } from "./bbs/BBSList.js";
+export { BBSListItem } from "./bbs/BBSListItem.js";
+export type { BBSListItemProps } from "./bbs/BBSListItem.js";
+/** @deprecated Prefer {@link BBSList} / {@link BBSListItem}. */
 export { BBSPanelAPI } from "./bbs/BBSPanelAPI.js";
+/** @deprecated Prefer {@link BBSListProps}. */
 export type { BBSPanelAPIProps } from "./bbs/BBSPanelAPI.js";
 export { BBSPanelIframe } from "./bbs/BBSPanelIframe.js";
 export type { BBSPanelIframeProps } from "./bbs/BBSPanelIframe.js";
+/** @deprecated Prefer {@link BBSTerminal} + {@link BBSList}. */
 export { SocialFeed } from "./bbs/SocialFeed.js";
+/** @deprecated Prefer {@link BBSTerminal} + {@link BBSList}. */
 export type { SocialFeedProps, SocialFeedTab } from "./bbs/SocialFeed.js";
+export type {
+  BBSItem,
+  BBSItemThumbnail,
+  BBSListDensity,
+  BBSListStatus,
+  BBSThumbnailFit,
+  BBSThumbnailPlacement,
+} from "./bbs/types.js";
+/** @deprecated Prefer {@link BBSItem}. */
 export type { FeedPlatform, UnifiedPost } from "./bbs/types.js";
 export { useInView } from "./hooks/useInView.js";
 export type { UseInViewOptions } from "./hooks/useInView.js";

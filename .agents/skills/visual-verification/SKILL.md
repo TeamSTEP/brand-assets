@@ -77,6 +77,7 @@ must be one of these — mixed with a real fail still fails):
 | `bgGradient` | CSS gradient on element/ancestor (PixelGrid, peek fades, scanline/vignette, etc.) |
 | `imgNode` | Text compositing over a foreground `<img>` (e.g. Boot peek image) |
 | `elmPartiallyObscured` | Text box clipped/obscured by an ancestor (e.g. Narrow story decorators) |
+| `bgOverlap` | Sibling overlay covering text (BBSTerminal CRT scanline/vignette / StaticNoise over feed body) |
 
 Real failures have `messageKey: null` and a measured `contrastRatio`. Token AA is still
 enforced by `check-contrast` — these incompletes are not a free pass to ship bad tokens.
