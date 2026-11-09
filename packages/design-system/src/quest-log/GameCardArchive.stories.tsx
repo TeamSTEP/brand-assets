@@ -66,6 +66,29 @@ export const Prototype: Story = {
   },
 };
 
+/** One-line body — baseline for thumb sizing beside short copy. */
+export const ShortDescription: Story = {
+  args: {
+    title: "Witch One: Crucible",
+    description: "A magic assassin adventure to save the kingdom.",
+    status: "legacy",
+    posterAlt: "Witch One: Crucible key art",
+    cta: { icon: "download", label: "PLAY NOW", url: "https://teamstep.itch.io/witch-one-crucible" },
+  },
+};
+
+/** Tall body — thumb scales with the text column (4:3), then caps and centers. */
+export const VeryLongDescription: Story = {
+  args: {
+    title: "Witch One",
+    description:
+      "A 2D online hide-and-seek battle-royale game inspired by the asymmetric play of Dead by Daylight and the deception of Among Us. One player becomes the invisible Cursed One hunting the rest. This longer archive blurb is intentional: it must wrap across several lines so Storybook and visual tests prove the poster grows with the text column at 4:3, then caps and centers once the card outgrows the thumb max-height.",
+    status: "legacy",
+    posterAlt: "Witch One key art",
+    cta: { icon: "gamepad", label: "PLAY THE ALPHA", url: "https://play.witchone.io/" },
+  },
+};
+
 /** Mobile viewport width (390) — stacked CQ under 480. */
 export const Narrow: Story = {
   parameters: {

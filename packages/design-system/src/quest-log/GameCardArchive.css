@@ -1,10 +1,31 @@
-.ds-game-card-archive__layout {
+/*
+ * Quest Log grid stretches cards to the tallest sibling. Fill that height so
+ * short copy doesn't leave empty Card chrome below the status border, and keep
+ * the status border as the only visible frame (Card accent border stays off).
+ */
+.ds-card:has(> .ds-game-card-archive__layout) {
   display: flex;
   flex-direction: column;
+  height: 100%;
+}
+
+.ds-card--accent-none:has(> .ds-game-card-archive__layout) {
+  border-color: transparent;
+  background: transparent;
+}
+
+.ds-game-card-archive__layout {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100%;
   gap: var(--spacing-sm);
   padding: var(--spacing-sm);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-card-sm);
+  background: var(--color-surface);
 }
 
 .ds-game-card-archive__layout--legacy {
@@ -37,17 +58,32 @@
   object-fit: cover;
 }
 
+/*
+ * Row: thumb height matches the text column (top → bottom). Width follows 4:3.
+ * max-height caps growth on long copy; align-self: center parks the capped thumb
+ * in the middle of the taller card instead of pinning it to the top.
+ */
 @container (min-width: 480px) {
   .ds-game-card-archive__layout {
     flex-direction: row;
+    align-items: stretch;
+  }
+
+  .ds-game-card-archive__body {
+    flex: 1 1 auto;
   }
 
   .ds-game-card-archive__thumb {
-    width: clamp(76px, 24cqi, 116px);
+    align-self: center;
+    box-sizing: border-box;
+    width: auto;
+    height: 100%;
+    max-height: 9.5rem;
+    aspect-ratio: 4 / 3;
   }
 }
 
-/* Desktop-width cards: richer spacing than tablet-at-480-row. */
+/* Desktop-width cards: richer spacing + slightly taller thumb cap. */
 @container (min-width: 720px) {
   .ds-game-card-archive__layout {
     gap: var(--spacing-md);
@@ -55,7 +91,7 @@
   }
 
   .ds-game-card-archive__thumb {
-    width: clamp(96px, 22cqi, 140px);
+    max-height: 11rem;
   }
 }
 
