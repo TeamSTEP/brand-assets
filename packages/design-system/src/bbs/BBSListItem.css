@@ -9,7 +9,7 @@
 
 .ds-bbs-list-item__link {
   display: grid;
-  grid-template-columns: minmax(0, 33.333%) minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
   gap: var(--spacing-sm);
   align-items: center;
   box-sizing: border-box;
@@ -33,14 +33,21 @@
 
 .ds-bbs-list-item__thumb {
   box-sizing: border-box;
-  place-self: center stretch;
+  place-self: center start;
   overflow: hidden;
   width: 100%;
-  max-width: 100%;
+  max-width: 6rem;
   aspect-ratio: 1;
   border: 1px solid color-mix(in srgb, var(--color-chrome-accent) 50%, transparent);
   border-radius: var(--radius-card-sm);
   background: var(--color-background-recessed);
+}
+
+/* Title-only rows (e.g. YouTube): leading video thumb, not a large square. */
+.ds-bbs-list-item--leading.ds-bbs-list-item--no-body:not(.ds-bbs-list-item--no-thumb)
+  .ds-bbs-list-item__thumb {
+  max-width: 10rem;
+  aspect-ratio: 16 / 9;
 }
 
 .ds-bbs-list-item__thumb-image {
@@ -143,7 +150,9 @@
     grid-template-columns: 1fr;
   }
 
-  .ds-bbs-list-item--leading:not(.ds-bbs-list-item--no-thumb) .ds-bbs-list-item__thumb {
+  .ds-bbs-list-item--leading:not(.ds-bbs-list-item--no-thumb) .ds-bbs-list-item__thumb,
+  .ds-bbs-list-item--leading.ds-bbs-list-item--no-body:not(.ds-bbs-list-item--no-thumb)
+    .ds-bbs-list-item__thumb {
     width: 100%;
     max-width: none;
     aspect-ratio: 16 / 9;

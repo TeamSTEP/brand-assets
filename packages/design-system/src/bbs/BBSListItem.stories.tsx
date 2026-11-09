@@ -97,7 +97,7 @@ const EXTREME_BODY = Array.from({ length: 24 }, (_, i) =>
   `Line block ${i + 1}: more words to force an extreme body length past any clamp so we can check thumbnail scale and vertical centering.`,
 ).join(" ");
 
-/** Side-by-side body lengths to smoke-test thumb ~1/3 width + vertical center. */
+/** Side-by-side body lengths to smoke-test capped square thumb + vertical center. */
 export const ThumbnailScaling: Story = {
   render: () => (
     <>
@@ -167,10 +167,66 @@ export const LongName: Story = {
 
 export const OmittedBodyWithThumb: Story = {
   args: {
+    thumbnailFit: "cover",
     item: {
       ...BASE,
+      name: "Meltdown trailer",
       thumbnail: { src: PLACEHOLDER_THUMB, alt: "" },
       publishedAt: "2026-10-02T12:00:00.000Z",
+    },
+  },
+};
+
+/** YouTube-like: short title, no body, cover fit — 16:9 capped leading thumb. */
+export const YoutubeShortTitle: Story = {
+  args: {
+    thumbnailFit: "cover",
+    item: {
+      ...BASE,
+      name: "Meltdown trailer is live",
+      thumbnail: { src: PLACEHOLDER_THUMB, alt: "" },
+      publishedAt: "2026-10-01T12:00:00.000Z",
+    },
+  },
+};
+
+/** YouTube-like: very long wrapping title beside capped 16:9 thumb. */
+export const YoutubeVeryLongTitle: Story = {
+  args: {
+    thumbnailFit: "cover",
+    item: {
+      ...BASE,
+      name: "Meltdown Gameplay Highlights — Hydro Dam Pt2 with an Extremely Long Title That Must Wrap Without Blowing Out the BBS Terminal Grid or Stretching the Leading Thumbnail",
+      thumbnail: { src: PLACEHOLDER_THUMB, alt: "" },
+      publishedAt: "2026-10-25T12:00:00.000Z",
+    },
+  },
+};
+
+/** Social-like: short body beside capped square thumb. */
+export const SocialShortBody: Story = {
+  args: {
+    thumbnailFit: "cover",
+    item: {
+      ...BASE,
+      name: "teamstep.io",
+      body: "Meltdown demo is live.",
+      thumbnail: { src: PLACEHOLDER_THUMB, alt: "" },
+      publishedAt: "2026-10-02T12:00:00.000Z",
+    },
+  },
+};
+
+/** Social-like: very long clamped body; square thumb stays capped. */
+export const SocialVeryLongBody: Story = {
+  args: {
+    thumbnailFit: "cover",
+    item: {
+      ...BASE,
+      name: "teamstep.io",
+      body: EXTREME_BODY,
+      thumbnail: { src: PLACEHOLDER_THUMB, alt: "" },
+      publishedAt: "2026-09-20T12:00:00.000Z",
     },
   },
 };

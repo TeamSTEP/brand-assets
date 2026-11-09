@@ -1,7 +1,7 @@
 {
   "name": "design-system",
   "private": true,
-  "packageManager": "pnpm@11.11.0",
+  "packageManager": "pnpm@12.16.1",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
