@@ -103,6 +103,10 @@
   text-transform: uppercase;
 }
 
+.ds-bbs-terminal__viewport {
+  position: relative;
+}
+
 .ds-bbs-terminal__body {
   position: relative;
   box-sizing: border-box;

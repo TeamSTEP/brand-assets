@@ -177,13 +177,15 @@ export function BBSTerminal({
       <h2 className="ds-bbs-terminal__panel-title" id={headingId}>
         {tabListLabel}
       </h2>
-      <div
-        className="ds-bbs-terminal__body"
-        role="tabpanel"
-        id={panelId}
-        aria-labelledby={`${headingId}${activeTabDomId ? ` ${activeTabDomId}` : ""}`}
-      >
-        {children}
+      <div className="ds-bbs-terminal__viewport">
+        <div
+          className="ds-bbs-terminal__body"
+          role="tabpanel"
+          id={panelId}
+          aria-labelledby={`${headingId}${activeTabDomId ? ` ${activeTabDomId}` : ""}`}
+        >
+          {children}
+        </div>
         <ScanlineOverlay />
         <VignetteOverlay />
       </div>
