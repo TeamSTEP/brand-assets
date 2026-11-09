@@ -1,5 +1,11 @@
 # @teamstep/design-system
 
+## 1.2.1
+
+### Patch Changes
+
+- a369ae4: Fix GameCardArchive beside long copy: scale 4:3 thumbs to the text-column height then cap/center on tall cards, fill stretched grid cells without empty Card chrome, and retarget BBS leading thumbs (capped squares with body; 16:9 capped for title-only rows).
+
 ## 1.2.0
 
 ### Minor Changes
