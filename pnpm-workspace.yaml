@@ -39,3 +39,6 @@ overrides:
   "source-map-js@^1.0.0": "^1.2.2"
   "follow-redirects@^1.0.0": "^1.16.2"
   "postcss-selector-parser@^7.0.0": "^7.1.6"
+  # No same-major patches — GHSA-3g3m-2fjr-6pw4 / GHSA-g3hv-75wg-m249.
+  "glob@^13.0.0": "^14.0.2"
+  "minimatch@^10.0.0": "^11.0.1"

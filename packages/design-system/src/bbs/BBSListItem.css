@@ -43,6 +43,12 @@
   background: var(--color-background-recessed);
 }
 
+.ds-bbs-list-item--above .ds-bbs-list-item__thumb {
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 16 / 9;
+}
+
 /* Title-only rows (e.g. YouTube): leading video thumb, not a large square. */
 .ds-bbs-list-item--leading.ds-bbs-list-item--no-body:not(.ds-bbs-list-item--no-thumb)
   .ds-bbs-list-item__thumb {
@@ -137,12 +143,6 @@
 
 .ds-bbs-list-item--above .ds-bbs-list-item__link {
   grid-template-columns: 1fr;
-}
-
-.ds-bbs-list-item--above .ds-bbs-list-item__thumb {
-  width: 100%;
-  max-width: none;
-  aspect-ratio: 16 / 9;
 }
 
 @container bbs-list (max-width: 399px) {
