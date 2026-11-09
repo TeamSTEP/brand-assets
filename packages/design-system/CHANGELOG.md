@@ -1,5 +1,11 @@
 # @teamstep/design-system
 
+## 1.2.2
+
+### Patch Changes
+
+- 72614b2: Pin BBS scanline and vignette overlays to the terminal scrollport so they stay on the visible panel while the feed scrolls.
+
 ## 1.2.1
 
 ### Patch Changes
